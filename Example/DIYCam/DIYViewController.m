@@ -78,17 +78,17 @@
 
 - (void)camCaptureStarted:(DIYCam *)cam
 {
-    
+    NSLog(@"Capture started");
 }
 
 - (void)camCaptureStopped:(DIYCam *)cam
 {
-    
+    NSLog(@"Capture stopped");
 }
 
 - (void)camCaptureProcessing:(DIYCam *)cam
 {
-    
+    NSLog(@"Capture Processing...");
 }
 
 - (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset
