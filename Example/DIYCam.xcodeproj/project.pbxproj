@@ -1,0 +1,323 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C32FCF6915756BD30015E119 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCF6815756BD30015E119 /* UIKit.framework */; };
+		C32FCF6B15756BD30015E119 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCF6A15756BD30015E119 /* Foundation.framework */; };
+		C32FCF6D15756BD30015E119 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCF6C15756BD30015E119 /* CoreGraphics.framework */; };
+		C32FCF7315756BD30015E119 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C32FCF7115756BD30015E119 /* InfoPlist.strings */; };
+		C32FCF7515756BD40015E119 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF7415756BD40015E119 /* main.m */; };
+		C32FCF7915756BD40015E119 /* DIYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF7815756BD40015E119 /* DIYAppDelegate.m */; };
+		C32FCF7C15756BD40015E119 /* DIYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF7B15756BD40015E119 /* DIYViewController.m */; };
+		C32FCF7F15756BD40015E119 /* DIYViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C32FCF7D15756BD40015E119 /* DIYViewController.xib */; };
+		C32FCF8C15756C2E0015E119 /* DIYCam.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF8B15756C2E0015E119 /* DIYCam.m */; };
+		C32FCF911575722F0015E119 /* DIYCamScaler.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF901575722F0015E119 /* DIYCamScaler.m */; };
+		C32FCF9815758D480015E119 /* DIYCamRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF9715758D480015E119 /* DIYCamRecorder.m */; };
+		C32FCF9B15758F350015E119 /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF9A15758F350015E119 /* DIYCamUtilities.m */; };
+		C32FCF9D1575CEC70015E119 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C32FCF9C1575CEC70015E119 /* README.md */; };
+		C32FCFA41575EDAC0015E119 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCFA31575EDAC0015E119 /* AVFoundation.framework */; };
+		C32FCFA61575EDB40015E119 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCFA51575EDB40015E119 /* AssetsLibrary.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C32FCF6415756BD30015E119 /* DIYCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DIYCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C32FCF6815756BD30015E119 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C32FCF6A15756BD30015E119 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C32FCF6C15756BD30015E119 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C32FCF7015756BD30015E119 /* DIYCam-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DIYCam-Info.plist"; sourceTree = "<group>"; };
+		C32FCF7215756BD30015E119 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C32FCF7415756BD40015E119 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C32FCF7615756BD40015E119 /* DIYCam-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DIYCam-Prefix.pch"; sourceTree = "<group>"; };
+		C32FCF7715756BD40015E119 /* DIYAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIYAppDelegate.h; sourceTree = "<group>"; };
+		C32FCF7815756BD40015E119 /* DIYAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DIYAppDelegate.m; sourceTree = "<group>"; };
+		C32FCF7A15756BD40015E119 /* DIYViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIYViewController.h; sourceTree = "<group>"; };
+		C32FCF7B15756BD40015E119 /* DIYViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DIYViewController.m; sourceTree = "<group>"; };
+		C32FCF7E15756BD40015E119 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DIYViewController.xib; sourceTree = "<group>"; };
+		C32FCF8A15756C2E0015E119 /* DIYCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCam.h; path = ../DIYCam.h; sourceTree = "<group>"; };
+		C32FCF8B15756C2E0015E119 /* DIYCam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCam.m; path = ../DIYCam.m; sourceTree = "<group>"; };
+		C32FCF8F1575722F0015E119 /* DIYCamScaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamScaler.h; path = ../DIYCamScaler.h; sourceTree = "<group>"; };
+		C32FCF901575722F0015E119 /* DIYCamScaler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamScaler.m; path = ../DIYCamScaler.m; sourceTree = "<group>"; };
+		C32FCF95157575840015E119 /* DIYCamDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamDefaults.h; path = ../DIYCamDefaults.h; sourceTree = "<group>"; };
+		C32FCF9615758D480015E119 /* DIYCamRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamRecorder.h; path = ../DIYCamRecorder.h; sourceTree = "<group>"; };
+		C32FCF9715758D480015E119 /* DIYCamRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamRecorder.m; path = ../DIYCamRecorder.m; sourceTree = "<group>"; };
+		C32FCF9915758F350015E119 /* DIYCamUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamUtilities.h; path = ../DIYCamUtilities.h; sourceTree = "<group>"; };
+		C32FCF9A15758F350015E119 /* DIYCamUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamUtilities.m; path = ../DIYCamUtilities.m; sourceTree = "<group>"; };
+		C32FCF9C1575CEC70015E119 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		C32FCFA31575EDAC0015E119 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C32FCFA51575EDB40015E119 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C32FCF6115756BD30015E119 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C32FCFA61575EDB40015E119 /* AssetsLibrary.framework in Frameworks */,
+				C32FCFA41575EDAC0015E119 /* AVFoundation.framework in Frameworks */,
+				C32FCF6915756BD30015E119 /* UIKit.framework in Frameworks */,
+				C32FCF6B15756BD30015E119 /* Foundation.framework in Frameworks */,
+				C32FCF6D15756BD30015E119 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C32FCF5915756BD30015E119 = {
+			isa = PBXGroup;
+			children = (
+				C32FCF8A15756C2E0015E119 /* DIYCam.h */,
+				C32FCF8B15756C2E0015E119 /* DIYCam.m */,
+				C32FCF95157575840015E119 /* DIYCamDefaults.h */,
+				C32FCF9615758D480015E119 /* DIYCamRecorder.h */,
+				C32FCF9715758D480015E119 /* DIYCamRecorder.m */,
+				C32FCF8F1575722F0015E119 /* DIYCamScaler.h */,
+				C32FCF901575722F0015E119 /* DIYCamScaler.m */,
+				C32FCF9915758F350015E119 /* DIYCamUtilities.h */,
+				C32FCF9A15758F350015E119 /* DIYCamUtilities.m */,
+				C32FCF9C1575CEC70015E119 /* README.md */,
+				C32FCF6E15756BD30015E119 /* Example */,
+				C32FCF6715756BD30015E119 /* Frameworks */,
+				C32FCF6515756BD30015E119 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C32FCF6515756BD30015E119 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C32FCF6415756BD30015E119 /* DIYCam.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C32FCF6715756BD30015E119 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C32FCFA51575EDB40015E119 /* AssetsLibrary.framework */,
+				C32FCFA31575EDAC0015E119 /* AVFoundation.framework */,
+				C32FCF6815756BD30015E119 /* UIKit.framework */,
+				C32FCF6A15756BD30015E119 /* Foundation.framework */,
+				C32FCF6C15756BD30015E119 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C32FCF6E15756BD30015E119 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				C32FCF7715756BD40015E119 /* DIYAppDelegate.h */,
+				C32FCF7815756BD40015E119 /* DIYAppDelegate.m */,
+				C32FCF7A15756BD40015E119 /* DIYViewController.h */,
+				C32FCF7B15756BD40015E119 /* DIYViewController.m */,
+				C32FCF7D15756BD40015E119 /* DIYViewController.xib */,
+				C32FCF6F15756BD30015E119 /* Supporting Files */,
+			);
+			name = Example;
+			path = DIYCam;
+			sourceTree = "<group>";
+		};
+		C32FCF6F15756BD30015E119 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C32FCF7015756BD30015E119 /* DIYCam-Info.plist */,
+				C32FCF7115756BD30015E119 /* InfoPlist.strings */,
+				C32FCF7415756BD40015E119 /* main.m */,
+				C32FCF7615756BD40015E119 /* DIYCam-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C32FCF6315756BD30015E119 /* DIYCam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C32FCF8215756BD40015E119 /* Build configuration list for PBXNativeTarget "DIYCam" */;
+			buildPhases = (
+				C32FCF6015756BD30015E119 /* Sources */,
+				C32FCF6115756BD30015E119 /* Frameworks */,
+				C32FCF6215756BD30015E119 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DIYCam;
+			productName = DIYCam;
+			productReference = C32FCF6415756BD30015E119 /* DIYCam.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C32FCF5B15756BD30015E119 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DIY;
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "DIY, Co.";
+			};
+			buildConfigurationList = C32FCF5E15756BD30015E119 /* Build configuration list for PBXProject "DIYCam" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C32FCF5915756BD30015E119;
+			productRefGroup = C32FCF6515756BD30015E119 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C32FCF6315756BD30015E119 /* DIYCam */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C32FCF6215756BD30015E119 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C32FCF7315756BD30015E119 /* InfoPlist.strings in Resources */,
+				C32FCF7F15756BD40015E119 /* DIYViewController.xib in Resources */,
+				C32FCF9D1575CEC70015E119 /* README.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C32FCF6015756BD30015E119 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C32FCF7515756BD40015E119 /* main.m in Sources */,
+				C32FCF7915756BD40015E119 /* DIYAppDelegate.m in Sources */,
+				C32FCF7C15756BD40015E119 /* DIYViewController.m in Sources */,
+				C32FCF8C15756C2E0015E119 /* DIYCam.m in Sources */,
+				C32FCF911575722F0015E119 /* DIYCamScaler.m in Sources */,
+				C32FCF9815758D480015E119 /* DIYCamRecorder.m in Sources */,
+				C32FCF9B15758F350015E119 /* DIYCamUtilities.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C32FCF7115756BD30015E119 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C32FCF7215756BD30015E119 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C32FCF7D15756BD40015E119 /* DIYViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C32FCF7E15756BD40015E119 /* en */,
+			);
+			name = DIYViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C32FCF8015756BD40015E119 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C32FCF8115756BD40015E119 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C32FCF8315756BD40015E119 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DIYCam/DIYCam-Prefix.pch";
+				INFOPLIST_FILE = "DIYCam/DIYCam-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C32FCF8415756BD40015E119 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DIYCam/DIYCam-Prefix.pch";
+				INFOPLIST_FILE = "DIYCam/DIYCam-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C32FCF5E15756BD30015E119 /* Build configuration list for PBXProject "DIYCam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C32FCF8015756BD40015E119 /* Debug */,
+				C32FCF8115756BD40015E119 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C32FCF8215756BD40015E119 /* Build configuration list for PBXNativeTarget "DIYCam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C32FCF8315756BD40015E119 /* Debug */,
+				C32FCF8415756BD40015E119 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C32FCF5B15756BD30015E119 /* Project object */;
+}
