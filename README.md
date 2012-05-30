@@ -4,20 +4,17 @@ DIYCam is a high-level layer built on top of AVFoundation that enables simple se
 
 ## Getting Started
 ```objective-c
-// Camera
+// Init camera
 cam = [[DIYCam alloc] init];
 [[self cam] setDelegate:self];
 
 // Preview
-AVCaptureVideoPreviewLayer *pl = [AVCaptureVideoPreviewLayer layerWithSession:[[self cam] session]];
-pl.frame = self.view.frame;
-[self.view.layer insertSublayer:pl below:[[self.view.layer sublayers] objectAtIndex:0]];
+cam.preview.frame       = display.frame;
+[display.layer addSublayer:cam.preview];
 
-// Gravity
-CGRect bounds   = self.view.layer.bounds;
-pl.videoGravity = AVLayerVideoGravityResizeAspectFill;
-pl.bounds       = bounds;
-pl.position     = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+CGRect bounds           = display.layer.bounds;
+cam.preview.bounds      = bounds;
+cam.preview.position    = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
 ```
 
 ## Public Methods
@@ -26,4 +23,14 @@ pl.position     = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
 - (void)startVideoCapture;
 - (void)stopVideoCapture;
 - (bool)isRecording;
+```
+
+## Delegate Methods
+```objective-c
+- (void)camReady:(DIYCam *)cam;
+- (void)camDidFail:(DIYCam *)cam withError:(NSError *)error;
+- (void)camCaptureStarted:(DIYCam *)cam;
+- (void)camCaptureStopped:(DIYCam *)cam;
+- (void)camCaptureProcessing:(DIYCam *)cam;
+- (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset;
 ```
