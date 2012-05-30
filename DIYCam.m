@@ -145,18 +145,19 @@
 - (void)startPhotoCapture
 {
     AVCaptureConnection *stillImageConnection = [DIYCamUtilities connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self stillImageOutput] connections]];
-    if (ORIENTATION_FORCE) {
+    if (ORIENTATION_FORCE) 
+    {
         [stillImageConnection setVideoOrientation:ORIENTATION_DEFAULT];
     }
     
-    [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection
-     completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-         
-         [[self delegate] camCaptureStarted:self];
+    [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) 
+    {
+        [[self delegate] camCaptureProcessing:self];
          
          if (imageDataSampleBuffer != NULL) 
          {
-             if (ASSET_LIBRARY) {
+             if (ASSET_LIBRARY) 
+             {
                  [self performSelectorInBackground:@selector(writePhotoToAssetLibrary:) withObject:(id)imageDataSampleBuffer];
              }
              [self performSelectorInBackground:@selector(writePhotoToFileSystem:) withObject:(id)imageDataSampleBuffer];
