@@ -11,7 +11,6 @@
 @implementation DIYViewController
 
 @synthesize cam;
-@synthesize preview;
 @synthesize display;
 @synthesize capturePhoto;
 @synthesize captureVideo;
@@ -38,10 +37,12 @@
     [[self cam] setDelegate:self];
     
     // Preview
-    AVCaptureVideoPreviewLayer *pl = [AVCaptureVideoPreviewLayer layerWithSession:[[self cam] session]];
-    pl.frame = display.frame;
-    pl.orientation = [[UIDevice currentDevice] orientation];
-    [display.layer insertSublayer:pl below:[[display.layer sublayers] objectAtIndex:0]];
+    cam.preview.frame       = display.frame;
+    [display.layer addSublayer:cam.preview];
+    
+    CGRect bounds           = display.layer.bounds;
+    cam.preview.bounds      = bounds;
+    cam.preview.position    = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
 }
 
 #pragma mark - UI events
@@ -70,7 +71,7 @@
     NSLog(@"Ready");
 }
 
-- (void)cam:(DIYCam *)cam didFailWithError:(NSError *)error
+- (void)camDidFail:(DIYCam *)cam withError:(NSError *)error
 {
     NSLog(@"Error: %@", error);
 }
@@ -101,7 +102,6 @@
 {
     [cam release]; cam = nil;
     
-    [preview release]; preview = nil;
     [display release]; display = nil;
     [capturePhoto release]; capturePhoto = nil;
     [captureVideo release]; captureVideo = nil;

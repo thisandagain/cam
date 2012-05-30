@@ -12,6 +12,7 @@
 
 @synthesize delegate;
 @synthesize session;
+@synthesize preview;
 @synthesize orientation;
 @synthesize videoInput;
 @synthesize audioInput;
@@ -26,7 +27,6 @@
     if (self) {
         [self setupSession];
         [self startSession];
-        [[self delegate] camReady:self];
     }
     return self;
 }
@@ -113,6 +113,16 @@
     } else {
         [newCaptureSession setSessionPreset:AVCaptureSessionPresetHigh];
     }
+    
+    // Preview
+    // ---------------------------------
+    preview = [AVCaptureVideoPreviewLayer layerWithSession:session];
+    preview.orientation     = [[UIDevice currentDevice] orientation];
+    preview.videoGravity    = AVLayerVideoGravityResizeAspectFill;
+    
+    //
+    
+    [[self delegate] camReady:self];
 }
 
 - (void)startSession
@@ -346,6 +356,7 @@
 - (void)releaseObjects
 {
     [session release]; session = nil;
+    [preview release]; preview = nil;
     [audioInput release]; audioInput = nil;
     [videoInput release]; videoInput = nil;
     [stillImageOutput release]; stillImageOutput = nil;
