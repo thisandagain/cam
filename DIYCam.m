@@ -135,7 +135,9 @@
 - (void)startPhotoCapture
 {
     AVCaptureConnection *stillImageConnection = [DIYCamUtilities connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self stillImageOutput] connections]];
-    [stillImageConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
+    if (ORIENTATION_FORCE) {
+        [stillImageConnection setVideoOrientation:ORIENTATION_DEFAULT];
+    }
     
     [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection
      completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
@@ -149,7 +151,7 @@
              }
              [self performSelectorInBackground:@selector(writePhotoToFileSystem:) withObject:(id)imageDataSampleBuffer];
          } else {
-             [[self delegate] cam:self didFailWithError:error];
+             [[self delegate] camDidFail:self withError:error];
          }
      }];
 }
@@ -198,8 +200,8 @@
     NSData *imageData               = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
     
     // Scale image
-    DIYCamScaler *image             = [[DIYCamScaler alloc] initWithData:imageData];
-    NSData *scaledImageData         = UIImageJPEGRepresentation([image makeImageOfSize:CGSizeMake(PHOTO_WIDTH, PHOTO_HEIGHT)], PHOTO_QUALITY);
+    UIImage *image                  = [[UIImage alloc] initWithData:imageData];
+    NSData *scaledImageData         = UIImageJPEGRepresentation([image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(PHOTO_WIDTH, PHOTO_HEIGHT) interpolationQuality:PHOTO_INTERPOLATION], PHOTO_QUALITY);
     
     // Documents
     NSArray *paths                  = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -231,7 +233,7 @@
  */
 - (void)startVideoCapture
 {
-
+    
 }
 
 /**
@@ -318,7 +320,7 @@
         NSError *error;
         if ([fileManager removeItemAtPath:filePath error:&error] == NO) {
             if ([[self delegate] respondsToSelector:@selector(captureManager:didFailWithError:)]) {
-                [[self delegate] cam:self didFailWithError:error];
+                [[self delegate] camDidFail:self withError:error];
             }            
         }
     }
@@ -334,7 +336,7 @@
 	NSError	*error;
 	if (![[NSFileManager defaultManager] copyItemAtURL:fileURL toURL:[NSURL fileURLWithPath:destinationPath] error:&error]) {
 		if ([[self delegate] respondsToSelector:@selector(captureManager:didFailWithError:)]) {
-			[[self delegate] cam:self didFailWithError:error];
+			[[self delegate] camDidFail:self withError:error];
 		}
 	}
 }

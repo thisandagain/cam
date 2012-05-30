@@ -12,6 +12,7 @@
 
 @synthesize cam;
 @synthesize preview;
+@synthesize display;
 @synthesize capturePhoto;
 @synthesize captureVideo;
 
@@ -25,7 +26,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
 #pragma mark - Setup
@@ -38,14 +39,9 @@
     
     // Preview
     AVCaptureVideoPreviewLayer *pl = [AVCaptureVideoPreviewLayer layerWithSession:[[self cam] session]];
-    pl.frame = self.view.frame;
-    [self.view.layer insertSublayer:pl below:[[self.view.layer sublayers] objectAtIndex:0]];
-    
-    // Gravity
-    CGRect bounds   = self.view.layer.bounds;
-    pl.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    pl.bounds       = bounds;
-    pl.position     = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+    pl.frame = display.frame;
+    pl.orientation = [[UIDevice currentDevice] orientation];
+    [display.layer insertSublayer:pl below:[[display.layer sublayers] objectAtIndex:0]];
 }
 
 #pragma mark - UI events
@@ -106,6 +102,7 @@
     [cam release]; cam = nil;
     
     [preview release]; preview = nil;
+    [display release]; display = nil;
     [capturePhoto release]; capturePhoto = nil;
     [captureVideo release]; captureVideo = nil;
 }

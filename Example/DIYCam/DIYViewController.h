@@ -15,8 +15,9 @@
 }
 
 @property (nonatomic, retain) DIYCam *cam;
-@property (nonatomic, retain) IBOutlet AVCaptureVideoPreviewLayer *preview;
+@property (nonatomic, retain) AVCaptureVideoPreviewLayer *preview;
 
+@property (nonatomic, retain) IBOutlet UIView *display;
 @property (nonatomic, retain) IBOutlet UIButton *capturePhoto;
 @property (nonatomic, retain) IBOutlet UIButton *captureVideo;
 

@@ -3,7 +3,7 @@
 
 // Orientation
 #define ORIENTATION_FORCE true
-#define ORIENTATION_DEFAULT portrait
+#define ORIENTATION_DEFAULT AVCaptureVideoOrientationLandscapeRight
 
 // Device
 #define DEVICE_FLASH false
@@ -12,6 +12,7 @@
 // Photo quality
 #define PHOTO_PRESET AVCaptureSessionPresetPhoto
 #define PHOTO_RESCALE true
+#define PHOTO_INTERPOLATION kCGInterpolationDefault
 #define PHOTO_WIDTH 1280
 #define PHOTO_HEIGHT 960
 #define PHOTO_QUALITY 0.9

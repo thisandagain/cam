@@ -12,7 +12,7 @@
 
 #import "DIYCamDefaults.h"
 #import "DIYCamRecorder.h"
-#import "DIYCamScaler.h"
+#import "UIImage+Resize.h"
 #import "DIYCamUtilities.h"
 
 //
@@ -21,7 +21,7 @@
 @protocol DIYCamDelegate <NSObject>
 @optional
 - (void)camReady:(DIYCam *)cam;
-- (void)cam:(DIYCam *)cam didFailWithError:(NSError *)error;
+- (void)camDidFail:(DIYCam *)cam withError:(NSError *)error;
 - (void)camCaptureStarted:(DIYCam *)cam;
 - (void)camCaptureStopped:(DIYCam *)cam;
 - (void)camCaptureProcessing:(DIYCam *)cam;
@@ -37,6 +37,7 @@
 
 @property (nonatomic, assign) id <DIYCamDelegate> delegate;
 @property (nonatomic, retain) AVCaptureSession *session;
+@property (nonatomic, retain) AVCaptureVideoPreviewLayer *preview;
 @property (nonatomic, assign) AVCaptureVideoOrientation orientation;
 @property (nonatomic, retain) AVCaptureDeviceInput *videoInput;
 @property (nonatomic, retain) AVCaptureDeviceInput *audioInput;
