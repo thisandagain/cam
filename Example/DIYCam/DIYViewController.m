@@ -32,9 +32,10 @@
 
 - (void)setup
 {
-    // Camera
+    // Init camera
     cam = [[DIYCam alloc] init];
     [[self cam] setDelegate:self];
+    [[self cam] setup];
     
     // Preview
     cam.preview.frame       = display.frame;
@@ -100,6 +101,7 @@
 
 - (void)releaseObjects
 {
+    [cam removeObservers];
     [cam release]; cam = nil;
     
     [display release]; display = nil;
