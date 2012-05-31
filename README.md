@@ -3,6 +3,7 @@
 DIYCam is a high-level layer built on top of AVFoundation that enables simple setup and implementation of photo and video capture within iOS. It is pretty darn opinionated though... if you are looking for lots of configuration options then this is probably not the best way to go. If you are looking for something simple but hopefully not "too" simple then read on:
 
 ## Getting Started
+The fastest way to get started with DIYCam is to look through the included "Example" project, but the setup and use is designed to be really minimal.
 ```objective-c
 // Init camera
 cam = [[DIYCam alloc] init];
@@ -17,6 +18,16 @@ CGRect bounds           = display.layer.bounds;
 cam.preview.bounds      = bounds;
 cam.preview.position    = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
 ```
+
+## Required Frameworks
+    AssetsLibrary.framework
+    AVFoundation.framework
+    CoreGraphics.framework
+    CoreMedia.framework
+    QuartzCore.framework
+    
+## Configuration
+Default configuration settings can be modified within DIYCamDefaults.h where options for asset library use, orientation, device settings, and quality can be set.
 
 ## Public Methods
 ```objective-c
