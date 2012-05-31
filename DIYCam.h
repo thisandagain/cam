@@ -19,7 +19,7 @@
 
 @class DIYCam;
 @protocol DIYCamDelegate <NSObject>
-@optional
+@required
 - (void)camReady:(DIYCam *)cam;
 - (void)camDidFail:(DIYCam *)cam withError:(NSError *)error;
 - (void)camCaptureStarted:(DIYCam *)cam;
@@ -30,9 +30,9 @@
 
 //
 
-@interface DIYCam : NSObject
+@interface DIYCam : NSObject <DIYCamRecorderDelegate>
 {
-    
+
 }
 
 @property (nonatomic, assign) id <DIYCamDelegate> delegate;
@@ -43,6 +43,11 @@
 @property (nonatomic, retain) AVCaptureDeviceInput *audioInput;
 @property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic, retain) DIYCamRecorder *recorder;
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundRecordingID;
+
+#pragma mark - Setup
+
+- (void)setup;
 
 #pragma mark - Photo
 

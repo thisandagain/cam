@@ -7,7 +7,6 @@
 //
 
 #import "DIYCamRecorder.h"
-#import "DIYCamUtilities.h"
 
 @interface DIYCamRecorder (FileOutputDelegate) <AVCaptureFileOutputRecordingDelegate>
 @end
@@ -21,7 +20,7 @@
 
 #pragma mark - Init
 
-- (id) initWithSession:(AVCaptureSession *)aSession outputFileURL:(NSURL *)anOutputFileURL
+- (id)initWithSession:(AVCaptureSession *)aSession outputFileURL:(NSURL *)anOutputFileURL
 {
     self = [super init];
     if (self != nil) {
@@ -38,35 +37,41 @@
 	return self;
 }
 
--(BOOL)recordsVideo
+- (BOOL)recordsVideo
 {
 	AVCaptureConnection *videoConnection = [DIYCamUtilities connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self movieFileOutput] connections]];
+    NSLog(@"VID!: %@", videoConnection);
 	return [videoConnection isActive];
 }
 
--(BOOL)recordsAudio
+- (BOOL)recordsAudio
 {
 	AVCaptureConnection *audioConnection = [DIYCamUtilities connectionWithMediaType:AVMediaTypeAudio fromConnections:[[self movieFileOutput] connections]];
 	return [audioConnection isActive];
 }
 
--(BOOL)isRecording
+- (BOOL)isRecording
 {
     return [[self movieFileOutput] isRecording];
 }
 
--(void)startRecordingWithOrientation:(AVCaptureVideoOrientation)videoOrientation;
+- (void)startRecordingWithOrientation:(AVCaptureVideoOrientation)videoOrientation;
 {
+    NSLog(@"Video: %d", [self recordsVideo]);
     AVCaptureConnection *videoConnection = [DIYCamUtilities connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self movieFileOutput] connections]];
+    NSLog(@"Connection: %@", videoConnection);
     if ([videoConnection isVideoOrientationSupported])
     {
         [videoConnection setVideoOrientation:videoOrientation];
     }
     
+    NSLog(@"Movie File Output: %@", [self movieFileOutput]);
+    NSLog(@"Output: %@", [self outputFileURL]);
+    
     [[self movieFileOutput] startRecordingToOutputFileURL:[self outputFileURL] recordingDelegate:self];
 }
 
--(void)stopRecording
+- (void)stopRecording
 {
     [[self movieFileOutput] stopRecording];
 }
@@ -75,9 +80,7 @@
 
 @implementation DIYCamRecorder (FileOutputDelegate)
 
-- (void)             captureOutput:(AVCaptureFileOutput *)captureOutput
-didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
-                   fromConnections:(NSArray *)connections
+- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections
 {
     if ([[self delegate] respondsToSelector:@selector(recorderRecordingDidBegin:)]) 
     {
@@ -85,10 +88,7 @@ didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
     }
 }
 
-- (void)              captureOutput:(AVCaptureFileOutput *)captureOutput
-didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
-                    fromConnections:(NSArray *)connections
-                              error:(NSError *)error
+- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
 {
     if ([[self delegate] respondsToSelector:@selector(recorder:recordingDidFinishToOutputFileURL:error:)]) 
     {

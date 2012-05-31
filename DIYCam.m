@@ -18,21 +18,32 @@
 @synthesize audioInput;
 @synthesize stillImageOutput;
 @synthesize recorder;
+@synthesize backgroundRecordingID;
 
 #pragma mark - Init
 
 - (id)init
 {
     self = [super init];
-    if (self) {
-        [self setupSession];
-        [self startSession];
+    if (self != nil) 
+    {
+		orientation = ORIENTATION_DEFAULT;
     }
+    
     return self;
 }
 
-- (void)setupSession
+/**
+ * Instanciates session and camera IO.
+ *
+ * @return  void
+ */
+- (void)setup
 {
+    // Create session
+    // ---------------------------------
+    session = [[AVCaptureSession alloc] init];
+    
     // Flash & torch support
     // ---------------------------------
     if ([[self camera] hasFlash]) 
@@ -72,46 +83,62 @@
 		}
 	}
     
-    // I/O
+    // Inputs
     // ---------------------------------
-    AVCaptureDeviceInput *newVideoInput                 = [[AVCaptureDeviceInput alloc] initWithDevice:[self camera] error:nil];
-    AVCaptureDeviceInput *newAudioInput                 = [[AVCaptureDeviceInput alloc] initWithDevice:[self audioDevice] error:nil];
-    AVCaptureStillImageOutput *newStillImageOutput  = [[AVCaptureStillImageOutput alloc] init];
-    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [newStillImageOutput setOutputSettings:outputSettings];
+    AVCaptureDevice *videoDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+	if (videoDevice)
+	{
+		NSError *error;
+		videoInput                  = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+		if (!error)
+		{
+			if ([session canAddInput:videoInput])
+            {
+				[session addInput:videoInput];
+            } else {
+                NSLog(@"Error: Couldn't add video input");
+            }
+		} else {
+			[[self delegate] camDidFail:self withError:error];
+		}
+	} else {
+		NSLog(@"Error: Couldn't create video capture device");
+	}
     
+    AVCaptureDevice *audioDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+    if (audioDevice)
+    {
+        NSError *error              = nil;
+        audioInput                  = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
+        if (!error)
+        {
+            [session addInput:audioInput];
+        } else {
+            [[self delegate] camDidFail:self withError:error];
+        }
+    }
+    
+    // Outputs
+    // ---------------------------------
+    stillImageOutput                = [[AVCaptureStillImageOutput alloc] init];
+    NSDictionary *outputSettings    = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
+    [stillImageOutput setOutputSettings:outputSettings];
+    [session addOutput:stillImageOutput];
     [outputSettings release];
     
-    // Create session
-    // ---------------------------------
-    AVCaptureSession *newCaptureSession = [[AVCaptureSession alloc] init];
-    if ([newCaptureSession canAddInput:newVideoInput]) {
-        [newCaptureSession addInput:newVideoInput];
-    }
-    if ([newCaptureSession canAddInput:newAudioInput]) {
-        [newCaptureSession addInput:newAudioInput];
-    }
-    if ([newCaptureSession canAddOutput:newStillImageOutput]) {
-        [newCaptureSession addOutput:newStillImageOutput];
-    }
+    //
     
-    [self setStillImageOutput:newStillImageOutput];
-    [self setVideoInput:newVideoInput];
-    [self setAudioInput:newAudioInput];
-    [self setSession:newCaptureSession];
-    
-    [newStillImageOutput release];
-    [newVideoInput release];
-    [newAudioInput release];
-    [newCaptureSession release];
+    NSURL *outputFileURL            = [self tempFileURL];
+    recorder                        = [[DIYCamRecorder alloc] initWithSession:[self session] outputFileURL:outputFileURL];
+    [recorder setDelegate:self];
     
     // Preset
     // ---------------------------------
-    if ([newCaptureSession canSetSessionPreset:PHOTO_PRESET])
+    if ([session canSetSessionPreset:PHOTO_PRESET])
     {
-        [newCaptureSession setSessionPreset:PHOTO_PRESET];
+        [session setSessionPreset:PHOTO_PRESET];
     } else {
-        [newCaptureSession setSessionPreset:AVCaptureSessionPresetHigh];
+        [session setSessionPreset:AVCaptureSessionPresetHigh];
     }
     
     // Preview
@@ -120,8 +147,22 @@
     preview.orientation     = [[UIDevice currentDevice] orientation];
     preview.videoGravity    = AVLayerVideoGravityResizeAspectFill;
     
-    //
+    // Pre-flight
+    // ---------------------------------
+	if (![recorder recordsVideo] && [recorder recordsAudio]) {
+		NSString *localizedDescription      = NSLocalizedString(@"Video recording unavailable", @"Video recording unavailable description");
+		NSString *localizedFailureReason    = NSLocalizedString(@"Movies recorded on this device will only contain audio. They will be accessible through iTunes file sharing.", @"Video recording unavailable failure reason");
+		NSDictionary *errorDict             = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                    localizedDescription, NSLocalizedDescriptionKey, 
+                                                    localizedFailureReason, NSLocalizedFailureReasonErrorKey, 
+                                                    nil];
+		NSError *noVideoError               = [NSError errorWithDomain:@"DIYCam" code:0 userInfo:errorDict];
+        [[self delegate] camDidFail:self withError:noVideoError];
+	}
     
+    // Start session
+    // ---------------------------------
+    [self startSession];
     [[self delegate] camReady:self];
 }
 
@@ -244,7 +285,9 @@
  */
 - (void)startVideoCapture
 {
-    
+    [self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}]];
+    [self removeFile:[[self recorder] outputFileURL]];
+    [[self recorder] startRecordingWithOrientation:orientation];
 }
 
 /**
@@ -254,9 +297,8 @@
  */
 - (void)stopVideoCapture
 {
-    if (ASSET_LIBRARY) {
-        [self performSelectorInBackground:@selector(writeVideoToAssetLibrary:) withObject:nil];
-    }
+    [[self recorder] stopRecording];
+    [[self delegate] camCaptureStopped:self];
 }
 
 /**
@@ -271,7 +313,7 @@
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     // ####
-    
+        
     // Asset library
     ALAssetsLibrary *library        = [[ALAssetsLibrary alloc] init];
     [library writeVideoAtPathToSavedPhotosAlbum:video completionBlock:^(NSURL *assetURL, NSError *error) {
@@ -283,11 +325,34 @@
     [pool release];
 }
 
+/**
+ * Return the video asset information.
+ *
+ * @param  NSURL  Asset path
+ *
+ * @return  void
+ */
+- (void)writeVideoToFileSystem:(NSURL *)video
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    // ####
+        
+    [[self delegate] camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                        [video absoluteString], @"path",
+                                                        @"video", @"type",
+                                                        nil]];
+    
+    // ####
+    
+    [pool release];
+}
+
 #pragma mark - Utility
 
 - (bool)isRecording
 {
-    return false;
+    return [recorder isRecording];
 }
 
 #pragma mark - Private methods
@@ -320,7 +385,7 @@
 
 - (NSURL *)tempFileURL
 {
-    return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.mov"]];
+    return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), @"iphone.mov"]];
 }
 
 - (void)removeFile:(NSURL *)fileURL
@@ -330,32 +395,54 @@
     if ([fileManager fileExistsAtPath:filePath]) {
         NSError *error;
         if ([fileManager removeItemAtPath:filePath error:&error] == NO) {
-            if ([[self delegate] respondsToSelector:@selector(captureManager:didFailWithError:)]) {
-                [[self delegate] camDidFail:self withError:error];
-            }            
+            [[self delegate] camDidFail:self withError:error];
         }
     }
 }
 
-- (void) copyFileToDocuments:(NSURL *)fileURL
+- (void)copyFileToDocuments:(NSURL *)fileURL
 {
-	NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	NSString *documentsDirectory        = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+	NSDateFormatter *dateFormatter      = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];
-	NSString *destinationPath = [documentsDirectory stringByAppendingFormat:@"/output_%@.mov", [dateFormatter stringFromDate:[NSDate date]]];
+	NSString *destinationPath           = [documentsDirectory stringByAppendingFormat:@"/output_%@.mov", [dateFormatter stringFromDate:[NSDate date]]];
 	[dateFormatter release];
-	NSError	*error;
+	
+    NSError	*error;
 	if (![[NSFileManager defaultManager] copyItemAtURL:fileURL toURL:[NSURL fileURLWithPath:destinationPath] error:&error]) {
-		if ([[self delegate] respondsToSelector:@selector(captureManager:didFailWithError:)]) {
-			[[self delegate] camDidFail:self withError:error];
-		}
+        [[self delegate] camDidFail:self withError:error];
 	}
+}
+
+#pragma mark - DIYCamRecorderDelegate
+
+- (void)recorderRecordingDidBegin:(DIYCamRecorder *)recorder
+{
+    [[self delegate] camCaptureStarted:self];
+}
+
+- (void)recorder:(DIYCamRecorder *)recorder recordingDidFinishToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error
+{
+    // Call delegate(s)
+    if (error)
+    {
+        [[self delegate] camDidFail:self withError:error];
+    } else {
+        [[self delegate] camCaptureProcessing:self];
+        
+        if (ASSET_LIBRARY) {
+            [self performSelectorInBackground:@selector(writeVideoToAssetLibrary:) withObject:outputFileURL];
+        }
+        [self performSelectorInBackground:@selector(writeVideoToFileSystem:) withObject:outputFileURL];
+    }
 }
 
 #pragma mark - Dealloc
 
 - (void)releaseObjects
 {
+    [[self session] stopRunning];
+    
     [session release]; session = nil;
     [preview release]; preview = nil;
     [audioInput release]; audioInput = nil;
