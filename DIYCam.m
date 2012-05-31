@@ -17,7 +17,7 @@
 @synthesize audioInput;
 @synthesize stillImageOutput;
 @synthesize movieFileOutput;
-@synthesize backgroundRecordingID;
+@synthesize library;
 
 #pragma mark - Init
 
@@ -26,7 +26,7 @@
     self = [super init];
     if (self != nil) 
     {
-        //
+        library        = [[ALAssetsLibrary alloc] init];
     }
     
     return self;
@@ -120,20 +120,20 @@
     
     // Outputs
     // ---------------------------------
-    stillImageOutput                = [[AVCaptureStillImageOutput alloc] init];
-    NSDictionary *outputSettings    = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [stillImageOutput setOutputSettings:outputSettings];
+    stillImageOutput                        = [[AVCaptureStillImageOutput alloc] init];
+    NSDictionary *stillOutputSettings       = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
+    [stillImageOutput setOutputSettings:stillOutputSettings];
     [session addOutput:stillImageOutput];
-    [outputSettings release];
+    [stillOutputSettings release];
     
     //
     
-    movieFileOutput                 = [[AVCaptureMovieFileOutput alloc] init];
-    Float64 TotalSeconds            = 120;			// Max seconds
-	int32_t preferredTimeScale      = 30;           // Frames per second
-	CMTime maxDuration              = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);
+    movieFileOutput                         = [[AVCaptureMovieFileOutput alloc] init];
+    Float64 TotalSeconds                    = VIDEO_DURATION;			// Max seconds
+	int32_t preferredTimeScale              = VIDEO_FPS;                // Frames per second
+	CMTime maxDuration                      = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);
 	movieFileOutput.maxRecordedDuration     = maxDuration;
-	movieFileOutput.minFreeDiskSpaceLimit   = 48828 * 1024;
+	movieFileOutput.minFreeDiskSpaceLimit   = VIDEO_MIN_DISK;
     [session addOutput:movieFileOutput];
 	[self setOutputProperties];
     
@@ -216,7 +216,6 @@
     NSData *imageData               = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
     
     // Asset library
-    ALAssetsLibrary *library        = [[ALAssetsLibrary alloc] init];
     [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
         NSLog(@"Asset written to library: %@", assetURL);
     }];
@@ -247,10 +246,7 @@
     NSData *scaledImageData         = UIImageJPEGRepresentation([image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(PHOTO_WIDTH, PHOTO_HEIGHT) interpolationQuality:PHOTO_INTERPOLATION], PHOTO_QUALITY);
     
     // Documents
-    NSArray *paths                  = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory    = [paths objectAtIndex:0];
-    NSString *assetName             = [NSString stringWithFormat:@"%@.jpg", [[NSProcessInfo processInfo] globallyUniqueString]];
-    NSString *assetPath             = [documentsDirectory stringByAppendingPathComponent:assetName];
+    NSString *assetPath             = [self createAssetFilePath:@"jpg"];
     [scaledImageData writeToFile:assetPath atomically:true];
     
     // Complete delegate
@@ -279,21 +275,20 @@
     isRecording = true;
     [[self delegate] camCaptureStarted:self];
     
-    //Create temporary URL to record to
-    NSString *outputPath        = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.mov"];
-    NSURL *outputURL            = [[NSURL alloc] initFileURLWithPath:outputPath];
+    // Create URL to record to
+    NSString *assetPath         = [self createAssetFilePath:@"mov"];
+    NSURL *outputURL            = [[NSURL alloc] initFileURLWithPath:assetPath];
     NSFileManager *fileManager  = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:outputPath])
+    if ([fileManager fileExistsAtPath:assetPath])
     {
         NSError *error;
-        if ([fileManager removeItemAtPath:outputPath error:&error] == NO)
+        if ([fileManager removeItemAtPath:assetPath error:&error] == NO)
         {
             [[self delegate] camDidFail:self withError:error];
         }
     }
-    [outputPath release];
     
-    //Start recording
+    // Start recording
     [movieFileOutput startRecordingToOutputFileURL:outputURL recordingDelegate:self];
     [outputURL release];
 }
@@ -325,7 +320,6 @@
     // ####
         
     // Asset library
-    ALAssetsLibrary *library        = [[ALAssetsLibrary alloc] init];
     [library writeVideoAtPathToSavedPhotosAlbum:video completionBlock:^(NSURL *assetURL, NSError *error) {
         NSLog(@"Asset written to library: %@", assetURL);
     }];
@@ -358,11 +352,21 @@
     [pool release];
 }
 
-#pragma mark - Utility
+#pragma mark - Utilities
 
 - (bool)isRecording
 {
     return isRecording;
+}
+
+- (NSString *)createAssetFilePath:(NSString *)extension
+{
+    NSArray *paths                  = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory    = [paths objectAtIndex:0];
+    NSString *assetName             = [NSString stringWithFormat:@"%@.%@", [[NSProcessInfo processInfo] globallyUniqueString], extension];
+    NSString *assetPath             = [documentsDirectory stringByAppendingPathComponent:assetName];
+    
+    return assetPath;
 }
 
 #pragma mark - Private methods
@@ -374,7 +378,7 @@
 	// Set landscape (if required)
 	if ([CaptureConnection isVideoOrientationSupported])
 	{
-		AVCaptureVideoOrientation orientation = ORIENTATION_DEFAULT;		//<<<<<SET VIDEO ORIENTATION IF LANDSCAPE
+		AVCaptureVideoOrientation orientation = ORIENTATION_DEFAULT;
 		[CaptureConnection setVideoOrientation:orientation];
 	}
     
@@ -411,46 +415,6 @@
     return [self cameraWithPosition:DEVICE_PRIMARY];
 }
 
-- (AVCaptureDevice *)audioDevice
-{
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
-    if ([devices count] > 0) {
-        return [devices objectAtIndex:0];
-    }
-    return nil;
-}
-
-- (NSURL *)tempFileURL
-{
-    return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), @"iphone.mov"]];
-}
-
-- (void)removeFile:(NSURL *)fileURL
-{
-    NSString *filePath = [fileURL path];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:filePath]) {
-        NSError *error;
-        if ([fileManager removeItemAtPath:filePath error:&error] == NO) {
-            [[self delegate] camDidFail:self withError:error];
-        }
-    }
-}
-
-- (void)copyFileToDocuments:(NSURL *)fileURL
-{
-	NSString *documentsDirectory        = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-	NSDateFormatter *dateFormatter      = [[NSDateFormatter alloc] init];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];
-	NSString *destinationPath           = [documentsDirectory stringByAppendingFormat:@"/output_%@.mov", [dateFormatter stringFromDate:[NSDate date]]];
-	[dateFormatter release];
-	
-    NSError	*error;
-	if (![[NSFileManager defaultManager] copyItemAtURL:fileURL toURL:[NSURL fileURLWithPath:destinationPath] error:&error]) {
-        [[self delegate] camDidFail:self withError:error];
-	}
-}
-
 #pragma mark - AVCaptureFileOutputRecordingDelegate
 
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
@@ -468,26 +432,14 @@
     
 	if (RecordedSuccessfully)
 	{
-        [[self delegate] camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                @"image", @"type",
-                                                                outputFileURL, @"path"
-                                                                , nil]];
-        
-		ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-		if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL])
-		{
-			[library writeVideoAtPathToSavedPhotosAlbum:outputFileURL
-										completionBlock:^(NSURL *assetURL, NSError *error)
-             {
-                 if (error)
-                 {
-                     
-                 }
-             }];
-		}
-        
-		[library release];		
-	}
+        if (ASSET_LIBRARY) 
+        {
+            [self performSelectorInBackground:@selector(writeVideoToAssetLibrary:) withObject:outputFileURL];
+        }
+        [self performSelectorInBackground:@selector(writeVideoToFileSystem:) withObject:outputFileURL];
+	} else {
+        [[self delegate] camDidFail:self withError:error];
+    }
 }
 
 #pragma mark - Dealloc
@@ -502,6 +454,7 @@
     [videoInput release]; videoInput = nil;
     [stillImageOutput release]; stillImageOutput = nil;
     [movieFileOutput release]; movieFileOutput = nil;
+    [library release]; library = nil;
 }
 
 - (void)dealloc

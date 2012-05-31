@@ -42,7 +42,7 @@
 
 @property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
-@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundRecordingID;
+@property (nonatomic, retain) ALAssetsLibrary *library;
 
 #pragma mark - Setup
 
@@ -57,8 +57,9 @@
 - (void)startVideoCapture;
 - (void)stopVideoCapture;
 
-#pragma mark - Utility
+#pragma mark - Utilities
 
 - (bool)isRecording;
+- (NSString *)createAssetFilePath:(NSString *)extension;
 
 @end

@@ -57,10 +57,10 @@
 {
     if (![cam isRecording]) 
     {
-        captureVideo.titleLabel.text = @"Recording...";
+        [captureVideo setTitle:@"Recording..." forState:UIControlStateNormal];
         [cam startVideoCapture];
     } else {
-        captureVideo.titleLabel.text = @"Start Recording";
+        [captureVideo setTitle:@"Start Recording" forState:UIControlStateNormal];
         [cam stopVideoCapture];
     }
 }
@@ -101,7 +101,6 @@
 
 - (void)releaseObjects
 {
-    [cam removeObservers];
     [cam release]; cam = nil;
     
     [display release]; display = nil;

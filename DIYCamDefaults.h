@@ -19,4 +19,7 @@
 
 // Video quality
 #define VIDEO_PRESET AVCaptureSessionPresetMedium
+#define VIDEO_CODEC AVVideoCodecJPEG
 #define VIDEO_FPS 24
+#define VIDEO_DURATION 300
+#define VIDEO_MIN_DISK 49999872

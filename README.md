@@ -25,6 +25,7 @@ cam.preview.position    = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bound
 - (void)startVideoCapture;
 - (void)stopVideoCapture;
 - (bool)isRecording;
+- (NSString *)createAssetFilePath:(NSString *)extension;
 ```
 
 ## Delegate Methods
