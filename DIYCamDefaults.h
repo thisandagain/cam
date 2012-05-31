@@ -18,4 +18,5 @@
 #define PHOTO_QUALITY 0.9
 
 // Video quality
-#define VIDEO_PRESET AVCaptureSessionPresetHigh
+#define VIDEO_PRESET AVCaptureSessionPresetMedium
+#define VIDEO_FPS 24

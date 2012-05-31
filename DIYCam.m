@@ -13,11 +13,10 @@
 @synthesize delegate;
 @synthesize session;
 @synthesize preview;
-@synthesize orientation;
 @synthesize videoInput;
 @synthesize audioInput;
 @synthesize stillImageOutput;
-@synthesize recorder;
+@synthesize movieFileOutput;
 @synthesize backgroundRecordingID;
 
 #pragma mark - Init
@@ -27,7 +26,7 @@
     self = [super init];
     if (self != nil) 
     {
-		orientation = ORIENTATION_DEFAULT;
+        //
     }
     
     return self;
@@ -40,9 +39,10 @@
  */
 - (void)setup
 {
-    // Create session
+    // Create session state
     // ---------------------------------
-    session = [[AVCaptureSession alloc] init];
+    session         = [[AVCaptureSession alloc] init];
+    isRecording     = false;
     
     // Flash & torch support
     // ---------------------------------
@@ -128,17 +128,21 @@
     
     //
     
-    NSURL *outputFileURL            = [self tempFileURL];
-    recorder                        = [[DIYCamRecorder alloc] initWithSession:[self session] outputFileURL:outputFileURL];
-    [recorder setDelegate:self];
+    movieFileOutput                 = [[AVCaptureMovieFileOutput alloc] init];
+    Float64 TotalSeconds            = 120;			// Max seconds
+	int32_t preferredTimeScale      = 30;           // Frames per second
+	CMTime maxDuration              = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);
+	movieFileOutput.maxRecordedDuration     = maxDuration;
+	movieFileOutput.minFreeDiskSpaceLimit   = 48828 * 1024;
+    [session addOutput:movieFileOutput];
+	[self setOutputProperties];
     
     // Preset
     // ---------------------------------
-    if ([session canSetSessionPreset:PHOTO_PRESET])
+    [session setSessionPreset:AVCaptureSessionPresetMedium];
+	if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720])
     {
-        [session setSessionPreset:PHOTO_PRESET];
-    } else {
-        [session setSessionPreset:AVCaptureSessionPresetHigh];
+        [session setSessionPreset:AVCaptureSessionPreset1280x720];
     }
     
     // Preview
@@ -146,19 +150,6 @@
     preview = [AVCaptureVideoPreviewLayer layerWithSession:session];
     preview.orientation     = [[UIDevice currentDevice] orientation];
     preview.videoGravity    = AVLayerVideoGravityResizeAspectFill;
-    
-    // Pre-flight
-    // ---------------------------------
-	if (![recorder recordsVideo] && [recorder recordsAudio]) {
-		NSString *localizedDescription      = NSLocalizedString(@"Video recording unavailable", @"Video recording unavailable description");
-		NSString *localizedFailureReason    = NSLocalizedString(@"Movies recorded on this device will only contain audio. They will be accessible through iTunes file sharing.", @"Video recording unavailable failure reason");
-		NSDictionary *errorDict             = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    localizedDescription, NSLocalizedDescriptionKey, 
-                                                    localizedFailureReason, NSLocalizedFailureReasonErrorKey, 
-                                                    nil];
-		NSError *noVideoError               = [NSError errorWithDomain:@"DIYCam" code:0 userInfo:errorDict];
-        [[self delegate] camDidFail:self withError:noVideoError];
-	}
     
     // Start session
     // ---------------------------------
@@ -284,10 +275,27 @@
  * @return  void
  */
 - (void)startVideoCapture
-{
-    [self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}]];
-    [self removeFile:[[self recorder] outputFileURL]];
-    [[self recorder] startRecordingWithOrientation:orientation];
+{    
+    isRecording = true;
+    [[self delegate] camCaptureStarted:self];
+    
+    //Create temporary URL to record to
+    NSString *outputPath        = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.mov"];
+    NSURL *outputURL            = [[NSURL alloc] initFileURLWithPath:outputPath];
+    NSFileManager *fileManager  = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:outputPath])
+    {
+        NSError *error;
+        if ([fileManager removeItemAtPath:outputPath error:&error] == NO)
+        {
+            [[self delegate] camDidFail:self withError:error];
+        }
+    }
+    [outputPath release];
+    
+    //Start recording
+    [movieFileOutput startRecordingToOutputFileURL:outputURL recordingDelegate:self];
+    [outputURL release];
 }
 
 /**
@@ -297,8 +305,10 @@
  */
 - (void)stopVideoCapture
 {
-    [[self recorder] stopRecording];
+    isRecording = false;
     [[self delegate] camCaptureStopped:self];
+    
+    [movieFileOutput stopRecording];
 }
 
 /**
@@ -352,10 +362,38 @@
 
 - (bool)isRecording
 {
-    return [recorder isRecording];
+    return isRecording;
 }
 
 #pragma mark - Private methods
+
+- (void) setOutputProperties
+{
+	AVCaptureConnection *CaptureConnection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+    
+	// Set landscape (if required)
+	if ([CaptureConnection isVideoOrientationSupported])
+	{
+		AVCaptureVideoOrientation orientation = ORIENTATION_DEFAULT;		//<<<<<SET VIDEO ORIENTATION IF LANDSCAPE
+		[CaptureConnection setVideoOrientation:orientation];
+	}
+    
+	// Set frame rate (if requried)
+	CMTimeShow(CaptureConnection.videoMinFrameDuration);
+	CMTimeShow(CaptureConnection.videoMaxFrameDuration);
+    
+	if (CaptureConnection.supportsVideoMinFrameDuration)
+    {
+        CaptureConnection.videoMinFrameDuration = CMTimeMake(1, VIDEO_FPS);
+    }
+	if (CaptureConnection.supportsVideoMaxFrameDuration)
+    {
+        CaptureConnection.videoMaxFrameDuration = CMTimeMake(1, VIDEO_FPS);
+    }
+    
+	CMTimeShow(CaptureConnection.videoMinFrameDuration);
+	CMTimeShow(CaptureConnection.videoMaxFrameDuration);
+}
 
 - (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition) position
 {
@@ -368,7 +406,6 @@
     return nil;
 }
 
-// Find the specified camera, returning nil if one is not found
 - (AVCaptureDevice *)camera
 {
     return [self cameraWithPosition:DEVICE_PRIMARY];
@@ -414,27 +451,43 @@
 	}
 }
 
-#pragma mark - DIYCamRecorderDelegate
+#pragma mark - AVCaptureFileOutputRecordingDelegate
 
-- (void)recorderRecordingDidBegin:(DIYCamRecorder *)recorder
+- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
 {
-    [[self delegate] camCaptureStarted:self];
-}
-
-- (void)recorder:(DIYCamRecorder *)recorder recordingDidFinishToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error
-{
-    // Call delegate(s)
-    if (error)
-    {
-        [[self delegate] camDidFail:self withError:error];
-    } else {
-        [[self delegate] camCaptureProcessing:self];
-        
-        if (ASSET_LIBRARY) {
-            [self performSelectorInBackground:@selector(writeVideoToAssetLibrary:) withObject:outputFileURL];
+    BOOL RecordedSuccessfully = true;
+    
+    if ([error code] != noErr)
+	{
+        id value = [[error userInfo] objectForKey:AVErrorRecordingSuccessfullyFinishedKey];
+        if (value)
+		{
+            RecordedSuccessfully = [value boolValue];
         }
-        [self performSelectorInBackground:@selector(writeVideoToFileSystem:) withObject:outputFileURL];
     }
+    
+	if (RecordedSuccessfully)
+	{
+        [[self delegate] camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                @"image", @"type",
+                                                                outputFileURL, @"path"
+                                                                , nil]];
+        
+		ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+		if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL])
+		{
+			[library writeVideoAtPathToSavedPhotosAlbum:outputFileURL
+										completionBlock:^(NSURL *assetURL, NSError *error)
+             {
+                 if (error)
+                 {
+                     
+                 }
+             }];
+		}
+        
+		[library release];		
+	}
 }
 
 #pragma mark - Dealloc
@@ -448,7 +501,7 @@
     [audioInput release]; audioInput = nil;
     [videoInput release]; videoInput = nil;
     [stillImageOutput release]; stillImageOutput = nil;
-    [recorder release]; recorder = nil;
+    [movieFileOutput release]; movieFileOutput = nil;
 }
 
 - (void)dealloc

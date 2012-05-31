@@ -11,7 +11,6 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "DIYCamDefaults.h"
-#import "DIYCamRecorder.h"
 #import "UIImage+Resize.h"
 #import "DIYCamUtilities.h"
 
@@ -30,19 +29,19 @@
 
 //
 
-@interface DIYCam : NSObject <DIYCamRecorderDelegate>
+@interface DIYCam : NSObject <AVCaptureFileOutputRecordingDelegate>
 {
-
+    BOOL isRecording;
 }
 
 @property (nonatomic, assign) id <DIYCamDelegate> delegate;
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureVideoPreviewLayer *preview;
-@property (nonatomic, assign) AVCaptureVideoOrientation orientation;
 @property (nonatomic, retain) AVCaptureDeviceInput *videoInput;
 @property (nonatomic, retain) AVCaptureDeviceInput *audioInput;
+
 @property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
-@property (nonatomic, retain) DIYCamRecorder *recorder;
+@property (nonatomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
 @property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundRecordingID;
 
 #pragma mark - Setup
@@ -60,6 +59,7 @@
 
 #pragma mark - Utility
 
+- (NSString *)toggleMode;
 - (bool)isRecording;
 
 @end

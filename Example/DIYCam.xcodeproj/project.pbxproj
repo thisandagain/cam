@@ -17,12 +17,12 @@
 		C32FCF7F15756BD40015E119 /* DIYViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C32FCF7D15756BD40015E119 /* DIYViewController.xib */; };
 		C32FCF8C15756C2E0015E119 /* DIYCam.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF8B15756C2E0015E119 /* DIYCam.m */; };
 		C32FCF911575722F0015E119 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF901575722F0015E119 /* UIImage+Resize.m */; };
-		C32FCF9815758D480015E119 /* DIYCamRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF9715758D480015E119 /* DIYCamRecorder.m */; };
 		C32FCF9B15758F350015E119 /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C32FCF9A15758F350015E119 /* DIYCamUtilities.m */; };
 		C32FCF9D1575CEC70015E119 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C32FCF9C1575CEC70015E119 /* README.md */; };
 		C32FCFA41575EDAC0015E119 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCFA31575EDAC0015E119 /* AVFoundation.framework */; };
 		C32FCFA61575EDB40015E119 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCFA51575EDB40015E119 /* AssetsLibrary.framework */; };
 		C32FCFAC1576A9860015E119 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCFAB1576A9860015E119 /* QuartzCore.framework */; };
+		C39B2CEE157750DE00BBEA55 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39B2CED157750DE00BBEA55 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,14 +44,13 @@
 		C32FCF8F1575722F0015E119 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "../UIImage+Resize.h"; sourceTree = "<group>"; };
 		C32FCF901575722F0015E119 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "../UIImage+Resize.m"; sourceTree = "<group>"; };
 		C32FCF95157575840015E119 /* DIYCamDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamDefaults.h; path = ../DIYCamDefaults.h; sourceTree = "<group>"; };
-		C32FCF9615758D480015E119 /* DIYCamRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamRecorder.h; path = ../DIYCamRecorder.h; sourceTree = "<group>"; };
-		C32FCF9715758D480015E119 /* DIYCamRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamRecorder.m; path = ../DIYCamRecorder.m; sourceTree = "<group>"; };
 		C32FCF9915758F350015E119 /* DIYCamUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamUtilities.h; path = ../DIYCamUtilities.h; sourceTree = "<group>"; };
 		C32FCF9A15758F350015E119 /* DIYCamUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamUtilities.m; path = ../DIYCamUtilities.m; sourceTree = "<group>"; };
 		C32FCF9C1575CEC70015E119 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C32FCFA31575EDAC0015E119 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C32FCFA51575EDB40015E119 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		C32FCFAB1576A9860015E119 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C39B2CED157750DE00BBEA55 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C39B2CEE157750DE00BBEA55 /* CoreMedia.framework in Frameworks */,
 				C32FCFAC1576A9860015E119 /* QuartzCore.framework in Frameworks */,
 				C32FCFA61575EDB40015E119 /* AssetsLibrary.framework in Frameworks */,
 				C32FCFA41575EDAC0015E119 /* AVFoundation.framework in Frameworks */,
@@ -77,8 +77,6 @@
 				C32FCF8A15756C2E0015E119 /* DIYCam.h */,
 				C32FCF8B15756C2E0015E119 /* DIYCam.m */,
 				C32FCF95157575840015E119 /* DIYCamDefaults.h */,
-				C32FCF9615758D480015E119 /* DIYCamRecorder.h */,
-				C32FCF9715758D480015E119 /* DIYCamRecorder.m */,
 				C32FCF9915758F350015E119 /* DIYCamUtilities.h */,
 				C32FCF9A15758F350015E119 /* DIYCamUtilities.m */,
 				C32FCF8F1575722F0015E119 /* UIImage+Resize.h */,
@@ -101,12 +99,13 @@
 		C32FCF6715756BD30015E119 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C32FCFAB1576A9860015E119 /* QuartzCore.framework */,
 				C32FCFA51575EDB40015E119 /* AssetsLibrary.framework */,
 				C32FCFA31575EDAC0015E119 /* AVFoundation.framework */,
-				C32FCF6815756BD30015E119 /* UIKit.framework */,
-				C32FCF6A15756BD30015E119 /* Foundation.framework */,
 				C32FCF6C15756BD30015E119 /* CoreGraphics.framework */,
+				C39B2CED157750DE00BBEA55 /* CoreMedia.framework */,
+				C32FCF6A15756BD30015E119 /* Foundation.framework */,
+				C32FCFAB1576A9860015E119 /* QuartzCore.framework */,
+				C32FCF6815756BD30015E119 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -206,7 +205,6 @@
 				C32FCF7C15756BD40015E119 /* DIYViewController.m in Sources */,
 				C32FCF8C15756C2E0015E119 /* DIYCam.m in Sources */,
 				C32FCF911575722F0015E119 /* UIImage+Resize.m in Sources */,
-				C32FCF9815758D480015E119 /* DIYCamRecorder.m in Sources */,
 				C32FCF9B15758F350015E119 /* DIYCamUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
