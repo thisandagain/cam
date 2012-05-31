@@ -148,8 +148,12 @@
     // Preview
     // ---------------------------------
     preview = [AVCaptureVideoPreviewLayer layerWithSession:session];
-    preview.orientation     = [[UIDevice currentDevice] orientation];
     preview.videoGravity    = AVLayerVideoGravityResizeAspectFill;
+    if (ORIENTATION_FORCE) {
+        preview.orientation = ORIENTATION_OVERRIDE;
+    } else {
+        preview.orientation = [[UIDevice currentDevice] orientation];
+    }
     
     // Start session
     // ---------------------------------

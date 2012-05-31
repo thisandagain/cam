@@ -4,6 +4,7 @@
 // Orientation
 #define ORIENTATION_FORCE true
 #define ORIENTATION_DEFAULT AVCaptureVideoOrientationLandscapeRight
+#define ORIENTATION_OVERRIDE UIDeviceOrientationLandscapeLeft
 
 // Device
 #define DEVICE_FLASH false
