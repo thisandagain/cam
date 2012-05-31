@@ -20,6 +20,7 @@ cam.preview.position    = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bound
 
 ## Public Methods
 ```objective-c
+- (void)setup;
 - (void)startPhotoCapture;
 - (void)startVideoCapture;
 - (void)stopVideoCapture;
