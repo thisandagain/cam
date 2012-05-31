@@ -59,7 +59,6 @@
 
 #pragma mark - Utility
 
-- (NSString *)toggleMode;
 - (bool)isRecording;
 
 @end

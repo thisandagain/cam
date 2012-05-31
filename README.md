@@ -7,6 +7,7 @@ DIYCam is a high-level layer built on top of AVFoundation that enables simple se
 // Init camera
 cam = [[DIYCam alloc] init];
 [[self cam] setDelegate:self];
+[[self cam] setup];
 
 // Preview
 cam.preview.frame       = display.frame;
