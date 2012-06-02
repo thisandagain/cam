@@ -27,7 +27,7 @@ cam.preview.position    = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bound
     QuartzCore.framework
     
 ## Configuration
-Default configuration settings can be modified within DIYCamDefaults.h where options for asset library use, orientation, device settings, and quality can be set.
+Default configuration settings can be modified within DIYCamDefaults.h where options for asset library use, orientation, device settings, and quality can be modified.
 
 ## Public Methods
 ```objective-c
