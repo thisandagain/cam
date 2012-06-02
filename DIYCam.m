@@ -453,9 +453,6 @@
     [[self session] stopRunning];
     
     [session release]; session = nil;
-    [preview release]; preview = nil;
-    [audioInput release]; audioInput = nil;
-    [videoInput release]; videoInput = nil;
     [stillImageOutput release]; stillImageOutput = nil;
     [movieFileOutput release]; movieFileOutput = nil;
     [library release]; library = nil;

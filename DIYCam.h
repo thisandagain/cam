@@ -36,9 +36,9 @@
 
 @property (nonatomic, assign) id <DIYCamDelegate> delegate;
 @property (nonatomic, retain) AVCaptureSession *session;
-@property (nonatomic, retain) AVCaptureVideoPreviewLayer *preview;
-@property (nonatomic, retain) AVCaptureDeviceInput *videoInput;
-@property (nonatomic, retain) AVCaptureDeviceInput *audioInput;
+@property (nonatomic, assign) AVCaptureVideoPreviewLayer *preview;
+@property (nonatomic, assign) AVCaptureDeviceInput *videoInput;
+@property (nonatomic, assign) AVCaptureDeviceInput *audioInput;
 
 @property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
