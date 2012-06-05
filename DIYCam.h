@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <MobileCoreServices/UTCoreTypes.h>
 
 #import "DIYCamDefaults.h"
 #import "UIImage+Resize.h"

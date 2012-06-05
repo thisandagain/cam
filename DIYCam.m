@@ -39,136 +39,145 @@
  */
 - (void)setup
 {
-    // Create session state
-    // ---------------------------------
-    session         = [[AVCaptureSession alloc] init];
-    isRecording     = false;
-    
-    // Flash & torch support
-    // ---------------------------------
-    if ([[self camera] hasFlash]) 
+    if ([self isVideoCameraAvailable])
     {
-		if ([[self camera] lockForConfiguration:nil]) 
+        // Create session state
+        // ---------------------------------
+        session         = [[AVCaptureSession alloc] init];
+        isRecording     = false;
+        
+        // Flash & torch support
+        // ---------------------------------
+        if ([[self camera] hasFlash]) 
         {
-            if (DEVICE_FLASH) 
+            if ([[self camera] lockForConfiguration:nil]) 
             {
-                if ([[self camera] isFlashModeSupported:AVCaptureFlashModeAuto]) {
-                    [[self camera] setFlashMode:AVCaptureFlashModeAuto];
-                }
-            } else {
-                if ([[self camera] isFlashModeSupported:AVCaptureFlashModeOff]) {
-                    [[self camera] setFlashMode:AVCaptureFlashModeOff];
-                }
-            }
-			[[self camera] unlockForConfiguration];
-		}
-	}
-    if ([[self camera] hasTorch]) 
-    {
-		if ([[self camera] lockForConfiguration:nil]) 
-        {
-            if (DEVICE_FLASH)
-            {
-                if ([[self camera] isTorchModeSupported:AVCaptureTorchModeAuto]) 
+                if (DEVICE_FLASH) 
                 {
-                    [[self camera] setTorchMode:AVCaptureTorchModeAuto];
+                    if ([[self camera] isFlashModeSupported:AVCaptureFlashModeAuto]) {
+                        [[self camera] setFlashMode:AVCaptureFlashModeAuto];
+                    }
+                } else {
+                    if ([[self camera] isFlashModeSupported:AVCaptureFlashModeOff]) {
+                        [[self camera] setFlashMode:AVCaptureFlashModeOff];
+                    }
                 }
-            } else {
-                if ([[self camera] isTorchModeSupported:AVCaptureTorchModeOff]) 
-                {
-                    [[self camera] setTorchMode:AVCaptureTorchModeOff];
-                }
+                [[self camera] unlockForConfiguration];
             }
-			[[self camera] unlockForConfiguration];
-		}
-	}
-    
-    // Inputs
-    // ---------------------------------
-    AVCaptureDevice *videoDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-	if (videoDevice)
-	{
-		NSError *error;
-		videoInput                  = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
-		if (!error)
-		{
-			if ([session canAddInput:videoInput])
-            {
-				[session addInput:videoInput];
-            } else {
-                NSLog(@"Error: Couldn't add video input");
-            }
-		} else {
-			[[self delegate] camDidFail:self withError:error];
-		}
-	} else {
-		NSLog(@"Error: Couldn't create video capture device");
-	}
-    
-    AVCaptureDevice *audioDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
-    if (audioDevice)
-    {
-        NSError *error              = nil;
-        audioInput                  = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
-        if (!error)
-        {
-            [session addInput:audioInput];
-        } else {
-            [[self delegate] camDidFail:self withError:error];
         }
+        if ([[self camera] hasTorch]) 
+        {
+            if ([[self camera] lockForConfiguration:nil]) 
+            {
+                if (DEVICE_FLASH)
+                {
+                    if ([[self camera] isTorchModeSupported:AVCaptureTorchModeAuto]) 
+                    {
+                        [[self camera] setTorchMode:AVCaptureTorchModeAuto];
+                    }
+                } else {
+                    if ([[self camera] isTorchModeSupported:AVCaptureTorchModeOff]) 
+                    {
+                        [[self camera] setTorchMode:AVCaptureTorchModeOff];
+                    }
+                }
+                [[self camera] unlockForConfiguration];
+            }
+        }
+        
+        // Inputs
+        // ---------------------------------
+        AVCaptureDevice *videoDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if (videoDevice)
+        {
+            NSError *error;
+            videoInput                  = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+            if (!error)
+            {
+                if ([session canAddInput:videoInput])
+                {
+                    [session addInput:videoInput];
+                } else {
+                    NSLog(@"Error: Couldn't add video input");
+                }
+            } else {
+                [[self delegate] camDidFail:self withError:error];
+            }
+        } else {
+            NSLog(@"Error: Couldn't create video capture device");
+        }
+        
+        AVCaptureDevice *audioDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+        if (audioDevice)
+        {
+            NSError *error              = nil;
+            audioInput                  = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
+            if (!error)
+            {
+                [session addInput:audioInput];
+            } else {
+                [[self delegate] camDidFail:self withError:error];
+            }
+        }
+        
+        // Outputs
+        // ---------------------------------
+        stillImageOutput                        = [[AVCaptureStillImageOutput alloc] init];
+        NSDictionary *stillOutputSettings       = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
+        [stillImageOutput setOutputSettings:stillOutputSettings];
+        [session addOutput:stillImageOutput];
+        [stillOutputSettings release];
+        
+        //
+        
+        movieFileOutput                         = [[AVCaptureMovieFileOutput alloc] init];
+        Float64 TotalSeconds                    = VIDEO_DURATION;			// Max seconds
+        int32_t preferredTimeScale              = VIDEO_FPS;                // Frames per second
+        CMTime maxDuration                      = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);
+        movieFileOutput.maxRecordedDuration     = maxDuration;
+        movieFileOutput.minFreeDiskSpaceLimit   = VIDEO_MIN_DISK;
+        [session addOutput:movieFileOutput];
+        [self setOutputProperties];
+        
+        // Preset
+        // ---------------------------------
+        [session setSessionPreset:AVCaptureSessionPresetMedium];
+        if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720])
+        {
+            [session setSessionPreset:AVCaptureSessionPreset1280x720];
+        }
+        
+        // Preview
+        // ---------------------------------
+        preview = [AVCaptureVideoPreviewLayer layerWithSession:session];
+        preview.videoGravity    = AVLayerVideoGravityResizeAspectFill;
+        if (ORIENTATION_FORCE) {
+            preview.orientation = ORIENTATION_OVERRIDE;
+        } else {
+            preview.orientation = [[UIDevice currentDevice] orientation];
+        }
+        
+        // Start session
+        // ---------------------------------
+        [self startSession];
+        [[self delegate] camReady:self];
     }
-    
-    // Outputs
-    // ---------------------------------
-    stillImageOutput                        = [[AVCaptureStillImageOutput alloc] init];
-    NSDictionary *stillOutputSettings       = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [stillImageOutput setOutputSettings:stillOutputSettings];
-    [session addOutput:stillImageOutput];
-    [stillOutputSettings release];
-    
-    //
-    
-    movieFileOutput                         = [[AVCaptureMovieFileOutput alloc] init];
-    Float64 TotalSeconds                    = VIDEO_DURATION;			// Max seconds
-	int32_t preferredTimeScale              = VIDEO_FPS;                // Frames per second
-	CMTime maxDuration                      = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);
-	movieFileOutput.maxRecordedDuration     = maxDuration;
-	movieFileOutput.minFreeDiskSpaceLimit   = VIDEO_MIN_DISK;
-    [session addOutput:movieFileOutput];
-	[self setOutputProperties];
-    
-    // Preset
-    // ---------------------------------
-    [session setSessionPreset:AVCaptureSessionPresetMedium];
-	if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720])
-    {
-        [session setSessionPreset:AVCaptureSessionPreset1280x720];
-    }
-    
-    // Preview
-    // ---------------------------------
-    preview = [AVCaptureVideoPreviewLayer layerWithSession:session];
-    preview.videoGravity    = AVLayerVideoGravityResizeAspectFill;
-    if (ORIENTATION_FORCE) {
-        preview.orientation = ORIENTATION_OVERRIDE;
-    } else {
-        preview.orientation = [[UIDevice currentDevice] orientation];
-    }
-    
-    // Start session
-    // ---------------------------------
-    [self startSession];
-    [[self delegate] camReady:self];
 }
 
 - (void)startSession
 {
-    [session startRunning];
+    if (session != nil)
+    {
+        [session startRunning];
+    }
 }
 
 - (void)stopSession
 {
-    [session stopRunning];
+    if (session != nil)
+    {
+        [session stopRunning];
+    }
 }
 
 #pragma mark - Photo
@@ -180,27 +189,30 @@
  */
 - (void)startPhotoCapture
 {
-    AVCaptureConnection *stillImageConnection = [DIYCamUtilities connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self stillImageOutput] connections]];
-    if (ORIENTATION_FORCE) 
+    if (session != nil)
     {
-        [stillImageConnection setVideoOrientation:ORIENTATION_DEFAULT];
-    }
-    
-    [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) 
-    {
-        [[self delegate] camCaptureProcessing:self];
-         
-         if (imageDataSampleBuffer != NULL) 
+        AVCaptureConnection *stillImageConnection = [DIYCamUtilities connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self stillImageOutput] connections]];
+        if (ORIENTATION_FORCE) 
+        {
+            [stillImageConnection setVideoOrientation:ORIENTATION_DEFAULT];
+        }
+        
+        [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) 
          {
-             if (ASSET_LIBRARY) 
+             [[self delegate] camCaptureProcessing:self];
+             
+             if (imageDataSampleBuffer != NULL) 
              {
-                 [self performSelectorInBackground:@selector(writePhotoToAssetLibrary:) withObject:(id)imageDataSampleBuffer];
+                 if (ASSET_LIBRARY) 
+                 {
+                     [self performSelectorInBackground:@selector(writePhotoToAssetLibrary:) withObject:(id)imageDataSampleBuffer];
+                 }
+                 [self performSelectorInBackground:@selector(writePhotoToFileSystem:) withObject:(id)imageDataSampleBuffer];
+             } else {
+                 [[self delegate] camDidFail:self withError:error];
              }
-             [self performSelectorInBackground:@selector(writePhotoToFileSystem:) withObject:(id)imageDataSampleBuffer];
-         } else {
-             [[self delegate] camDidFail:self withError:error];
-         }
-     }];
+         }];
+    }
 }
 
 /**
@@ -276,25 +288,28 @@
  */
 - (void)startVideoCapture
 {    
-    isRecording = true;
-    [[self delegate] camCaptureStarted:self];
-    
-    // Create URL to record to
-    NSString *assetPath         = [self createAssetFilePath:@"mov"];
-    NSURL *outputURL            = [[NSURL alloc] initFileURLWithPath:assetPath];
-    NSFileManager *fileManager  = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:assetPath])
+    if (session != nil)
     {
-        NSError *error;
-        if ([fileManager removeItemAtPath:assetPath error:&error] == NO)
+        isRecording = true;
+        [[self delegate] camCaptureStarted:self];
+        
+        // Create URL to record to
+        NSString *assetPath         = [self createAssetFilePath:@"mov"];
+        NSURL *outputURL            = [[NSURL alloc] initFileURLWithPath:assetPath];
+        NSFileManager *fileManager  = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:assetPath])
         {
-            [[self delegate] camDidFail:self withError:error];
+            NSError *error;
+            if ([fileManager removeItemAtPath:assetPath error:&error] == NO)
+            {
+                [[self delegate] camDidFail:self withError:error];
+            }
         }
+        
+        // Start recording
+        [movieFileOutput startRecordingToOutputFileURL:outputURL recordingDelegate:self];
+        [outputURL release];
     }
-    
-    // Start recording
-    [movieFileOutput startRecordingToOutputFileURL:outputURL recordingDelegate:self];
-    [outputURL release];
 }
 
 /**
@@ -304,10 +319,13 @@
  */
 - (void)stopVideoCapture
 {
-    isRecording = false;
-    [[self delegate] camCaptureStopped:self];
-    
-    [movieFileOutput stopRecording];
+    if (session != nil && isRecording)
+    {
+        isRecording = false;
+        [[self delegate] camCaptureStopped:self];
+        
+        [movieFileOutput stopRecording];
+    }
 }
 
 /**
@@ -417,6 +435,20 @@
 - (AVCaptureDevice *)camera
 {
     return [self cameraWithPosition:DEVICE_PRIMARY];
+}
+
+- (BOOL)isVideoCameraAvailable
+{
+	UIImagePickerController *picker     = [[UIImagePickerController alloc] init];
+	NSArray *sourceTypes                = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
+	[picker release];
+    
+	if (![sourceTypes containsObject:(NSString *)kUTTypeMovie])
+    {
+		return false;
+	}
+    
+	return true;
 }
 
 #pragma mark - AVCaptureFileOutputRecordingDelegate
