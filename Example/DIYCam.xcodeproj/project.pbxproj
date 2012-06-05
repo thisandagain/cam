@@ -24,6 +24,7 @@
 		C32FCFAC1576A9860015E119 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCFAB1576A9860015E119 /* QuartzCore.framework */; };
 		C39B2CEE157750DE00BBEA55 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39B2CED157750DE00BBEA55 /* CoreMedia.framework */; };
 		C39B2CF01577EBF500BBEA55 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = C39B2CEF1577EBF500BBEA55 /* LICENSE.md */; };
+		C3C35B8D157DA0C8004697F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C35B8C157DA0C8004697F6 /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		C32FCFAB1576A9860015E119 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C39B2CED157750DE00BBEA55 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C39B2CEF1577EBF500BBEA55 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
+		C3C35B8C157DA0C8004697F6 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3C35B8D157DA0C8004697F6 /* MobileCoreServices.framework in Frameworks */,
 				C39B2CEE157750DE00BBEA55 /* CoreMedia.framework in Frameworks */,
 				C32FCFAC1576A9860015E119 /* QuartzCore.framework in Frameworks */,
 				C32FCFA61575EDB40015E119 /* AssetsLibrary.framework in Frameworks */,
@@ -107,6 +110,7 @@
 				C32FCF6C15756BD30015E119 /* CoreGraphics.framework */,
 				C39B2CED157750DE00BBEA55 /* CoreMedia.framework */,
 				C32FCF6A15756BD30015E119 /* Foundation.framework */,
+				C3C35B8C157DA0C8004697F6 /* MobileCoreServices.framework */,
 				C32FCFAB1576A9860015E119 /* QuartzCore.framework */,
 				C32FCF6815756BD30015E119 /* UIKit.framework */,
 			);

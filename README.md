@@ -24,6 +24,7 @@ cam.preview.position    = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bound
     AVFoundation.framework
     CoreGraphics.framework
     CoreMedia.framework
+    MobileCoreServices.framework
     QuartzCore.framework
     
 ## Configuration
