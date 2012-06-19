@@ -32,18 +32,18 @@
 
 @interface DIYCam : NSObject <AVCaptureFileOutputRecordingDelegate>
 {
-    BOOL isRecording;
+    @private AVCaptureDeviceInput *videoInput;
+    @private AVCaptureDeviceInput *audioInput;
+    
+    @private AVCaptureStillImageOutput *stillImageOutput;
+    @private AVCaptureMovieFileOutput *movieFileOutput;
+    @private ALAssetsLibrary *library;
 }
 
 @property (nonatomic, assign) id <DIYCamDelegate> delegate;
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, assign) AVCaptureVideoPreviewLayer *preview;
-@property (nonatomic, assign) AVCaptureDeviceInput *videoInput;
-@property (nonatomic, assign) AVCaptureDeviceInput *audioInput;
-
-@property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
-@property (nonatomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
-@property (nonatomic, retain) ALAssetsLibrary *library;
+@property (nonatomic, assign) BOOL isRecording;
 
 #pragma mark - Setup
 
@@ -60,7 +60,6 @@
 
 #pragma mark - Utilities
 
-- (bool)isRecording;
 - (NSString *)createAssetFilePath:(NSString *)extension;
 
 @end

@@ -8,11 +8,25 @@
 
 #import "DIYCam.h"
 
+//
+
+@interface DIYCam ()
+@property (nonatomic, assign) AVCaptureDeviceInput *videoInput;
+@property (nonatomic, assign) AVCaptureDeviceInput *audioInput;
+
+@property (atomic, retain) AVCaptureStillImageOutput *stillImageOutput;
+@property (atomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
+@property (atomic, retain) ALAssetsLibrary *library;
+@end
+
+//
+
 @implementation DIYCam
 
 @synthesize delegate;
 @synthesize session;
 @synthesize preview;
+@synthesize isRecording;
 @synthesize videoInput;
 @synthesize audioInput;
 @synthesize stillImageOutput;
@@ -44,7 +58,7 @@
         // Create session state
         // ---------------------------------
         session         = [[AVCaptureSession alloc] init];
-        isRecording     = false;
+        [self setIsRecording:false];
         
         // Flash & torch support
         // ---------------------------------
@@ -290,7 +304,7 @@
 {    
     if (session != nil)
     {
-        isRecording = true;
+        [self setIsRecording:true];
         [[self delegate] camCaptureStarted:self];
         
         // Create URL to record to
@@ -319,9 +333,9 @@
  */
 - (void)stopVideoCapture
 {
-    if (session != nil && isRecording)
+    if (session != nil && self.isRecording)
     {
-        isRecording = false;
+        [self setIsRecording:false];
         [[self delegate] camCaptureStopped:self];
         
         [movieFileOutput stopRecording];
@@ -363,11 +377,16 @@
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     // ####
-        
-    [[self delegate] camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                        [video absoluteString], @"path",
-                                                        @"video", @"type",
-                                                        nil]];
+    
+    [self generateVideoThumbnail:[video absoluteString] success:^(UIImage *image, NSURL *thumbnail) {
+        [[self delegate] camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                            [video absoluteString], @"path",
+                                                            [thumbnail absoluteString], @"thumbnail",
+                                                            @"video", @"type",
+                                                            nil]];
+    } failure:^(NSException *exception) {
+        [[self delegate] camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:0 userInfo:nil]];
+    }];
     
     // ####
     
@@ -375,11 +394,6 @@
 }
 
 #pragma mark - Utilities
-
-- (bool)isRecording
-{
-    return isRecording;
-}
 
 - (NSString *)createAssetFilePath:(NSString *)extension
 {
@@ -451,6 +465,31 @@
 	return true;
 }
 
+- (void)generateVideoThumbnail:(NSString*)url success:(void (^)(UIImage *image, NSURL *path))success failure:(void (^)(NSException *exception))failure
+{
+    // Setup
+    AVURLAsset *asset                           = [[[AVURLAsset alloc] initWithURL:[NSURL URLWithString:url] options:nil] autorelease];
+    CMTime thumbTime                            = CMTimeMakeWithSeconds(0,24);
+    
+    AVAssetImageGenerator *generator            = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    generator.appliesPreferredTrackTransform    = false;
+    generator.maximumSize = CGSizeMake(PHOTO_WIDTH, PHOTO_HEIGHT);
+    
+    // Completion handler
+    AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+        if (result != AVAssetImageGeneratorSucceeded) {
+            failure([NSException exceptionWithName:@"" reason:@"Could not generate video thumbnail" userInfo:nil]);
+        } else {
+            success([UIImage imageWithCGImage:im], nil);
+        }
+        
+        [generator release];
+    };
+    
+    // Generate
+    [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
+}
+
 #pragma mark - AVCaptureFileOutputRecordingDelegate
 
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
@@ -483,6 +522,8 @@
 - (void)releaseObjects
 {
     [[self session] stopRunning];
+    
+    delegate = nil;
     
     [session release]; session = nil;
     [stillImageOutput release]; stillImageOutput = nil;
