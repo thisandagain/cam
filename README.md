@@ -36,7 +36,6 @@ Default configuration settings can be modified within DIYCamDefaults.h where opt
 - (void)startPhotoCapture;
 - (void)startVideoCapture;
 - (void)stopVideoCapture;
-- (bool)isRecording;
 - (NSString *)createAssetFilePath:(NSString *)extension;
 ```
 
