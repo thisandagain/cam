@@ -30,7 +30,7 @@ cam.preview.position    = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bound
 ## Configuration
 Default configuration settings can be modified within DIYCamDefaults.h where options for asset library use, orientation, device settings, and quality can be modified.
 
-## Public Methods
+## Methods
 ```objective-c
 - (void)setup;
 - (void)startPhotoCapture;
@@ -48,4 +48,12 @@ Default configuration settings can be modified within DIYCamDefaults.h where opt
 - (void)camCaptureStopped:(DIYCam *)cam;
 - (void)camCaptureProcessing:(DIYCam *)cam;
 - (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset;
+```
+
+## Properties
+```objective-c
+@property (nonatomic, assign) id <DIYCamDelegate> delegate;
+@property (nonatomic, retain) AVCaptureSession *session;
+@property (nonatomic, assign) AVCaptureVideoPreviewLayer *preview;
+@property (nonatomic, assign) BOOL isRecording;
 ```
