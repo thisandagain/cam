@@ -39,6 +39,7 @@
     
     @private AVCaptureStillImageOutput *stillImageOutput;
     @private AVCaptureMovieFileOutput *movieFileOutput;
+    @private AVAssetImageGenerator *thumbnailGenerator;
     @private ALAssetsLibrary *library;
 }
 

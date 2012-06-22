@@ -16,6 +16,7 @@
 
 @property (atomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property (atomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
+@property (atomic, retain) AVAssetImageGenerator *thumbnailGenerator;
 @property (atomic, retain) ALAssetsLibrary *library;
 @end
 
@@ -31,6 +32,7 @@
 @synthesize audioInput;
 @synthesize stillImageOutput;
 @synthesize movieFileOutput;
+@synthesize thumbnailGenerator;
 @synthesize library;
 
 #pragma mark - Init
@@ -468,27 +470,32 @@
 - (void)generateVideoThumbnail:(NSString*)url success:(void (^)(UIImage *image, NSURL *path))success failure:(void (^)(NSException *exception))failure
 {
     // Setup
-    AVURLAsset *asset                           = [[[AVURLAsset alloc] initWithURL:[NSURL URLWithString:url] options:nil] autorelease];
-    CMTime thumbTime                            = CMTimeMakeWithSeconds(0,24);
-    
-    AVAssetImageGenerator *generator            = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-    generator.appliesPreferredTrackTransform    = false;
-    generator.maximumSize = CGSizeMake(PHOTO_WIDTH, PHOTO_HEIGHT);
-    
-    // Completion handler
-    AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-        if (result != AVAssetImageGeneratorSucceeded) {
+    AVURLAsset *asset                   = [[AVURLAsset alloc] initWithURL:[NSURL URLWithString:url] options:nil];
+    Float64 durationSeconds             = CMTimeGetSeconds([asset duration]);
+    CMTime thumbTime                    = CMTimeMakeWithSeconds(durationSeconds / 2.0, 600);
+
+    // Generate
+    self.thumbnailGenerator             = [AVAssetImageGenerator assetImageGeneratorWithAsset:asset];
+    thumbnailGenerator.maximumSize      = CGSizeMake(VIDEO_THUMB_WIDTH, VIDEO_THUMB_HEIGHT);
+    [thumbnailGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error) {
+        NSString *requestedTimeString = (NSString *)CMTimeCopyDescription(NULL, requestedTime);
+        NSString *actualTimeString = (NSString *)CMTimeCopyDescription(NULL, actualTime);
+        NSLog(@"Requested: %@; actual %@", requestedTimeString, actualTimeString);
+        [requestedTimeString release];
+        [actualTimeString release];
+        
+        //
+        
+        if (result != AVAssetImageGeneratorSucceeded) 
+        {
             failure([NSException exceptionWithName:@"" reason:@"Could not generate video thumbnail" userInfo:nil]);
         } else {
             UIImage *sim = [UIImage imageWithCGImage:im];
             success(sim, [sim saveToCache]);
         }
         
-        [generator release];
-    };
-    
-    // Generate
-    [generator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:handler];
+        [asset release];
+    }];
 }
 
 #pragma mark - AVCaptureFileOutputRecordingDelegate
@@ -529,6 +536,7 @@
     [session release]; session = nil;
     [stillImageOutput release]; stillImageOutput = nil;
     [movieFileOutput release]; movieFileOutput = nil;
+    [thumbnailGenerator release]; thumbnailGenerator = nil;
     [library release]; library = nil;
 }
 
