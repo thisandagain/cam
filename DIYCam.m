@@ -381,8 +381,8 @@
     [self generateVideoThumbnail:[video absoluteString] success:^(UIImage *image, NSURL *thumbnail) {
         [[self delegate] camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             [video absoluteString], @"path",
-                                                            [thumbnail absoluteString], @"thumbnail",
                                                             @"video", @"type",
+                                                            [thumbnail absoluteString], @"thumbnail",
                                                             nil]];
     } failure:^(NSException *exception) {
         [[self delegate] camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:0 userInfo:nil]];
@@ -480,7 +480,8 @@
         if (result != AVAssetImageGeneratorSucceeded) {
             failure([NSException exceptionWithName:@"" reason:@"Could not generate video thumbnail" userInfo:nil]);
         } else {
-            success([UIImage imageWithCGImage:im], nil);
+            UIImage *sim = [UIImage imageWithCGImage:im];
+            success(sim, [sim saveToCache]);
         }
         
         [generator release];

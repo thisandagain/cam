@@ -24,6 +24,7 @@
 		C32FCFAC1576A9860015E119 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32FCFAB1576A9860015E119 /* QuartzCore.framework */; };
 		C39B2CEE157750DE00BBEA55 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39B2CED157750DE00BBEA55 /* CoreMedia.framework */; };
 		C39B2CF01577EBF500BBEA55 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = C39B2CEF1577EBF500BBEA55 /* LICENSE.md */; };
+		C3B48D6E1593EAEB0050224C /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B48D6D1593EAEB0050224C /* UIImage+Save.m */; };
 		C3C35B8D157DA0C8004697F6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C35B8C157DA0C8004697F6 /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,8 @@
 		C32FCFAB1576A9860015E119 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C39B2CED157750DE00BBEA55 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C39B2CEF1577EBF500BBEA55 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
+		C3B48D6C1593EAEB0050224C /* UIImage+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Save.h"; path = "../UIImage+Save.h"; sourceTree = "<group>"; };
+		C3B48D6D1593EAEB0050224C /* UIImage+Save.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Save.m"; path = "../UIImage+Save.m"; sourceTree = "<group>"; };
 		C3C35B8C157DA0C8004697F6 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -86,6 +89,8 @@
 				C32FCF9A15758F350015E119 /* DIYCamUtilities.m */,
 				C32FCF8F1575722F0015E119 /* UIImage+Resize.h */,
 				C32FCF901575722F0015E119 /* UIImage+Resize.m */,
+				C3B48D6C1593EAEB0050224C /* UIImage+Save.h */,
+				C3B48D6D1593EAEB0050224C /* UIImage+Save.m */,
 				C39B2CEF1577EBF500BBEA55 /* LICENSE.md */,
 				C32FCF9C1575CEC70015E119 /* README.md */,
 				C32FCF6E15756BD30015E119 /* Example */,
@@ -214,6 +219,7 @@
 				C32FCF8C15756C2E0015E119 /* DIYCam.m in Sources */,
 				C32FCF911575722F0015E119 /* UIImage+Resize.m in Sources */,
 				C32FCF9B15758F350015E119 /* DIYCamUtilities.m in Sources */,
+				C3B48D6E1593EAEB0050224C /* UIImage+Save.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

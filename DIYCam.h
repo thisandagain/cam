@@ -12,8 +12,10 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 #import "DIYCamDefaults.h"
-#import "UIImage+Resize.h"
 #import "DIYCamUtilities.h"
+
+#import "UIImage+Resize.h"
+#import "UIImage+Save.h"
 
 //
 
