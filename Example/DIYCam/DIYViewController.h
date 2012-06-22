@@ -19,6 +19,7 @@
 @property (nonatomic, retain) IBOutlet UIView *display;
 @property (nonatomic, retain) IBOutlet UIButton *capturePhoto;
 @property (nonatomic, retain) IBOutlet UIButton *captureVideo;
+@property (nonatomic, retain) IBOutlet UIImageView *thumbnail;
 
 - (IBAction)triggerPhotoCapture:(id)sender;
 - (IBAction)toggleVideoCapture:(id)sender;

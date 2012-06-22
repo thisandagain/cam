@@ -14,6 +14,7 @@
 @synthesize display;
 @synthesize capturePhoto;
 @synthesize captureVideo;
+@synthesize thumbnail;
 
 #pragma mark - View lifecycle
 
@@ -95,6 +96,18 @@
 - (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset
 {
     NSLog(@"Asset: %@", asset);
+    if ([[asset objectForKey:@"type"] isEqualToString:@"video"])
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
+            UIImage *image = [UIImage imageWithContentsOfFile:[asset objectForKey:@"thumbnail"]];
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                thumbnail.image = image;
+            });
+            
+        });
+    }
 }
 
 #pragma mark - Dealloc
@@ -106,6 +119,7 @@
     [display release]; display = nil;
     [capturePhoto release]; capturePhoto = nil;
     [captureVideo release]; captureVideo = nil;
+    [thumbnail release]; thumbnail = nil;
 }
 
 - (void)viewDidUnload
