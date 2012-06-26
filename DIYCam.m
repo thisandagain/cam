@@ -18,6 +18,8 @@
 @property (atomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
 @property (atomic, retain) AVAssetImageGenerator *thumbnailGenerator;
 @property (atomic, retain) ALAssetsLibrary *library;
+
+@property (atomic, retain) NSOperationQueue *queue;
 @end
 
 //
@@ -34,6 +36,7 @@
 @synthesize movieFileOutput;
 @synthesize thumbnailGenerator;
 @synthesize library;
+@synthesize queue;
 
 #pragma mark - Init
 
@@ -42,7 +45,9 @@
     self = [super init];
     if (self != nil) 
     {
-        library        = [[ALAssetsLibrary alloc] init];
+        library     = [[ALAssetsLibrary alloc] init];
+        queue       = [NSOperationQueue mainQueue];
+        self.queue.maxConcurrentOperationCount = 2;
     }
     
     return self;
@@ -219,11 +224,18 @@
              
              if (imageDataSampleBuffer != NULL) 
              {
-                 if (ASSET_LIBRARY) 
+                 NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+                 
+                 if (ASSET_LIBRARY)
                  {
-                     [self performSelectorInBackground:@selector(writePhotoToAssetLibrary:) withObject:(id)imageDataSampleBuffer];
+                     NSInvocationOperation *aOperation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(writePhotoToAssetLibrary:) object:imageData];
+                     [queue addOperation:aOperation];
+                     [aOperation release];
                  }
-                 [self performSelectorInBackground:@selector(writePhotoToFileSystem:) withObject:(id)imageDataSampleBuffer];
+                 
+                 NSInvocationOperation *fOperation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(writePhotoToFileSystem:) object:imageData];
+                 [queue addOperation:fOperation];
+                 [fOperation release];
              } else {
                  [[self delegate] camDidFail:self withError:error];
              }
@@ -234,65 +246,35 @@
 /**
  * Writes sample buffer to asset library.
  *
- * @param  CMSampleBufferRef  Image buffer
+ * @param {NSData} Image data
  *
  * @return  void
  */
-- (void)writePhotoToAssetLibrary:(CMSampleBufferRef)imageDataSampleBuffer
+- (void)writePhotoToAssetLibrary:(id)imageData
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    // ####
-    
-    // Image data
-    NSData *imageData               = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-    
-    // Asset library
     [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
         NSLog(@"Asset written to library: %@", assetURL);
     }];
-
-    // ####
-    
-    [pool release];
 }
 
 /**
  * Writes sample buffer to local file-system.
  *
- * @param  CMSampleBufferRef  Image buffer
+ * @param {NSData} Image data
  *
  * @return  void
  */
-- (void)writePhotoToFileSystem:(CMSampleBufferRef)imageDataSampleBuffer
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    // ####
-    
-    // Image data
-    NSData *imageData               = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-    
-    // Scale image
-    UIImage *image                  = [[UIImage alloc] initWithData:imageData];
-    NSData *scaledImageData         = UIImageJPEGRepresentation([image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(PHOTO_WIDTH, PHOTO_HEIGHT) interpolationQuality:PHOTO_INTERPOLATION], PHOTO_QUALITY);
-    
+- (void)writePhotoToFileSystem:(id)imageData
+{    
     // Documents
     NSString *assetPath             = [self createAssetFilePath:@"jpg"];
-    [scaledImageData writeToFile:assetPath atomically:true];
+    [imageData writeToFile:assetPath atomically:true];
     
     // Complete delegate
     [[self delegate] camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:
                                                         assetPath, @"path",
                                                         @"image", @"type",
                                                         nil]];
-    
-    // GC
-    [image release];
-    
-    // ####
-    
-    [pool release];
 }
 
 #pragma mark - Video
@@ -353,18 +335,10 @@
  */
 - (void)writeVideoToAssetLibrary:(NSURL *)video
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    // ####
-        
     // Asset library
     [library writeVideoAtPathToSavedPhotosAlbum:video completionBlock:^(NSURL *assetURL, NSError *error) {
         NSLog(@"Asset written to library: %@", assetURL);
     }];
-    
-    // ####
-    
-    [pool release];
 }
 
 /**
@@ -375,11 +349,7 @@
  * @return  void
  */
 - (void)writeVideoToFileSystem:(NSURL *)video
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    // ####
-    
+{    
     [self generateVideoThumbnail:[video absoluteString] success:^(UIImage *image, NSURL *thumbnail) {
         [[self delegate] camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             [video absoluteString], @"path",
@@ -389,10 +359,6 @@
     } failure:^(NSException *exception) {
         [[self delegate] camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:0 userInfo:nil]];
     }];
-    
-    // ####
-    
-    [pool release];
 }
 
 #pragma mark - Utilities
@@ -467,6 +433,8 @@
 	return true;
 }
 
+#pragma mark - Operations
+
 - (void)generateVideoThumbnail:(NSString*)url success:(void (^)(UIImage *image, NSURL *path))success failure:(void (^)(NSException *exception))failure
 {
     // Setup
@@ -517,9 +485,13 @@
 	{
         if (ASSET_LIBRARY) 
         {
-            [self performSelectorInBackground:@selector(writeVideoToAssetLibrary:) withObject:outputFileURL];
+            NSInvocationOperation *aOperation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(writeVideoToAssetLibrary:) object:outputFileURL];
+            [queue addOperation:aOperation];
+            [aOperation release];
         }
-        [self performSelectorInBackground:@selector(writeVideoToFileSystem:) withObject:outputFileURL];
+        NSInvocationOperation *fOperation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(writeVideoToFileSystem:) object:outputFileURL];
+        [queue addOperation:fOperation];
+        [fOperation release];
 	} else {
         [[self delegate] camDidFail:self withError:error];
     }
@@ -538,6 +510,7 @@
     [movieFileOutput release]; movieFileOutput = nil;
     [thumbnailGenerator release]; thumbnailGenerator = nil;
     [library release]; library = nil;
+    [queue release]; queue = nil;
 }
 
 - (void)dealloc

@@ -41,6 +41,8 @@
     @private AVCaptureMovieFileOutput *movieFileOutput;
     @private AVAssetImageGenerator *thumbnailGenerator;
     @private ALAssetsLibrary *library;
+    
+    @private NSOperationQueue *queue;
 }
 
 @property (nonatomic, assign) id <DIYCamDelegate> delegate;
