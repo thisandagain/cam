@@ -483,6 +483,7 @@
     
 	if (RecordedSuccessfully)
 	{
+        [[self delegate] camCaptureProcessing:self];
         if (ASSET_LIBRARY) 
         {
             NSInvocationOperation *aOperation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(writeVideoToAssetLibrary:) object:outputFileURL];
