@@ -1,28 +1,32 @@
-// Assets
-#define ASSET_LIBRARY true
+//
+//  DIYCamDefaults.h
+//  cam
+//
+//  Created by Andrew Sliwinski on 7/5/12.
+//  Copyright (c) 2012 DIY, Co. All rights reserved.
+//
 
-// Orientation
-#define ORIENTATION_FORCE true
-#define ORIENTATION_DEFAULT AVCaptureVideoOrientationLandscapeRight
-#define ORIENTATION_OVERRIDE UIDeviceOrientationLandscapeLeft
-
-// Device
+/**
+ * Device settings
+ */
 #define DEVICE_FLASH false
-#define DEVICE_PRIMARY AVCaptureDevicePositionBack
+#define DEVICE_DISK_MINIMUM 49999872
+#define DEVICE_ORIENTATION_FORCE false
+#define DEVICE_ORIENTATION_DEFAULT AVCaptureVideoOrientationLandscapeRight
 
-// Photo quality
-#define PHOTO_PRESET AVCaptureSessionPresetPhoto
-#define PHOTO_RESCALE true
-#define PHOTO_INTERPOLATION kCGInterpolationDefault
-#define PHOTO_WIDTH 1280
-#define PHOTO_HEIGHT 960
-#define PHOTO_QUALITY 0.9
+/**
+ * Photo settings
+ */
+#define PHOTO_SESSION_PRESET AVCaptureSessionPresetPhoto
+#define PHOTO_SESSION_GRAVITY AVLayerVideoGravityResizeAspectFill
 
-// Video quality
-#define VIDEO_PRESET AVCaptureSessionPresetMedium
-#define VIDEO_CODEC AVVideoCodecJPEG
-#define VIDEO_FPS 24
-#define VIDEO_DURATION 300
-#define VIDEO_MIN_DISK 49999872
-#define VIDEO_THUMB_WIDTH 640
-#define VIDEO_THUMB_HEIGHT 480
+/**
+ * Video settings
+ */
+#define VIDEO_SESSION_PRESET AVCaptureSessionPreset1280x720
+#define VIDEO_SESSION_GRAVITY AVCaptureSessionGravityFill
+
+/**
+ * File I/O settings
+ */
+#define SAVE_ASSET_LIBRARY true

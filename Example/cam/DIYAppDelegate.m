@@ -1,24 +1,26 @@
 //
 //  DIYAppDelegate.m
-//  DIYCam
+//  cam
 //
-//  Created by Andrew Sliwinski on 5/29/12.
+//  Created by Andrew Sliwinski on 7/5/12.
 //  Copyright (c) 2012 DIY, Co. All rights reserved.
 //
 
 #import "DIYAppDelegate.h"
 
-#import "DIYViewController.h"
+#import "DIYFirstViewController.h"
+
+#import "DIYSecondViewController.h"
 
 @implementation DIYAppDelegate
 
 @synthesize window = _window;
-@synthesize viewController = _viewController;
+@synthesize tabBarController = _tabBarController;
 
 - (void)dealloc
 {
     [_window release];
-    [_viewController release];
+    [_tabBarController release];
     [super dealloc];
 }
 
@@ -26,8 +28,11 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    self.viewController = [[[DIYViewController alloc] initWithNibName:@"DIYViewController" bundle:nil] autorelease];
-    self.window.rootViewController = self.viewController;
+    UIViewController *viewController1 = [[[DIYFirstViewController alloc] initWithNibName:@"DIYFirstViewController" bundle:nil] autorelease];
+    UIViewController *viewController2 = [[[DIYSecondViewController alloc] initWithNibName:@"DIYSecondViewController" bundle:nil] autorelease];
+    self.tabBarController = [[[UITabBarController alloc] init] autorelease];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
+    self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
 }

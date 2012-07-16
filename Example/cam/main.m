@@ -1,8 +1,8 @@
 //
 //  main.m
-//  DIYCam
+//  cam
 //
-//  Created by Andrew Sliwinski on 5/29/12.
+//  Created by Andrew Sliwinski on 7/5/12.
 //  Copyright (c) 2012 DIY, Co. All rights reserved.
 //
 
