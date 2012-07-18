@@ -52,11 +52,7 @@
 
 - (IBAction)capturePhoto:(id)sender
 {
-    [self.cam capturePhoto:^(NSDictionary *asset) {
-        NSLog(@"Asset: %@", asset);
-    } failure:^(NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+    [self.cam capturePhoto];
 }
 
 #pragma mark - DIYCamDelegate
@@ -79,6 +75,26 @@
 - (void)camModeDidChange:(DIYCam *)cam mode:(DIYCamMode)mode
 {
     NSLog(@"Mode did change");
+}
+
+- (void)camCaptureStarted:(DIYCam *)cam
+{
+    NSLog(@"Capture started");
+}
+
+- (void)camCaptureStopped:(DIYCam *)cam
+{
+    NSLog(@"Capture stopped");
+}
+
+- (void)camCaptureProcessing:(DIYCam *)cam
+{
+    NSLog(@"Capture processing");
+}
+
+- (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset
+{
+    NSLog(@"Capture complete. Asset: %@", asset);
 }
 
 #pragma mark - Dealloc

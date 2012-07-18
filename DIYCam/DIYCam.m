@@ -78,7 +78,7 @@
 
 #pragma mark - Public methods
 
-- (void)capturePhoto:(void (^)(NSDictionary *asset))success failure:(void (^)(NSError *error))failure
+- (void)capturePhoto
 {
     if (self.session != nil) {
         
@@ -90,8 +90,13 @@
             stillImageConnection.videoOrientation = [[UIDevice currentDevice] orientation];
         }
         
+        [self.delegate camCaptureStarted:self];
+        
         // Capture image async block
         [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {             
+            
+            [self.delegate camCaptureProcessing:self];
+            
             // Check sample buffer 
             if (imageDataSampleBuffer != NULL && error == nil) {
                 // Convert to jpeg
@@ -108,16 +113,16 @@
                 DIYCamFileOperation *fop = [[DIYCamFileOperation alloc] initWithData:imageData forLocation:DIYCamFileLocationCache];
                 [fop setCompletionBlock:^{
                     if (fop.complete) {
-                        success([NSDictionary dictionaryWithObjectsAndKeys:fop.path, @"path", @"photo", @"type", nil]);
+                        [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:fop.path, @"path", @"photo", @"type", nil]];
                     } else {
-                        failure([NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]);
+                        [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
                     }
                     [fop setCompletionBlock:nil];
                 }];
                 [self.queue addOperation:fop];
                 [fop release];
              } else {
-                failure(error);
+                 [self.delegate camDidFail:self withError:error];
              }
          }];
     } else {
@@ -130,7 +135,7 @@
     
 }
 
-- (void)captureVideoEnd:(void (^)(NSDictionary *asset))success failure:(void (^)(NSError *error))failure
+- (void)captureVideoStop
 {
     
 }

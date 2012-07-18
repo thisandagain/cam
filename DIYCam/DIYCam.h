@@ -32,6 +32,11 @@ typedef enum {
 
 - (void)camModeWillChange:(DIYCam *)cam mode:(DIYCamMode)mode;
 - (void)camModeDidChange:(DIYCam *)cam mode:(DIYCamMode)mode;
+
+- (void)camCaptureStarted:(DIYCam *)cam;
+- (void)camCaptureStopped:(DIYCam *)cam;
+- (void)camCaptureProcessing:(DIYCam *)cam;
+- (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset;
 @end
 
 //
@@ -42,8 +47,8 @@ typedef enum {
 @property (nonatomic, assign) DIYCamMode captureMode;
 @property (nonatomic, retain) AVCaptureSession *session;
 
-- (void)capturePhoto:(void (^)(NSDictionary *asset))success failure:(void (^)(NSError *error))failure;
+- (void)capturePhoto;
 - (void)captureVideoStart;
-- (void)captureVideoEnd:(void (^)(NSDictionary *asset))success failure:(void (^)(NSError *error))failure;
+- (void)captureVideoStop;
 
 @end
