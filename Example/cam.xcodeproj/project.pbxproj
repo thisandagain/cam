@@ -33,7 +33,6 @@
 		C3A284EC15A7B1A400D0C221 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284EB15A7B1A400D0C221 /* AssetsLibrary.framework */; };
 		C3A284EE15A7B3A800D0C221 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284ED15A7B3A800D0C221 /* AVFoundation.framework */; };
 		C3A284F015A7BD5E00D0C221 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */; };
-		C3AC9C2215AF6B3400A23E6F /* DIYCamDelegateListener.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AC9C2115AF6B3400A23E6F /* DIYCamDelegateListener.m */; };
 		C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */; };
 /* End PBXBuildFile section */
 
@@ -76,8 +75,6 @@
 		C3A284EB15A7B1A400D0C221 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		C3A284ED15A7B3A800D0C221 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		C3AC9C2015AF6B3400A23E6F /* DIYCamDelegateListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamDelegateListener.h; path = ../DIYCam/DIYCamDelegateListener.h; sourceTree = "<group>"; };
-		C3AC9C2115AF6B3400A23E6F /* DIYCamDelegateListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamDelegateListener.m; path = ../DIYCam/DIYCamDelegateListener.m; sourceTree = "<group>"; };
 		C3DAD29115A92CB600A218DF /* DIYCamUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamUtilities.h; path = ../DIYCam/DIYCamUtilities.h; sourceTree = "<group>"; };
 		C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamUtilities.m; path = ../DIYCam/DIYCamUtilities.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,8 +177,6 @@
 				C36CA43415A64A8700529935 /* DIYCam.m */,
 				C36CA43B15A6506B00529935 /* DIYCam.podspec */,
 				C36CA44315A66C6900529935 /* DIYCamDefaults.h */,
-				C3AC9C2015AF6B3400A23E6F /* DIYCamDelegateListener.h */,
-				C3AC9C2115AF6B3400A23E6F /* DIYCamDelegateListener.m */,
 				C3297CFF15A955A80094BE12 /* DIYCamPreview.h */,
 				C3297D0015A955A80094BE12 /* DIYCamPreview.m */,
 				C3DAD29115A92CB600A218DF /* DIYCamUtilities.h */,
@@ -279,7 +274,6 @@
 				C3A284E615A6BC4600D0C221 /* DIYCamThumbnailOperation.m in Sources */,
 				C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */,
 				C3297D0115A955A80094BE12 /* DIYCamPreview.m in Sources */,
-				C3AC9C2215AF6B3400A23E6F /* DIYCamDelegateListener.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
