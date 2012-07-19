@@ -77,6 +77,7 @@
             self.cam.captureMode = DIYCamModeVideo;
             break;
         default:
+            [NSException raise:@"SelectorOutOfBounds" format:@"Selector changed to %d, which is out of bounds", self.selector.selectedSegmentIndex];
             break;
     }
 }
