@@ -24,7 +24,9 @@
  * Video settings
  */
 #define VIDEO_SESSION_PRESET AVCaptureSessionPreset1280x720
-#define VIDEO_SESSION_GRAVITY AVCaptureSessionGravityFill
+#define VIDEO_SESSION_GRAVITY AVLayerVideoGravityResizeAspectFill
+#define VIDEO_MAX_DURATION 300
+#define VIDEO_FPS 30
 
 /**
  * File I/O settings
