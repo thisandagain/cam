@@ -34,6 +34,7 @@
 		C3A284EE15A7B3A800D0C221 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284ED15A7B3A800D0C221 /* AVFoundation.framework */; };
 		C3A284F015A7BD5E00D0C221 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */; };
 		C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */; };
+		DE26EABE15B76FAA008AF717 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE26EABD15B76FAA008AF717 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C3DAD29115A92CB600A218DF /* DIYCamUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamUtilities.h; path = ../DIYCam/DIYCamUtilities.h; sourceTree = "<group>"; };
 		C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamUtilities.m; path = ../DIYCam/DIYCamUtilities.m; sourceTree = "<group>"; };
+		DE26EABD15B76FAA008AF717 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE26EABE15B76FAA008AF717 /* CoreMedia.framework in Frameworks */,
 				C3A284F015A7BD5E00D0C221 /* MobileCoreServices.framework in Frameworks */,
 				C3A284EE15A7B3A800D0C221 /* AVFoundation.framework in Frameworks */,
 				C3A284EC15A7B1A400D0C221 /* AssetsLibrary.framework in Frameworks */,
@@ -120,6 +123,7 @@
 		C36CA40215A6443400529935 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DE26EABD15B76FAA008AF717 /* CoreMedia.framework */,
 				C3A284EB15A7B1A400D0C221 /* AssetsLibrary.framework */,
 				C3A284ED15A7B3A800D0C221 /* AVFoundation.framework */,
 				C36CA40715A6443400529935 /* CoreGraphics.framework */,
