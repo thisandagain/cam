@@ -282,7 +282,7 @@
     
     // Preview
     // ---------------------------------
-    self.preview.videoGravity   = PHOTO_SESSION_GRAVITY;
+    self.preview.videoGravity   = AVLayerVideoGravityResizeAspectFill;
     self.preview.frame          = self.frame;
     [self.layer addSublayer:self.preview];
     
@@ -353,7 +353,7 @@
     
     // Preview
     // ---------------------------------
-    self.preview.videoGravity   = VIDEO_SESSION_GRAVITY;
+    self.preview.videoGravity   = AVLayerVideoGravityResizeAspectFill;
     self.preview.frame          = self.frame;
     [self.layer addSublayer:self.preview];
     
