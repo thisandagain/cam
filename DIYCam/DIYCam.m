@@ -388,6 +388,7 @@
 
 - (void)releaseObjects
 {
+    [self purgeMode];
     _delegate = nil;
     
     [_session release]; _session = nil;
