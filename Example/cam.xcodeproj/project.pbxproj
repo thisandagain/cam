@@ -35,6 +35,7 @@
 		C3A284F015A7BD5E00D0C221 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */; };
 		C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */; };
 		DE26EABE15B76FAA008AF717 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE26EABD15B76FAA008AF717 /* CoreMedia.framework */; };
+		DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +44,7 @@
 		C3626F9B15A69C8300543864 /* CHANGES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CHANGES.md; path = ../CHANGES.md; sourceTree = "<group>"; };
 		C3626FA415A6A38800543864 /* DIYCamFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamFileOperation.h; path = ../DIYCam/DIYCamFileOperation.h; sourceTree = "<group>"; };
 		C3626FA515A6A38800543864 /* DIYCamFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamFileOperation.m; path = ../DIYCam/DIYCamFileOperation.m; sourceTree = "<group>"; };
-		C3626FA715A6A3A300543864 /* DIYCamLibraryImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; name = DIYCamLibraryImageOperation.h; path = ../DIYCam/DIYCamLibraryImageOperation.h; sourceTree = "<group>"; };
+		C3626FA715A6A3A300543864 /* DIYCamLibraryImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamLibraryImageOperation.h; path = ../DIYCam/DIYCamLibraryImageOperation.h; sourceTree = "<group>"; };
 		C3626FA815A6A3A300543864 /* DIYCamLibraryImageOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamLibraryImageOperation.m; path = ../DIYCam/DIYCamLibraryImageOperation.m; sourceTree = "<group>"; };
 		C36CA3FF15A6443400529935 /* cam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36CA40315A6443400529935 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -79,6 +80,8 @@
 		C3DAD29115A92CB600A218DF /* DIYCamUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamUtilities.h; path = ../DIYCam/DIYCamUtilities.h; sourceTree = "<group>"; };
 		C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamUtilities.m; path = ../DIYCam/DIYCamUtilities.m; sourceTree = "<group>"; };
 		DE26EABD15B76FAA008AF717 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		DE26EABF15B78740008AF717 /* DIYCamLibraryVideoOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamLibraryVideoOperation.h; path = ../DIYCam/DIYCamLibraryVideoOperation.h; sourceTree = "<group>"; };
+		DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamLibraryVideoOperation.m; path = ../DIYCam/DIYCamLibraryVideoOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +192,8 @@
 				C3626FA515A6A38800543864 /* DIYCamFileOperation.m */,
 				C3626FA715A6A3A300543864 /* DIYCamLibraryImageOperation.h */,
 				C3626FA815A6A3A300543864 /* DIYCamLibraryImageOperation.m */,
+				DE26EABF15B78740008AF717 /* DIYCamLibraryVideoOperation.h */,
+				DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */,
 				C3A284E415A6BC4600D0C221 /* DIYCamThumbnailOperation.h */,
 				C3A284E515A6BC4600D0C221 /* DIYCamThumbnailOperation.m */,
 			);
@@ -278,6 +283,7 @@
 				C3A284E615A6BC4600D0C221 /* DIYCamThumbnailOperation.m in Sources */,
 				C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */,
 				C3297D0115A955A80094BE12 /* DIYCamPreview.m in Sources */,
+				DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
