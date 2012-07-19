@@ -97,7 +97,8 @@
     }
 }
 
-#pragma mark - Path helpers
+#pragma mark - Asset helpers
+
 + (NSString *)createAssetFilePath:(NSString *)extension
 {
     NSArray *paths                  = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -108,5 +109,36 @@
     return assetPath;
 }
 
++ (void)generateVideoThumbnail:(NSURL *)url success:(void (^)(UIImage *image, NSData *data))success failure:(void (^)(NSException *exception))failure
+{
+    // Setup
+    AVURLAsset *asset                   = [[AVURLAsset alloc] initWithURL:url options:nil];
+    Float64 durationSeconds             = CMTimeGetSeconds([asset duration]);
+    CMTime thumbTime                    = CMTimeMakeWithSeconds(durationSeconds / 2.0, 600);
+    
+    // Generate
+    AVAssetImageGenerator *thumbnailGenerator   = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    thumbnailGenerator.maximumSize              = CGSizeMake(1280, 720);
+    [thumbnailGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error) {
+        NSString *requestedTimeString = (NSString *)CMTimeCopyDescription(NULL, requestedTime);
+        NSString *actualTimeString = (NSString *)CMTimeCopyDescription(NULL, actualTime);
+        [requestedTimeString release];
+        [actualTimeString release];
+        
+        //
+        
+        if (result != AVAssetImageGeneratorSucceeded) 
+        {
+            failure([NSException exceptionWithName:@"" reason:@"Could not generate video thumbnail" userInfo:nil]);
+        } else {
+            UIImage *sim = [UIImage imageWithCGImage:im];
+            NSData *data = UIImageJPEGRepresentation(sim, 0.7);
+            success(sim, data);
+        }
+        
+        [asset release];
+        [thumbnailGenerator release];
+    }];
+}
 
 @end

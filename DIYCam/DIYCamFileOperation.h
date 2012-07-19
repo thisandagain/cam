@@ -27,5 +27,6 @@ typedef enum {
 @property (atomic, retain) NSError *error;
 
 - (id)initWithData:(id)data forLocation:(DIYCamFileLocation)location;
++ (NSURL *)generatePathForLocation:(DIYCamFileLocation)location;
 
 @end

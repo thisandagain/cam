@@ -26,7 +26,7 @@
     _complete   = false;
     
     _path       = [[NSURL alloc] init];
-    self.path   = [self generatePathForLocation:location];
+    self.path   = [DIYCamFileOperation generatePathForLocation:location];
     
     _error      = [[NSError alloc] init];
     self.error  = NULL;
@@ -50,7 +50,7 @@
 
 #pragma mark - Private methods
 
-- (NSURL *)generatePathForLocation:(DIYCamFileLocation)location
++ (NSURL *)generatePathForLocation:(DIYCamFileLocation)location
 {
     NSArray *paths          = nil;
     NSString *directory     = nil;
