@@ -32,11 +32,7 @@
 
 - (void)main
 {
-    @try {
-        // [library writeVideoAtPathToSavedPhotosAlbum:video completionBlock:^(NSURL *assetURL, NSError *error) {
-       // NSLog(@"Asset written to library: %@", assetURL);
-       //}];
-        
+    @try {        
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
         
