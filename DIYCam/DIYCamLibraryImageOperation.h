@@ -1,5 +1,5 @@
 //
-//  DIYCamLibraryOperation.h
+//  DIYCamLibraryImageOperation.h
 //  cam
 //
 //  Created by Andrew Sliwinski on 7/5/12.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface DIYCamLibraryOperation : NSOperation
+@interface DIYCamLibraryImageOperation : NSOperation
 {
     id dataset;
 }

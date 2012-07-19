@@ -10,7 +10,7 @@
 		C3297D0115A955A80094BE12 /* DIYCamPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = C3297D0015A955A80094BE12 /* DIYCamPreview.m */; };
 		C3626F9C15A69C8300543864 /* CHANGES.md in Resources */ = {isa = PBXBuildFile; fileRef = C3626F9B15A69C8300543864 /* CHANGES.md */; };
 		C3626FA615A6A38800543864 /* DIYCamFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3626FA515A6A38800543864 /* DIYCamFileOperation.m */; };
-		C3626FA915A6A3A300543864 /* DIYCamLibraryOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3626FA815A6A3A300543864 /* DIYCamLibraryOperation.m */; };
+		C3626FA915A6A3A300543864 /* DIYCamLibraryImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3626FA815A6A3A300543864 /* DIYCamLibraryImageOperation.m */; };
 		C36CA40415A6443400529935 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36CA40315A6443400529935 /* UIKit.framework */; };
 		C36CA40615A6443400529935 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36CA40515A6443400529935 /* Foundation.framework */; };
 		C36CA40815A6443400529935 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36CA40715A6443400529935 /* CoreGraphics.framework */; };
@@ -43,8 +43,8 @@
 		C3626F9B15A69C8300543864 /* CHANGES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CHANGES.md; path = ../CHANGES.md; sourceTree = "<group>"; };
 		C3626FA415A6A38800543864 /* DIYCamFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamFileOperation.h; path = ../DIYCam/DIYCamFileOperation.h; sourceTree = "<group>"; };
 		C3626FA515A6A38800543864 /* DIYCamFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamFileOperation.m; path = ../DIYCam/DIYCamFileOperation.m; sourceTree = "<group>"; };
-		C3626FA715A6A3A300543864 /* DIYCamLibraryOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamLibraryOperation.h; path = ../DIYCam/DIYCamLibraryOperation.h; sourceTree = "<group>"; };
-		C3626FA815A6A3A300543864 /* DIYCamLibraryOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamLibraryOperation.m; path = ../DIYCam/DIYCamLibraryOperation.m; sourceTree = "<group>"; };
+		C3626FA715A6A3A300543864 /* DIYCamLibraryImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; name = DIYCamLibraryImageOperation.h; path = ../DIYCam/DIYCamLibraryImageOperation.h; sourceTree = "<group>"; };
+		C3626FA815A6A3A300543864 /* DIYCamLibraryImageOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamLibraryImageOperation.m; path = ../DIYCam/DIYCamLibraryImageOperation.m; sourceTree = "<group>"; };
 		C36CA3FF15A6443400529935 /* cam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36CA40315A6443400529935 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C36CA40515A6443400529935 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -187,8 +187,8 @@
 				C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */,
 				C3626FA415A6A38800543864 /* DIYCamFileOperation.h */,
 				C3626FA515A6A38800543864 /* DIYCamFileOperation.m */,
-				C3626FA715A6A3A300543864 /* DIYCamLibraryOperation.h */,
-				C3626FA815A6A3A300543864 /* DIYCamLibraryOperation.m */,
+				C3626FA715A6A3A300543864 /* DIYCamLibraryImageOperation.h */,
+				C3626FA815A6A3A300543864 /* DIYCamLibraryImageOperation.m */,
 				C3A284E415A6BC4600D0C221 /* DIYCamThumbnailOperation.h */,
 				C3A284E515A6BC4600D0C221 /* DIYCamThumbnailOperation.m */,
 			);
@@ -274,7 +274,7 @@
 				C36CA41E15A6443400529935 /* DIYSecondViewController.m in Sources */,
 				C36CA43515A64A8700529935 /* DIYCam.m in Sources */,
 				C3626FA615A6A38800543864 /* DIYCamFileOperation.m in Sources */,
-				C3626FA915A6A3A300543864 /* DIYCamLibraryOperation.m in Sources */,
+				C3626FA915A6A3A300543864 /* DIYCamLibraryImageOperation.m in Sources */,
 				C3A284E615A6BC4600D0C221 /* DIYCamThumbnailOperation.m in Sources */,
 				C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */,
 				C3297D0115A955A80094BE12 /* DIYCamPreview.m in Sources */,
