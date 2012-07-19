@@ -29,6 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.selector addTarget:self action:@selector(selectorChanged:) forControlEvents:UIControlEventValueChanged];
 	
     // Setup cam
     self.cam.delegate       = self;
@@ -52,7 +54,31 @@
 
 - (IBAction)capturePhoto:(id)sender
 {
-    [self.cam capturePhoto];
+    if (self.cam.captureMode == DIYCamModePhoto) {
+        [self.cam capturePhoto];
+    }
+    else {
+        if (self.cam.isRecording) {
+            [self.cam captureVideoStop];
+        }
+        else {
+            [self.cam captureVideoStart];
+        }
+    }
+}
+
+- (IBAction)selectorChanged:(id)sender
+{
+    switch (self.selector.selectedSegmentIndex) {
+        case 0:
+            self.cam.captureMode = DIYCamModePhoto;
+            break;
+        case 1:
+            self.cam.captureMode = DIYCamModeVideo;
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - DIYCamDelegate
