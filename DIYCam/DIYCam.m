@@ -235,6 +235,16 @@
 - (void)purgeMode
 {
     [self stopSession];
+    
+    for (AVCaptureInput *input in self.session.inputs) {
+        [self.session removeInput:input];
+    }
+    
+    for (AVCaptureOutput *output in self.session.outputs) {
+        [self.session removeOutput:output];
+    }
+    
+    [self.preview removeFromSuperlayer];
 }
 
 - (void)establishPhotoMode
