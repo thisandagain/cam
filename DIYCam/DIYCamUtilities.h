@@ -19,4 +19,6 @@
 
 + (void)setFlash:(BOOL)flash;
 
++ (NSString *)createAssetFilePath:(NSString *)extension;
+
 @end
