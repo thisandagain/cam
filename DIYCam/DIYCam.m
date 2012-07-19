@@ -181,13 +181,32 @@
 	if (recordedSuccessfully)
 	{
         [self.delegate camCaptureProcessing:self];
+        
+        // Asset library
         if (SAVE_ASSET_LIBRARY) 
         {  
             DIYCamLibraryVideoOperation *lOp = [[DIYCamLibraryVideoOperation alloc] initWithURL:outputFileURL];
             [self.queue addOperation:lOp];
             [lOp release];
         }
-        // TODO: write a thumbnail and call complete when done
+        
+        // Thumbnail
+        [DIYCamUtilities generateVideoThumbnail:outputFileURL success:^(UIImage *image, NSData *data) {
+            DIYCamFileOperation *fOp = [[DIYCamFileOperation alloc] initWithData:data forLocation:DIYCamFileLocationCache];
+            [fOp setCompletionBlock:^{
+                if (fOp.complete) {
+                    [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:outputFileURL, @"path", @"video", @"type", fOp.path, @"thumb", nil]];
+                } else {
+                    [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
+                }
+                [fOp setCompletionBlock:nil];
+            }];
+            [self.queue addOperation:fOp];
+            [fOp release];
+        } failure:^(NSException *exception) {
+            [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
+        }];
+        
 	} else {
         [[self delegate] camDidFail:self withError:error];
     }

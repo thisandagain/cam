@@ -15,7 +15,6 @@
 #import "DIYCamFileOperation.h"
 #import "DIYCamLibraryImageOperation.h"
 #import "DIYCamLibraryVideoOperation.h"
-#import "DIYCamThumbnailOperation.h"
 
 //
 

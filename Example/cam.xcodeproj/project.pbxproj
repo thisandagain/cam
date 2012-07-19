@@ -29,7 +29,6 @@
 		C36CA43915A6505900529935 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = C36CA43715A6505900529935 /* LICENSE.md */; };
 		C36CA43A15A6505900529935 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C36CA43815A6505900529935 /* README.md */; };
 		C36CA43C15A6506B00529935 /* DIYCam.podspec in Resources */ = {isa = PBXBuildFile; fileRef = C36CA43B15A6506B00529935 /* DIYCam.podspec */; };
-		C3A284E615A6BC4600D0C221 /* DIYCamThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A284E515A6BC4600D0C221 /* DIYCamThumbnailOperation.m */; };
 		C3A284EC15A7B1A400D0C221 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284EB15A7B1A400D0C221 /* AssetsLibrary.framework */; };
 		C3A284EE15A7B3A800D0C221 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284ED15A7B3A800D0C221 /* AVFoundation.framework */; };
 		C3A284F015A7BD5E00D0C221 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */; };
@@ -72,8 +71,6 @@
 		C36CA43815A6505900529935 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C36CA43B15A6506B00529935 /* DIYCam.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DIYCam.podspec; path = ../DIYCam.podspec; sourceTree = "<group>"; };
 		C36CA44315A66C6900529935 /* DIYCamDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamDefaults.h; path = ../DIYCam/DIYCamDefaults.h; sourceTree = "<group>"; };
-		C3A284E415A6BC4600D0C221 /* DIYCamThumbnailOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamThumbnailOperation.h; path = ../DIYCam/DIYCamThumbnailOperation.h; sourceTree = "<group>"; };
-		C3A284E515A6BC4600D0C221 /* DIYCamThumbnailOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamThumbnailOperation.m; path = ../DIYCam/DIYCamThumbnailOperation.m; sourceTree = "<group>"; };
 		C3A284EB15A7B1A400D0C221 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		C3A284ED15A7B3A800D0C221 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -194,8 +191,6 @@
 				C3626FA815A6A3A300543864 /* DIYCamLibraryImageOperation.m */,
 				DE26EABF15B78740008AF717 /* DIYCamLibraryVideoOperation.h */,
 				DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */,
-				C3A284E415A6BC4600D0C221 /* DIYCamThumbnailOperation.h */,
-				C3A284E515A6BC4600D0C221 /* DIYCamThumbnailOperation.m */,
 			);
 			name = DIYCam;
 			sourceTree = "<group>";
@@ -280,7 +275,6 @@
 				C36CA43515A64A8700529935 /* DIYCam.m in Sources */,
 				C3626FA615A6A38800543864 /* DIYCamFileOperation.m in Sources */,
 				C3626FA915A6A3A300543864 /* DIYCamLibraryImageOperation.m in Sources */,
-				C3A284E615A6BC4600D0C221 /* DIYCamThumbnailOperation.m in Sources */,
 				C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */,
 				C3297D0115A955A80094BE12 /* DIYCamPreview.m in Sources */,
 				DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */,

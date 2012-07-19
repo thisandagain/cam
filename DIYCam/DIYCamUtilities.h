@@ -20,5 +20,6 @@
 + (void)setFlash:(BOOL)flash;
 
 + (NSString *)createAssetFilePath:(NSString *)extension;
++ (void)generateVideoThumbnail:(NSURL *)url success:(void (^)(UIImage *image, NSData *data))success failure:(void (^)(NSException *exception))failure;
 
 @end
