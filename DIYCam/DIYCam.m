@@ -91,8 +91,6 @@
             stillImageConnection.videoOrientation = [[UIDevice currentDevice] orientation];
         }
         
-        [self.delegate camCaptureStarted:self];
-        
         // Capture image async block
         [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {             
             
