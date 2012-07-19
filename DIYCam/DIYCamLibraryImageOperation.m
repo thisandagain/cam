@@ -1,14 +1,14 @@
 //
-//  DIYCamLibraryOperation.m
+//  DIYCamLibraryImageOperation.m
 //  cam
 //
 //  Created by Andrew Sliwinski on 7/5/12.
 //  Copyright (c) 2012 DIY, Co. All rights reserved.
 //
 
-#import "DIYCamLibraryOperation.h"
+#import "DIYCamLibraryImageOperation.h"
 
-@implementation DIYCamLibraryOperation
+@implementation DIYCamLibraryImageOperation
 
 @synthesize complete = _complete;
 @synthesize size = _size;

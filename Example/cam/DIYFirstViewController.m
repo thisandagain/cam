@@ -29,6 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.selector addTarget:self action:@selector(selectorChanged:) forControlEvents:UIControlEventValueChanged];
 	
     // Setup cam
     self.cam.delegate       = self;
@@ -52,11 +54,32 @@
 
 - (IBAction)capturePhoto:(id)sender
 {
-    [self.cam capturePhoto:^(NSDictionary *asset) {
-        NSLog(@"Asset: %@", asset);
-    } failure:^(NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+    if (self.cam.captureMode == DIYCamModePhoto) {
+        [self.cam capturePhoto];
+    }
+    else {
+        if (self.cam.isRecording) {
+            [self.cam captureVideoStop];
+        }
+        else {
+            [self.cam captureVideoStart];
+        }
+    }
+}
+
+- (IBAction)selectorChanged:(id)sender
+{
+    switch (self.selector.selectedSegmentIndex) {
+        case 0:
+            self.cam.captureMode = DIYCamModePhoto;
+            break;
+        case 1:
+            self.cam.captureMode = DIYCamModeVideo;
+            break;
+        default:
+            [NSException raise:@"SelectorOutOfBounds" format:@"Selector changed to %d, which is out of bounds", self.selector.selectedSegmentIndex];
+            break;
+    }
 }
 
 #pragma mark - DIYCamDelegate
@@ -79,6 +102,26 @@
 - (void)camModeDidChange:(DIYCam *)cam mode:(DIYCamMode)mode
 {
     NSLog(@"Mode did change");
+}
+
+- (void)camCaptureStarted:(DIYCam *)cam
+{
+    NSLog(@"Capture started");
+}
+
+- (void)camCaptureStopped:(DIYCam *)cam
+{
+    NSLog(@"Capture stopped");
+}
+
+- (void)camCaptureProcessing:(DIYCam *)cam
+{
+    NSLog(@"Capture processing");
+}
+
+- (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset
+{
+    NSLog(@"Capture complete. Asset: %@", asset);
 }
 
 #pragma mark - Dealloc
