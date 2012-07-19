@@ -21,7 +21,7 @@
     if (![super init]) return nil;
     
     _complete = false;
-    _path = videoURL;
+    self.path = videoURL;
     _error = [[NSError alloc] init];
     self.error = NULL;
     
