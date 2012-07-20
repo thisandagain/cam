@@ -11,6 +11,8 @@
 //
 
 @interface DIYCam ()
+@property (nonatomic, assign, readwrite) BOOL isRecording;
+
 @property (nonatomic, assign) BOOL ready;
 @property (nonatomic, retain) NSOperationQueue *queue;
 @property (nonatomic, retain) DIYCamPreview *preview;

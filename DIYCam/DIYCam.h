@@ -46,7 +46,7 @@ typedef enum {
 @property (nonatomic, assign) id<DIYCamDelegate> delegate;
 @property (nonatomic, assign) DIYCamMode captureMode;
 @property (nonatomic, retain) AVCaptureSession *session;
-@property (nonatomic, assign) BOOL isRecording;
+@property (nonatomic, assign, readonly) BOOL isRecording;
 
 - (void)capturePhoto;
 - (void)captureVideoStart;
