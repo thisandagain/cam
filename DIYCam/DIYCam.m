@@ -114,7 +114,7 @@
                 DIYCamFileOperation *fop = [[DIYCamFileOperation alloc] initWithData:imageData forLocation:DIYCamFileLocationCache];
                 [fop setCompletionBlock:^{
                     if (fop.complete) {
-                        [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:fop.path, @"path", @"photo", @"type", nil]];
+                        [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:fop.path, @"path", @"image", @"type", nil]];
                     } else {
                         [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
                     }
@@ -409,6 +409,7 @@
 
 - (void)releaseObjects
 {
+    [self purgeMode];
     _delegate = nil;
     
     [_session release]; _session = nil;
