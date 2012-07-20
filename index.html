@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Cam : A “keep it simple, stupid” approach to handling photo and video capture with AVFoundation." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Cam</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/thisandagain/cam">View on GitHub</a>
+
+          <h1 id="project_title">Cam</h1>
+          <h2 id="project_tagline">A “keep it simple, stupid” approach to handling photo and video capture with AVFoundation.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/thisandagain/cam/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/thisandagain/cam/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>DIYCam is a high-level layer built on top of AVFoundation that enables simple setup and implementation of photo and video capture within iOS.</p>
+
+<h2>Getting Started</h2>
+
+<p>The easiest way to get going with DIYCam is to take a look at the included example application. The XCode project file can be found at <code>Example &gt; cam.xcodeproj</code>.</p>
+
+<p>In order to use DIYCam, you'll want to add the entirety of the <code>DIYCam</code> directory to your project. To get started, simply:</p>
+
+<div class="highlight">
+<pre><span class="cp">#import "DIYCam.h"</span>
+</pre>
+</div>
+
+
+<div class="highlight">
+<pre><span class="n">DIYCam</span> <span class="o">*</span><span class="n">cam</span>         <span class="o">=</span> <span class="p">[[</span><span class="n">DIYCam</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFrame:</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">];</span>
+<span class="n">cam</span><span class="p">.</span><span class="n">delegate</span>        <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+<span class="n">cam</span><span class="p">.</span><span class="n">captureMode</span>     <span class="o">=</span> <span class="n">DIYCamModePhoto</span><span class="p">;</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">cam</span><span class="p">];</span>
+</pre>
+</div>
+
+
+<p>You'll also need to link the following frameworks:</p>
+
+<div class="highlight">
+<pre>AssetsLibrary.framework
+AVFoundation.framework
+CoreGraphics.framework
+CoreMedia.framework
+MobileCoreServices.framework
+QuartzCore.framework
+</pre>
+</div>
+
+
+<h2>Configuration</h2>
+
+<p>Default configuration settings can be modified within DIYCamDefaults.h where options for asset library use, orientation, device settings, and quality can be modified.</p>
+
+<hr><h2>Methods</h2>
+
+<div class="highlight">
+<pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">capturePhoto</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">captureVideoStart</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">captureVideoStop</span><span class="p">;</span>
+</pre>
+</div>
+
+
+<h2>Delegate Methods</h2>
+
+<div class="highlight">
+<pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">camReady:</span><span class="p">(</span><span class="n">DIYCam</span> <span class="o">*</span><span class="p">)</span><span class="nv">cam</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">camDidFail:</span><span class="p">(</span><span class="n">DIYCam</span> <span class="o">*</span><span class="p">)</span><span class="nv">cam</span> <span class="nf">withError:</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">camModeWillChange:</span><span class="p">(</span><span class="n">DIYCam</span> <span class="o">*</span><span class="p">)</span><span class="nv">cam</span> <span class="nf">mode:</span><span class="p">(</span><span class="n">DIYCamMode</span><span class="p">)</span><span class="nv">mode</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">camModeDidChange:</span><span class="p">(</span><span class="n">DIYCam</span> <span class="o">*</span><span class="p">)</span><span class="nv">cam</span> <span class="nf">mode:</span><span class="p">(</span><span class="n">DIYCamMode</span><span class="p">)</span><span class="nv">mode</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">camCaptureStarted:</span><span class="p">(</span><span class="n">DIYCam</span> <span class="o">*</span><span class="p">)</span><span class="nv">cam</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">camCaptureStopped:</span><span class="p">(</span><span class="n">DIYCam</span> <span class="o">*</span><span class="p">)</span><span class="nv">cam</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">camCaptureProcessing:</span><span class="p">(</span><span class="n">DIYCam</span> <span class="o">*</span><span class="p">)</span><span class="nv">cam</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">camCaptureComplete:</span><span class="p">(</span><span class="n">DIYCam</span> <span class="o">*</span><span class="p">)</span><span class="nv">cam</span> <span class="nf">withAsset:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">asset</span><span class="p">;</span>
+</pre>
+</div>
+
+
+<h2>Properties</h2>
+
+<div class="highlight">
+<pre><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="kt">id</span><span class="o">&lt;</span><span class="n">DIYCamDelegate</span><span class="o">&gt;</span> <span class="n">delegate</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">DIYCamMode</span> <span class="n">captureMode</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">AVCaptureSession</span> <span class="o">*</span><span class="n">session</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="kt">BOOL</span> <span class="n">isRecording</span><span class="p">;</span>
+</pre>
+</div>
+
+
+<hr><h2>iOS Support</h2>
+
+<p>DIYCam is tested on iOS 5 and up. Older versions of iOS may work but are not currently supported.</p>
+
+<h2>ARC</h2>
+
+<p>If you are including DIYCam in a project that uses <a href="http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html">Automatic Reference Counting (ARC)</a>, you will need to set the <code>-fno-objc-arc</code> compiler flag on all of the DIYCam source files. To do this in Xcode, go to your active target and select the "Build Phases" tab. Now select all DIYCam source files, press Enter, insert <code>-fno-objc-arc</code> and then "Done" to disable ARC for DIYCam.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Cam maintained by <a href="https://github.com/thisandagain">thisandagain</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-33281153-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
