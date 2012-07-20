@@ -1,4 +1,4 @@
-Copyright 2011 DIY, Co.
+Copyright 2012 DIY, Co.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

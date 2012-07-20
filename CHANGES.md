@@ -1,6 +1,6 @@
 # Revision History
 
-## v0.2.0
+## v1.0.0
 - API redesign (simpler, more flexible, and more complete)
 - Disk and image scaling performance improvements
 - Redesigned project structure
