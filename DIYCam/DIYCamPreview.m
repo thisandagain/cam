@@ -16,6 +16,7 @@
 {
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [self orientationDidChange];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -49,38 +50,62 @@
 
 - (void)orientationDidChange
 {
-    if (!DEVICE_ORIENTATION_FORCE && self.orientationSupported) {
-        
+    AVCaptureVideoOrientation newOrientation;
+    if (DEVICE_ORIENTATION_FORCE) {
+        newOrientation = DEVICE_ORIENTATION_DEFAULT;
+    }
+    else if (!DEVICE_ORIENTATION_FORCE && self.orientationSupported) {
         UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
-        AVCaptureVideoOrientation newOrientation;
-        BOOL isLandscape;
         
         switch (deviceOrientation) {
             case UIDeviceOrientationPortrait:
                 newOrientation = AVCaptureVideoOrientationPortrait;
-                isLandscape = false;
                 break;
             case UIDeviceOrientationPortraitUpsideDown:
                 newOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
-                isLandscape = false;
                 break;
             case UIDeviceOrientationLandscapeLeft:
                 newOrientation = AVCaptureVideoOrientationLandscapeRight;
-                isLandscape = true;
                 break;
             case UIDeviceOrientationLandscapeRight:
                 newOrientation = AVCaptureVideoOrientationLandscapeLeft;
-                isLandscape = true;
                 break;
             default:
                 return;
                 break;
         }
-        
-        CGSize newSize = [self sizeForOrientation:isLandscape];
+    }
+    
+    if (DEVICE_ORIENTATION_FORCE || self.orientationSupported) {
+        CGSize newSize = [self sizeForOrientation:[self isOrientationLandscape:newOrientation]];
         self.orientation    = newOrientation;
         self.frame          = CGRectMake(0, 0, newSize.width, newSize.height);
     }
+}
+
+- (BOOL)isOrientationLandscape:(AVCaptureVideoOrientation)videoOrientation
+{
+    BOOL isLandscape;
+    
+    switch (videoOrientation) {
+        case AVCaptureVideoOrientationPortrait:
+            isLandscape = false;
+            break;
+        case AVCaptureVideoOrientationPortraitUpsideDown:
+            isLandscape = false;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            isLandscape = true;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            isLandscape = true;
+            break;
+        default:
+            return false;
+            break;
+    }
+    
+    return isLandscape;
 }
 
 - (CGSize)sizeForOrientation:(BOOL)landscape
