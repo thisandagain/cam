@@ -355,6 +355,19 @@
         [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:200 userInfo:nil]];
     }
     
+    AVCaptureDevice *audioDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+    if (audioDevice)
+    {
+        NSError *error              = nil;
+        self.audioInput                  = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
+        if (!error)
+        {
+            [self.session addInput:self.audioInput];
+        } else {
+            [self.delegate camDidFail:self withError:error];
+        }
+    }
+    
     // Outputs
     // ---------------------------------
     Float64 TotalSeconds                    = VIDEO_MAX_DURATION;			// Max seconds
