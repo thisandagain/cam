@@ -1,7 +1,10 @@
 # Revision History
 
+## v1.0.2
+- Patch to resolve orientation issues with capture sessions
+
 ## v1.0.1
-- Patch to resolve forced orientation issues
+- Patch to resolve forced orientation issues with preview
 
 ## v1.0.0
 - API redesign (simpler, more flexible, and more complete)
