@@ -141,4 +141,23 @@
     }];
 }
 
++ (AVCaptureVideoOrientation)getAVCaptureOrientationFromDeviceOrientation
+{
+    AVCaptureVideoOrientation orientation;
+    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+    
+	if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown)
+		orientation = AVCaptureVideoOrientationPortraitUpsideDown;
+    
+	// AVCapture and UIDevice have opposite meanings for landscape left and right (AVCapture orientation is the same as UIInterfaceOrientation)
+	else if (deviceOrientation == UIDeviceOrientationLandscapeLeft)
+		orientation = AVCaptureVideoOrientationLandscapeRight;
+	else if (deviceOrientation == UIDeviceOrientationLandscapeRight)
+		orientation = AVCaptureVideoOrientationLandscapeLeft;
+    else
+        orientation = AVCaptureVideoOrientationPortrait;
+    
+    return orientation;
+}
+
 @end

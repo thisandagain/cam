@@ -150,6 +150,14 @@
             }
         }
         
+        // Record in the correct orientation
+        AVCaptureConnection *videoConnection = [DIYCamUtilities connectionWithMediaType:AVMediaTypeVideo fromConnections:[self.movieFileOutput connections]];
+        if ([videoConnection isVideoOrientationSupported] && !DEVICE_ORIENTATION_FORCE) {
+            [videoConnection setVideoOrientation:[DIYCamUtilities getAVCaptureOrientationFromDeviceOrientation]];
+        } else {
+            [videoConnection setVideoOrientation:DEVICE_ORIENTATION_DEFAULT];
+        }
+        
         // Start recording
         [self.movieFileOutput startRecordingToOutputFileURL:outputURL recordingDelegate:self];
     }
