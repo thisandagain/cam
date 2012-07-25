@@ -1,5 +1,8 @@
 # Revision History
 
+## v1.0.3 (Pending Release)
+- Resolved issues with audio capture in video mode
+
 ## v1.0.2
 - Patch to resolve orientation issues with capture sessions
 
