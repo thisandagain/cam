@@ -1,6 +1,6 @@
 # Revision History
 
-## v1.0.4 (In Progress)
+## v1.0.4
 - Allow for camera position control (front / back)
 - Various static analysis fixes from XCode 4.4.X
 
