@@ -286,7 +286,7 @@
     
     // Inputs
     // ---------------------------------
-    AVCaptureDevice *videoDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDevice *videoDevice    = [DIYCamUtilities camera];
     if (videoDevice) {
         NSError *error;
         self.videoInput             = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
@@ -338,7 +338,7 @@
     
     // Inputs
     // ---------------------------------
-    AVCaptureDevice *videoDevice    = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDevice *videoDevice    = [DIYCamUtilities camera];
     if (videoDevice) {
         NSError *error;
         self.videoInput             = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
