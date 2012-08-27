@@ -19,7 +19,8 @@
 
 - (id)initWithData:(id)data forLocation:(DIYCamFileLocation)location
 {
-    if (![super init]) return nil;
+    self = [super init];
+    if (!self) return nil;
     
     dataset     = [data retain];
     _size       = [dataset length];

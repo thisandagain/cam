@@ -18,7 +18,8 @@
 
 - (id)initWithURL:(id)videoURL
 {
-    if (![super init]) return nil;
+    self = [super init];
+    if (!self) return nil;
     
     _complete = false;
     self.path = videoURL;
