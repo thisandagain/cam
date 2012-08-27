@@ -1,6 +1,10 @@
 # Revision History
 
-## v1.0.3 (Pending Release)
+## v1.0.4 (In Progress)
+- Allow for camera position control (front / back)
+- Various static analysis fixes from XCode 4.4.X
+
+## v1.0.3
 - Resolved issues with audio capture in video mode
 
 ## v1.0.2
