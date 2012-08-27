@@ -50,11 +50,9 @@
 
 - (void)orientationDidChange
 {
-    AVCaptureVideoOrientation newOrientation;
-    if (DEVICE_ORIENTATION_FORCE) {
-        newOrientation = DEVICE_ORIENTATION_DEFAULT;
-    }
-    else if (!DEVICE_ORIENTATION_FORCE && self.orientationSupported) {
+    AVCaptureVideoOrientation newOrientation = DEVICE_ORIENTATION_DEFAULT;
+
+    if (!DEVICE_ORIENTATION_FORCE && self.orientationSupported) {
         UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
         
         switch (deviceOrientation) {
