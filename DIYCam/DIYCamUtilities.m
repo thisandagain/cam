@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 DIY, Co. All rights reserved.
 //
 
+#import "DIYCamDefaults.h"
 #import "DIYCamUtilities.h"
 
 @implementation DIYCamUtilities
@@ -16,7 +17,7 @@
 {
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     for (AVCaptureDevice *device in devices) {
-        if ([device position] == AVCaptureDevicePositionBack) {
+        if ([device position] == DEVICE_POSITION) {
             return device;
         }
     }
