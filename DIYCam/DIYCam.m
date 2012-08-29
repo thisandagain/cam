@@ -21,6 +21,8 @@
 @property (atomic, retain) AVCaptureDeviceInput *audioInput;
 @property (atomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property (atomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
+
+@property (nonatomic, retain) UIImageView *focusImageView;
 @end
 
 //
@@ -39,6 +41,8 @@
 @synthesize audioInput = _audioInput;
 @synthesize stillImageOutput = _stillImageOutput;
 @synthesize movieFileOutput = _movieFileOutput;
+
+@synthesize focusImageView = _focusImageView;
 
 #pragma mark - Init
 
@@ -60,6 +64,11 @@
     _stillImageOutput       = [[AVCaptureStillImageOutput alloc] init];
     _movieFileOutput        = [[AVCaptureMovieFileOutput alloc] init];
     
+    
+    UIImage *defaultImage   = [UIImage imageNamed:@"focus_indicator@2x.png"];
+    _focusImageView         = [[UIImageView alloc] initWithImage:defaultImage];
+    _focusImageView.frame   = CGRectMake(0, 0, defaultImage.size.width, defaultImage.size.height);
+        
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(focusAtTap:)];
     [self addGestureRecognizer:tap];
     [tap release];
@@ -260,6 +269,11 @@
             break;
     }
     
+    // Tap to focus indicator
+    // -------------------------------------
+    _focusImageView.hidden = YES;
+    [self addSubview:_focusImageView];
+        
     [self.delegate camModeDidChange:self mode:captureMode];
 }
 
@@ -510,7 +524,8 @@
 - (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer
 {  
     if (self.videoInput.device.isFocusPointOfInterestSupported && [self.videoInput.device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-        CGPoint focusPoint = [self convertToPointOfInterestFromViewCoordinates:[gestureRecognizer locationInView:self]];
+        CGPoint tapPoint = [gestureRecognizer locationInView:self];
+        CGPoint focusPoint = [self convertToPointOfInterestFromViewCoordinates:tapPoint];
         NSError *error;
         if ([self.videoInput.device lockForConfiguration:&error]) {
             self.videoInput.device.focusPointOfInterest = focusPoint;
@@ -520,8 +535,80 @@
         else {
             [self.delegate camDidFail:self withError:error];
         }
+        
+        _focusImageView.center = tapPoint;
+        [self animateFocusImage:0];
+        
     }
     
+}
+
+- (void)animateFocusImage:(int)stage
+{
+    switch (stage) {
+        case 0:
+            _focusImageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+            _focusImageView.alpha = 0.0;
+            _focusImageView.hidden = NO;
+            [self animateFocusImage:1];
+            break;
+            
+        case 1:
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 _focusImageView.transform = CGAffineTransformIdentity;
+                                 _focusImageView.alpha = 1.0;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:2];
+                             }];
+            break;
+            
+        case 2:
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 _focusImageView.alpha = 0.5;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:3];
+                             }];
+            break;
+            
+        case 3:
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 _focusImageView.alpha = 1.0;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:4];
+                             }];
+            break;
+            
+        case 4:
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 _focusImageView.alpha = 0.0;
+                             }
+                             completion:^(BOOL finished){
+                                 _focusImageView.hidden = YES;
+                             }];
+            break;
+    }
+}
+
+#pragma mark - focusImage methods
+
+- (void)setFocusImage:(UIImage *)focusImage
+{
+    CGPoint oldCenter = _focusImageView.center;
+    _focusImageView.image = focusImage;
+    _focusImageView.frame = CGRectMake(0, 0, _focusImageView.image.size.width, _focusImageView.image.size.height);
+    _focusImageView.center = oldCenter;
+}
+
+- (UIImage*)focusImage
+{
+    return _focusImageView.image;
 }
 
 #pragma mark - Dealloc
@@ -538,6 +625,8 @@
     [_audioInput release]; _audioInput = nil;
     [_stillImageOutput release]; _stillImageOutput = nil;
     [_movieFileOutput release]; _movieFileOutput = nil;
+    
+    [_focusImageView release]; _focusImageView = nil;
 }
 
 - (void)dealloc
