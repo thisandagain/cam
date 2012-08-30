@@ -47,6 +47,7 @@ typedef enum {
 @property (nonatomic, assign) DIYCamMode captureMode;
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, assign, readonly) BOOL isRecording;
+@property (nonatomic, retain) UIImage *focusImage;
 
 - (void)capturePhoto;
 - (void)captureVideoStart;
