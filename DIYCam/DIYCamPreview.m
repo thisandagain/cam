@@ -46,6 +46,13 @@
     return self;
 }
 
+#pragma mark - Public methods
+
+- (void)reset
+{
+    [self orientationDidChange];    // Force orientation check
+}
+
 #pragma mark - Private methods
 
 - (void)orientationDidChange
@@ -120,15 +127,9 @@
 
 #pragma mark - Dealloc
 
-- (void)releaseObjects
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)dealloc
 {
-    [self releaseObjects];
-    [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

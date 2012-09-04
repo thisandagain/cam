@@ -357,6 +357,8 @@
 		C36CA42C15A6443400529935 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cam/cam-Prefix.pch";
 				INFOPLIST_FILE = "cam/cam-Info.plist";
@@ -369,6 +371,8 @@
 		C36CA42D15A6443400529935 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cam/cam-Prefix.pch";
 				INFOPLIST_FILE = "cam/cam-Info.plist";

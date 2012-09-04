@@ -38,7 +38,6 @@
 {    
 	UIImagePickerController *picker     = [[UIImagePickerController alloc] init];
 	NSArray *sourceTypes                = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
-	[picker release];
     
 	if ([sourceTypes containsObject:(NSString *)kUTTypeMovie]) {
 		return true;
@@ -118,27 +117,18 @@
     CMTime thumbTime                    = CMTimeMakeWithSeconds(durationSeconds / 2.0, 600);
     
     // Generate
-    AVAssetImageGenerator *thumbnailGenerator   = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    __block AVAssetImageGenerator *thumbnailGenerator   = [[AVAssetImageGenerator alloc] initWithAsset:asset];
     thumbnailGenerator.maximumSize              = CGSizeMake(1280, 720);
     [thumbnailGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error) {
-        NSString *requestedTimeString = (NSString *)CMTimeCopyDescription(NULL, requestedTime);
-        NSString *actualTimeString = (NSString *)CMTimeCopyDescription(NULL, actualTime);
-        [requestedTimeString release];
-        [actualTimeString release];
+        thumbnailGenerator = nil;
         
-        //
-        
-        if (result != AVAssetImageGeneratorSucceeded) 
-        {
+        if (result != AVAssetImageGeneratorSucceeded) {
             failure([NSException exceptionWithName:@"" reason:@"Could not generate video thumbnail" userInfo:nil]);
         } else {
             UIImage *sim = [UIImage imageWithCGImage:im];
             NSData *data = UIImageJPEGRepresentation(sim, 0.7);
             success(sim, data);
         }
-        
-        [asset release];
-        [thumbnailGenerator release];
     }];
 }
 

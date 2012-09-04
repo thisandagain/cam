@@ -33,3 +33,10 @@
  * File I/O settings
  */
 #define SAVE_ASSET_LIBRARY true
+
+/**
+ * Output buffer settings
+ */
+#define OUTPUT_BUFFER true
+#define OUTPUT_BUFFER_DISCARD true
+#define OUTPUT_BUFFER_SETTINGS @{}

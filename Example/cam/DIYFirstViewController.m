@@ -10,10 +10,6 @@
 
 @implementation DIYFirstViewController
 
-@synthesize cam = _cam;
-@synthesize selector = _selector;
-@synthesize capture = _capture;
-
 #pragma mark - View lifecycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -47,7 +43,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
 #pragma mark - IBActions
@@ -128,9 +124,9 @@
 
 - (void)releaseObjects
 {    
-    [_cam release]; _cam = nil;
-    [_selector release]; _selector = nil;
-    [_capture release]; _capture = nil;
+    _cam = nil;
+    _selector = nil;
+    _capture = nil;
 }
 
 - (void)viewDidUnload
@@ -142,7 +138,6 @@
 - (void)dealloc
 {
     [self releaseObjects];
-    [super dealloc];
 }
 
 @end

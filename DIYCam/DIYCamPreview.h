@@ -11,4 +11,6 @@
 
 @interface DIYCamPreview : AVCaptureVideoPreviewLayer
 
+- (void)reset;
+
 @end

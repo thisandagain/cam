@@ -10,11 +10,6 @@
 
 @implementation DIYCamLibraryImageOperation
 
-@synthesize complete = _complete;
-@synthesize size = _size;
-@synthesize path = _path;
-@synthesize error = _error;
-
 #pragma mark - Init
 
 - (id)initWithData:(id)data
@@ -22,11 +17,12 @@
     self = [super init];
     if (!self) return nil;
     
-    dataset     = [data retain];
+    dataset     = data;
     _size       = [dataset length];
     _complete   = false;
     _path       = [[NSURL alloc] init];
     _error      = [[NSError alloc] init];
+    _library    = [[ALAssetsLibrary alloc] init];
     self.error  = NULL;
     
     return self;
@@ -37,15 +33,14 @@
 - (void)main
 {
     @try 
-    {        
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
-        [library writeImageDataToSavedPhotosAlbum:dataset metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-            self.path = assetURL;
-            self.error = error;
-            self.complete = true;
-        }];
-        [pool release];
+    {
+        @autoreleasepool {
+            [self.library writeImageDataToSavedPhotosAlbum:dataset metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+                self.path = assetURL;
+                self.error = error;
+                self.complete = true;
+            }];
+        }
     } @catch (NSException *exception) {
         [exception raise];
     }
@@ -53,17 +48,12 @@
 
 #pragma mark - Dealloc
 
-- (void)releaseObjects
-{
-    [dataset release]; dataset = nil;
-    [_path release]; _path = nil;
-    [_error release]; _error = nil;
-}
-
 - (void)dealloc
 {
-    [self releaseObjects];
-    [super dealloc];
+    dataset = nil;
+    _path = nil;
+    _error = nil;
+    _library = nil;
 }
 
 @end

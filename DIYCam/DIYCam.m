@@ -27,19 +27,6 @@
 
 @implementation DIYCam
 
-@synthesize delegate = _delegate;
-@synthesize captureMode = _captureMode;
-@synthesize session = _session;
-@synthesize isRecording = _isRecording;
-
-@synthesize ready = _ready;
-@synthesize queue = _queue;
-@synthesize preview = _preview;
-@synthesize videoInput = _videoInput;
-@synthesize audioInput = _audioInput;
-@synthesize stillImageOutput = _stillImageOutput;
-@synthesize movieFileOutput = _movieFileOutput;
-
 #pragma mark - Init
 
 - (void)_init
@@ -107,11 +94,14 @@
                 if (SAVE_ASSET_LIBRARY) {
                     DIYCamLibraryImageOperation *lop = [[DIYCamLibraryImageOperation alloc] initWithData:imageData];
                     [self.queue addOperation:lop];
-                    [lop release];
                 }
                  
                 // Save to application cache
                 DIYCamFileOperation *fop = [[DIYCamFileOperation alloc] initWithData:imageData forLocation:DIYCamFileLocationCache];
+                
+                // Completion block is manually nilled out to break the retain cycle 
+                #pragma clang diagnostic push
+                #pragma clang diagnostic ignored "-Warc-retain-cycles"
                 [fop setCompletionBlock:^{
                     if (fop.complete) {
                         [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:fop.path, @"path", @"image", @"type", nil]];
@@ -120,8 +110,9 @@
                     }
                     [fop setCompletionBlock:nil];
                 }];
+                #pragma clang diagnostic pop
+                
                 [self.queue addOperation:fop];
-                [fop release];
              } else {
                  [self.delegate camDidFail:self withError:error];
              }
@@ -139,13 +130,11 @@
         
         // Create URL to record to
         NSString *assetPath         = [DIYCamUtilities createAssetFilePath:@"mov"];
-        NSURL *outputURL            = [[[NSURL alloc] initFileURLWithPath:assetPath] autorelease];
+        NSURL *outputURL            = [[NSURL alloc] initFileURLWithPath:assetPath];
         NSFileManager *fileManager  = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:assetPath])
-        {
+        if ([fileManager fileExistsAtPath:assetPath]) {
             NSError *error;
-            if ([fileManager removeItemAtPath:assetPath error:&error] == NO)
-            {
+            if ([fileManager removeItemAtPath:assetPath error:&error] == NO) {
                 [[self delegate] camDidFail:self withError:error];
             }
         }
@@ -179,11 +168,9 @@
 {
     BOOL recordedSuccessfully = true;
     
-    if ([error code] != noErr)
-	{
+    if ([error code] != noErr) {
         id value = [[error userInfo] objectForKey:AVErrorRecordingSuccessfullyFinishedKey];
-        if (value)
-		{
+        if (value) {
             recordedSuccessfully = [value boolValue];
         }
     }
@@ -193,16 +180,18 @@
         [self.delegate camCaptureProcessing:self];
         
         // Asset library
-        if (SAVE_ASSET_LIBRARY) 
-        {  
+        if (SAVE_ASSET_LIBRARY) {  
             DIYCamLibraryVideoOperation *lOp = [[DIYCamLibraryVideoOperation alloc] initWithURL:outputFileURL];
             [self.queue addOperation:lOp];
-            [lOp release];
         }
         
         // Thumbnail
         [DIYCamUtilities generateVideoThumbnail:outputFileURL success:^(UIImage *image, NSData *data) {
             DIYCamFileOperation *fOp = [[DIYCamFileOperation alloc] initWithData:data forLocation:DIYCamFileLocationCache];
+            
+            // Completion block is manually nilled out to break the retain cycle
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Warc-retain-cycles"
             [fOp setCompletionBlock:^{
                 if (fOp.complete) {
                     [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:outputFileURL, @"path", @"video", @"type", fOp.path, @"thumb", nil]];
@@ -211,8 +200,9 @@
                 }
                 [fOp setCompletionBlock:nil];
             }];
+            #pragma clang diagnostic pop
+            
             [self.queue addOperation:fOp];
-            [fOp release];
         } failure:^(NSException *exception) {
             [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
         }];
@@ -308,7 +298,6 @@
     NSDictionary *stillOutputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
     self.stillImageOutput.outputSettings = stillOutputSettings;
     [self.session addOutput:self.stillImageOutput];
-    [stillOutputSettings release];
     
     // Preset
     // ---------------------------------
@@ -321,6 +310,7 @@
     // ---------------------------------
     self.preview.videoGravity   = AVLayerVideoGravityResizeAspectFill;
     self.preview.frame          = self.frame;
+    [self.preview reset];
     [self.layer addSublayer:self.preview];
     
     // Start session
@@ -405,6 +395,7 @@
     // ---------------------------------
     self.preview.videoGravity   = AVLayerVideoGravityResizeAspectFill;
     self.preview.frame          = self.frame;
+    [self.preview reset];
     [self.layer addSublayer:self.preview];
     
     // Start session
@@ -428,24 +419,18 @@
 
 #pragma mark - Dealloc
 
-- (void)releaseObjects
+- (void)dealloc
 {
     [self purgeMode];
     _delegate = nil;
     
-    [_session release]; _session = nil;
-    [_queue release]; _queue = nil;
-    [_preview release]; _preview = nil;
-    [_videoInput release]; _videoInput = nil;
-    [_audioInput release]; _audioInput = nil;
-    [_stillImageOutput release]; _stillImageOutput = nil;
-    [_movieFileOutput release]; _movieFileOutput = nil;
-}
-
-- (void)dealloc
-{
-    [self releaseObjects];
-    [super dealloc];
+    _session = nil;
+    _queue = nil;
+    _preview = nil;
+    _videoInput = nil;
+    _audioInput = nil;
+    _stillImageOutput = nil;
+    _movieFileOutput = nil;
 }
 
 @end

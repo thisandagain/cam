@@ -10,11 +10,6 @@
 
 @implementation DIYCamFileOperation
 
-@synthesize complete = _complete;
-@synthesize size = _size;
-@synthesize path = _path;
-@synthesize error = _error;
-
 #pragma mark - Init
 
 - (id)initWithData:(id)data forLocation:(DIYCamFileLocation)location
@@ -22,7 +17,7 @@
     self = [super init];
     if (!self) return nil;
     
-    dataset     = [data retain];
+    dataset     = data;
     _size       = [dataset length];
     _complete   = false;
     
@@ -40,10 +35,14 @@
 - (void)main
 {
     @try 
-    {        
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        self.complete = [dataset writeToURL:self.path options:NSDataWritingAtomic error:&_error];
-        [pool release];
+    {
+        @autoreleasepool {
+            NSError *error;
+            self.complete = [dataset writeToURL:self.path options:NSDataWritingAtomic error:&error];
+            if (error) {
+                self.error = error;
+            }
+        }
     } @catch (NSException *exception) {
         [exception raise];
     }
@@ -78,17 +77,11 @@
 
 #pragma mark - Dealloc
 
-- (void)releaseObjects
-{
-    [dataset release]; dataset = nil;
-    [_path release]; _path = nil;
-    [_error release]; _error = nil;
-}
-
 - (void)dealloc
 {
-    [self releaseObjects];
-    [super dealloc];
+    dataset = nil;
+    _path = nil;
+    _error = nil;
 }
 
 @end
