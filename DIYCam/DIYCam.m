@@ -516,9 +516,8 @@
         }
     }
     
-    CGPoint fuxedPoint = CGPointMake(1.0f - pointOfInterest.y, pointOfInterest.x);
-    NSLog(@"fuxedpoint of interest: %@", NSStringFromCGPoint(fuxedPoint));
-    return fuxedPoint;
+    CGPoint correctedPoint = CGPointMake(1.0f - pointOfInterest.y, pointOfInterest.x);
+    return correctedPoint;
 }
 
 - (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer
