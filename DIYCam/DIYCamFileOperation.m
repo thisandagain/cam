@@ -75,13 +75,4 @@
     return [NSURL fileURLWithPath:assetPath];
 }
 
-#pragma mark - Dealloc
-
-- (void)dealloc
-{
-    dataset = nil;
-    _path = nil;
-    _error = nil;
-}
-
 @end

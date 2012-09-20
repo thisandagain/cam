@@ -11,16 +11,16 @@
 //
 
 @interface DIYCam ()
-@property (nonatomic, assign, readwrite) BOOL isRecording;
+@property (assign, readwrite) BOOL isRecording;
 
-@property (nonatomic, assign) BOOL ready;
-@property (nonatomic, retain) NSOperationQueue *queue;
-@property (nonatomic, retain) DIYCamPreview *preview;
+@property BOOL ready;
+@property NSOperationQueue *queue;
+@property DIYCamPreview *preview;
 
-@property (atomic, retain) AVCaptureDeviceInput *videoInput;
-@property (atomic, retain) AVCaptureDeviceInput *audioInput;
-@property (atomic, retain) AVCaptureStillImageOutput *stillImageOutput;
-@property (atomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
+@property AVCaptureDeviceInput *videoInput;
+@property AVCaptureDeviceInput *audioInput;
+@property AVCaptureStillImageOutput *stillImageOutput;
+@property AVCaptureMovieFileOutput *movieFileOutput;
 @end
 
 //
@@ -422,15 +422,7 @@
 - (void)dealloc
 {
     [self purgeMode];
-    _delegate = nil;
-    
-    _session = nil;
-    _queue = nil;
-    _preview = nil;
-    _videoInput = nil;
-    _audioInput = nil;
-    _stillImageOutput = nil;
-    _movieFileOutput = nil;
+    self.delegate = nil;
 }
 
 @end
