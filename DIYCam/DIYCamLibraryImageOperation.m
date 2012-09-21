@@ -46,4 +46,11 @@
     }
 }
 
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    dataset = nil;
+}
+
 @end
