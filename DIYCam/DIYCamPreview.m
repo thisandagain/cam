@@ -54,12 +54,18 @@
 }
 
 #pragma mark - Private methods
-
+/*
+ NOTE: [AVCaptureVideoPreviewLayer isOrientationSupported] is deprecated in favor of
+        [AVCaptureVideoPreviewLayer connection].supportsVideoOrientation,
+        but [AVCaptureVideoPreviewLayer connection] is only available in iOS 6.
+        
+        Same for [AVCaptureVideoPreviewLayer orientation] / [AVCaptureVideoPreviewLayer connection].videoOrientation
+ */
 - (void)orientationDidChange
 {
     AVCaptureVideoOrientation newOrientation = DEVICE_ORIENTATION_DEFAULT;
 
-    if (!DEVICE_ORIENTATION_FORCE && self.connection.supportsVideoOrientation) {
+    if (!DEVICE_ORIENTATION_FORCE && self.orientationSupported) {
         UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
         
         switch (deviceOrientation) {
@@ -81,9 +87,9 @@
         }
     }
     
-    if (DEVICE_ORIENTATION_FORCE || self.connection.supportsVideoOrientation) {
+    if (DEVICE_ORIENTATION_FORCE || self.orientationSupported) {
         CGSize newSize = [self sizeForOrientation:[self isOrientationLandscape:newOrientation]];
-        self.connection.videoOrientation    = newOrientation;
+        self.orientation    = newOrientation;
         self.frame          = CGRectMake(0, 0, newSize.width, newSize.height);
     }
 }
