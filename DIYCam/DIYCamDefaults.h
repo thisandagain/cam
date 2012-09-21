@@ -11,7 +11,7 @@
  */
 #define DEVICE_FLASH false
 #define DEVICE_DISK_MINIMUM 49999872
-#define DEVICE_ORIENTATION_FORCE true
+#define DEVICE_ORIENTATION_FORCE false
 #define DEVICE_ORIENTATION_DEFAULT AVCaptureVideoOrientationLandscapeRight
 #define DEVICE_POSITION AVCaptureDevicePositionBack
 

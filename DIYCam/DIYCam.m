@@ -11,16 +11,18 @@
 //
 
 @interface DIYCam ()
-@property (nonatomic, assign, readwrite) BOOL isRecording;
+@property (assign, readwrite) BOOL isRecording;
 
-@property (nonatomic, assign) BOOL ready;
-@property (nonatomic, retain) NSOperationQueue *queue;
-@property (nonatomic, retain) DIYCamPreview *preview;
+@property BOOL ready;
+@property NSOperationQueue *queue;
+@property DIYCamPreview *preview;
 
-@property (atomic, retain) AVCaptureDeviceInput *videoInput;
-@property (atomic, retain) AVCaptureDeviceInput *audioInput;
-@property (atomic, retain) AVCaptureStillImageOutput *stillImageOutput;
-@property (atomic, retain) AVCaptureMovieFileOutput *movieFileOutput;
+@property AVCaptureDeviceInput *videoInput;
+@property AVCaptureDeviceInput *audioInput;
+@property AVCaptureStillImageOutput *stillImageOutput;
+@property AVCaptureMovieFileOutput *movieFileOutput;
+@property UIImageView *focusImageView;
+
 @end
 
 //
@@ -46,6 +48,14 @@
     _audioInput             = nil;
     _stillImageOutput       = [[AVCaptureStillImageOutput alloc] init];
     _movieFileOutput        = [[AVCaptureMovieFileOutput alloc] init];
+    
+    
+    UIImage *defaultImage   = [UIImage imageNamed:@"focus_indicator@2x.png"];
+    _focusImageView         = [[UIImageView alloc] initWithImage:defaultImage];
+    self.focusImageView.frame   = CGRectMake(0, 0, defaultImage.size.width, defaultImage.size.height);
+        
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(focusAtTap:)];
+    [self addGestureRecognizer:tap];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -246,6 +256,11 @@
             break;
     }
     
+    // Tap to focus indicator
+    // -------------------------------------
+    self.focusImageView.hidden = YES;
+    [self addSubview:self.focusImageView];
+        
     [self.delegate camModeDidChange:self mode:captureMode];
 }
 
@@ -417,20 +432,178 @@
     }
 }
 
+#pragma mark - Focusing
+
+// Convert from view coordinates to camera coordinates, where {0,0} represents the top left of the picture area, and {1,1} represents
+// the bottom right in landscape mode with the home button on the right.
+- (CGPoint)convertToPointOfInterestFromViewCoordinates:(CGPoint)viewCoordinates
+{
+    CGPoint pointOfInterest = CGPointMake(.5f, .5f);
+    CGSize frameSize = self.frame.size;
+    
+    if (self.preview.isMirrored) {
+        viewCoordinates.x = frameSize.width - viewCoordinates.x;
+    }
+    
+    if ([self.preview.videoGravity isEqualToString:AVLayerVideoGravityResize]) {
+		// Scale, switch x and y, and reverse x
+        pointOfInterest = CGPointMake(viewCoordinates.y / frameSize.height, 1.f - (viewCoordinates.x / frameSize.width));
+    } else {
+        CGRect cleanAperture;
+        for (AVCaptureInputPort *port in self.videoInput.ports) {
+            if (port.mediaType == AVMediaTypeVideo) {
+                cleanAperture = CMVideoFormatDescriptionGetCleanAperture([port formatDescription], YES);
+                CGSize apertureSize = cleanAperture.size;
+                CGPoint point = viewCoordinates;
+                
+                CGFloat apertureRatio = apertureSize.height / apertureSize.width;
+                CGFloat viewRatio = frameSize.width / frameSize.height;
+                CGFloat xc = .5f;
+                CGFloat yc = .5f;
+                
+                if ([self.preview.videoGravity isEqualToString:AVLayerVideoGravityResizeAspect]) {
+                    if (viewRatio > apertureRatio) {
+                        CGFloat y2 = frameSize.height;
+                        CGFloat x2 = frameSize.height * apertureRatio;
+                        CGFloat x1 = frameSize.width;
+                        CGFloat blackBar = (x1 - x2) / 2;
+						// If point is inside letterboxed area, do coordinate conversion; otherwise, don't change the default value returned (.5,.5)
+                        if (point.x >= blackBar && point.x <= blackBar + x2) {
+							// Scale (accounting for the letterboxing on the left and right of the video preview), switch x and y, and reverse x
+                            xc = point.y / y2;
+                            yc = 1.f - ((point.x - blackBar) / x2);
+                        }
+                    } else {
+                        CGFloat y2 = frameSize.width / apertureRatio;
+                        CGFloat y1 = frameSize.height;
+                        CGFloat x2 = frameSize.width;
+                        CGFloat blackBar = (y1 - y2) / 2;
+						// If point is inside letterboxed area, do coordinate conversion. Otherwise, don't change the default value returned (.5,.5)
+                        if (point.y >= blackBar && point.y <= blackBar + y2) {
+							// Scale (accounting for the letterboxing on the top and bottom of the video preview), switch x and y, and reverse x
+                            xc = ((point.y - blackBar) / y2);
+                            yc = 1.f - (point.x / x2);
+                        }
+                    }
+                } else if ([self.preview.videoGravity isEqualToString:AVLayerVideoGravityResizeAspectFill]) {
+					// Scale, switch x and y, and reverse x
+                    if (viewRatio > apertureRatio) {
+                        CGFloat y2 = apertureSize.width * (frameSize.width / apertureSize.height);
+                        xc = (point.y + ((y2 - frameSize.height) / 2.f)) / y2; // Account for cropped height
+                        yc = (frameSize.width - point.x) / frameSize.width;
+                    } else {
+                        CGFloat x2 = apertureSize.height * (frameSize.height / apertureSize.width);
+                        yc = 1.f - ((point.x + ((x2 - frameSize.width) / 2)) / x2); // Account for cropped width
+                        xc = point.y / frameSize.height;
+                    }
+                }
+                
+                pointOfInterest = CGPointMake(xc, yc);
+                break;
+            }
+        }
+    }
+    
+    CGPoint correctedPoint = CGPointMake(1.0f - pointOfInterest.y, pointOfInterest.x);
+    return correctedPoint;
+}
+
+- (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer
+{  
+    if (self.videoInput.device.isFocusPointOfInterestSupported && [self.videoInput.device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+        CGPoint tapPoint = [gestureRecognizer locationInView:self];
+        CGPoint focusPoint = [self convertToPointOfInterestFromViewCoordinates:tapPoint];
+        NSError *error;
+        if ([self.videoInput.device lockForConfiguration:&error]) {
+            self.videoInput.device.focusPointOfInterest = focusPoint;
+            self.videoInput.device.focusMode = AVCaptureFocusModeAutoFocus;
+            [self.videoInput.device unlockForConfiguration];
+        }
+        else {
+            [self.delegate camDidFail:self withError:error];
+        }
+        
+        self.focusImageView.center = tapPoint;
+        [self animateFocusImage:0];
+        
+    }
+    
+}
+
+- (void)animateFocusImage:(int)stage
+{
+    switch (stage) {
+        case 0: {
+            self.focusImageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+            self.focusImageView.alpha = 0.0;
+            self.focusImageView.hidden = NO;
+            [self animateFocusImage:1];
+        }
+            break;
+            
+        case 1: {
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.focusImageView.transform = CGAffineTransformIdentity;
+                                 self.focusImageView.alpha = 1.0;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:2];
+                             }];
+        }
+            break;
+            
+        case 2: {
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.focusImageView.alpha = 0.5;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:3];
+                             }];
+        }
+            break;
+            
+        case 3: {
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.focusImageView.alpha = 1.0;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:4];
+                             }];
+        }
+            break;
+            
+        case 4: {
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.focusImageView.alpha = 0.0;
+                             }
+                             completion:^(BOOL finished){
+                                 self.focusImageView.hidden = YES;
+                             }];
+        }
+            break;
+    }
+}
+
+#pragma mark - focusImage methods
+
+- (void)setFocusImage:(UIImage *)focusImage
+{
+    CGPoint oldCenter = self.focusImageView.center;
+    self.focusImageView.image = focusImage;
+    self.focusImageView.frame = CGRectMake(0, 0, self.focusImageView.image.size.width, self.focusImageView.image.size.height);
+    self.focusImageView.center = oldCenter;
+}
+
 #pragma mark - Dealloc
 
 - (void)dealloc
 {
     [self purgeMode];
-    _delegate = nil;
-    
-    _session = nil;
-    _queue = nil;
-    _preview = nil;
-    _videoInput = nil;
-    _audioInput = nil;
-    _stillImageOutput = nil;
-    _movieFileOutput = nil;
+    self.delegate = nil;
 }
 
 @end

@@ -80,8 +80,6 @@
 - (void)dealloc
 {
     dataset = nil;
-    _path = nil;
-    _error = nil;
 }
 
 @end
