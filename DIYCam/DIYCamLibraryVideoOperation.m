@@ -43,13 +43,4 @@
     }
 }
 
-#pragma mark - Dealloc
-
-- (void)dealloc
-{
-    _path = nil;
-    _error = nil;
-    _library = nil;
-}
-
 @end

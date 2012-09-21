@@ -54,7 +54,13 @@
 }
 
 #pragma mark - Private methods
-
+/*
+ NOTE: [AVCaptureVideoPreviewLayer isOrientationSupported] is deprecated in favor of
+        [AVCaptureVideoPreviewLayer connection].supportsVideoOrientation,
+        but [AVCaptureVideoPreviewLayer connection] is only available in iOS 6.
+        
+        Same for [AVCaptureVideoPreviewLayer orientation] / [AVCaptureVideoPreviewLayer connection].videoOrientation
+ */
 - (void)orientationDidChange
 {
     AVCaptureVideoOrientation newOrientation = DEVICE_ORIENTATION_DEFAULT;

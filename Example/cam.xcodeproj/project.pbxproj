@@ -35,6 +35,7 @@
 		C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */; };
 		DE26EABE15B76FAA008AF717 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE26EABD15B76FAA008AF717 /* CoreMedia.framework */; };
 		DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */; };
+		DEB86A0E160BF5C4001A3C9E /* focus_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,7 @@
 		DE26EABD15B76FAA008AF717 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		DE26EABF15B78740008AF717 /* DIYCamLibraryVideoOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamLibraryVideoOperation.h; path = ../DIYCam/DIYCamLibraryVideoOperation.h; sourceTree = "<group>"; };
 		DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamLibraryVideoOperation.m; path = ../DIYCam/DIYCamLibraryVideoOperation.m; sourceTree = "<group>"; };
+		DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "focus_indicator@2x.png"; path = "../DIYCam/focus_indicator@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 				C3626FA815A6A3A300543864 /* DIYCamLibraryImageOperation.m */,
 				DE26EABF15B78740008AF717 /* DIYCamLibraryVideoOperation.h */,
 				DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */,
+				DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */,
 			);
 			name = DIYCam;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				C36CA43A15A6505900529935 /* README.md in Resources */,
 				C36CA43C15A6506B00529935 /* DIYCam.podspec in Resources */,
 				C3626F9C15A69C8300543864 /* CHANGES.md in Resources */,
+				DEB86A0E160BF5C4001A3C9E /* focus_indicator@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
