@@ -49,7 +49,6 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(focusAtTap:)];
     [self addGestureRecognizer:tap];
-    [tap release];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -493,9 +492,8 @@
         }
     }
     
-    CGPoint fuxedPoint = CGPointMake(1.0f - pointOfInterest.y, pointOfInterest.x);
-    NSLog(@"fuxedpoint of interest: %@", NSStringFromCGPoint(fuxedPoint));
-    return fuxedPoint;
+    CGPoint correctedPoint = CGPointMake(1.0f - pointOfInterest.y, pointOfInterest.x);
+    return correctedPoint;
 }
 
 - (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer
