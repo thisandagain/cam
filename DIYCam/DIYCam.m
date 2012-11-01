@@ -308,6 +308,7 @@
     if (videoDevice) {
         NSError *error;
         self.videoInput             = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+        [DIYCamUtilities setHighISO:DEVICE_HI_ISO];
         if (!error) {
             if ([self.session canAddInput:self.videoInput]) {
                 [self.session addInput:self.videoInput];
@@ -360,6 +361,7 @@
     if (videoDevice) {
         NSError *error;
         self.videoInput             = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+        [DIYCamUtilities setHighISO:DEVICE_HI_ISO];
         if (!error) {
             if ([self.session canAddInput:self.videoInput]) {
                 [self.session addInput:self.videoInput];

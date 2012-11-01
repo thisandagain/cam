@@ -14,6 +14,7 @@
 #define DEVICE_ORIENTATION_FORCE true
 #define DEVICE_ORIENTATION_DEFAULT AVCaptureVideoOrientationLandscapeRight
 #define DEVICE_POSITION AVCaptureDevicePositionBack
+#define DEVICE_HI_ISO true
 
 /**
  * Photo settings
