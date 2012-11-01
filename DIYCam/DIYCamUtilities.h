@@ -18,6 +18,7 @@
 + (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
 
 + (void)setFlash:(BOOL)flash;
++ (void)setHighISO:(BOOL)highISO;
 
 + (NSString *)createAssetFilePath:(NSString *)extension;
 + (void)generateVideoThumbnail:(NSURL *)url success:(void (^)(UIImage *image, NSData *data))success failure:(void (^)(NSException *exception))failure;
