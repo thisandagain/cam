@@ -93,7 +93,17 @@
                     [[self camera] setTorchMode:AVCaptureTorchModeOff];
                 }
             }
-            [[DIYCamUtilities camera] unlockForConfiguration];
+            [[self camera] unlockForConfiguration];
+        }
+    }
+}
+
++ (void)setHighISO:(BOOL)highISO
+{
+    if ([[self camera] respondsToSelector:@selector(isLowLightBoostSupported)]) {
+        if ([[self camera] lockForConfiguration:nil]) {
+            [self camera].automaticallyEnablesLowLightBoostWhenAvailable = highISO;
+            [[self camera] unlockForConfiguration];
         }
     }
 }
