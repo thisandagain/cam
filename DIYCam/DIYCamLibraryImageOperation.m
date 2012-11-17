@@ -46,9 +46,7 @@
             self.complete = true;
         }];
         [pool release];
-    } @catch (NSException *exception) {
-        [exception raise];
-    }
+    } @catch (NSException *exception) { }
 }
 
 #pragma mark - Dealloc
