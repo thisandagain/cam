@@ -100,7 +100,7 @@
 + (void)setHighISO:(BOOL)highISO
 {
     if ([[self camera] respondsToSelector:@selector(isLowLightBoostSupported)]) {
-        if ([[self camera] lockForConfiguration:nil]) {
+        if ([[self camera] lockForConfiguration:nil] && [self camera].isLowLightBoostSupported) {
             [self camera].automaticallyEnablesLowLightBoostWhenAvailable = highISO;
             [[self camera] unlockForConfiguration];
         }
