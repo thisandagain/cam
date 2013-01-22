@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DIYCam.h"
 
-@interface DIYFirstViewController : UIViewController <DIYCamDelegate>
+@interface DIYFirstViewController : UIViewController <DIYCamDelegate, UIGestureRecognizerDelegate>
 
 @property IBOutlet DIYCam *cam;
 @property IBOutlet UISegmentedControl *selector;

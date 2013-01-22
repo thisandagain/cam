@@ -12,11 +12,11 @@
 
 @interface DIYCam ()
 @property (assign, readwrite) BOOL isRecording;
-
-@property BOOL ready;
 @property NSOperationQueue *queue;
 @property DIYCamPreview *preview;
+@property (nonatomic) DIYCamMode captureMode;
 
+@property AVCaptureSession *session;
 @property AVCaptureDeviceInput *videoInput;
 @property AVCaptureDeviceInput *audioInput;
 @property AVCaptureStillImageOutput *stillImageOutput;
@@ -39,7 +39,6 @@
     _captureMode            = DIYCamModePhoto;
     _session                = [[AVCaptureSession alloc] init];
 
-    _ready                  = false;
     _queue                  = [[NSOperationQueue alloc] init];
     self.queue.maxConcurrentOperationCount = 4;
     _preview                = [[DIYCamPreview alloc] initWithSession:_session];
@@ -71,6 +70,35 @@
 }
 
 #pragma mark - Public methods
+
+- (BOOL)getRecordingStatus
+{
+    return self.isRecording;
+}
+
+- (void)startSession
+{
+    if (self.session != nil && !self.session.isRunning) {
+        [self.session startRunning];
+    }
+}
+
+- (void)stopSession
+{
+    if (self.session != nil && self.session.isRunning) {
+        [self.session stopRunning];
+    }
+}
+
+- (DIYCamMode)getCamMode
+{
+    return self.captureMode;
+}
+
+- (void)setCamMode:(DIYCamMode)mode
+{
+    self.captureMode = mode;
+}
 
 - (void)capturePhoto
 {
@@ -407,20 +435,6 @@
     // Start session
     // ---------------------------------
     [self startSession];
-}
-
-- (void)startSession
-{
-    if (self.session != nil && !self.session.isRunning) {
-        [self.session startRunning];
-    }
-}
-
-- (void)stopSession
-{
-    if (self.session != nil && self.session.isRunning) {
-        [self.session stopRunning];
-    }
 }
 
 #pragma mark - Focusing

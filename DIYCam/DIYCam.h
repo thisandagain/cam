@@ -44,10 +44,15 @@ typedef enum {
 @interface DIYCam : UIView <AVCaptureFileOutputRecordingDelegate>
 
 @property (weak) id<DIYCamDelegate> delegate;
-@property (nonatomic) DIYCamMode captureMode;
-@property AVCaptureSession *session;
-@property (assign, readonly) BOOL isRecording;
 
+#pragma mark - Status
+- (BOOL)getRecordingStatus;
+- (void)stopSession;
+- (void)startSession;
+- (DIYCamMode)getCamMode;
+- (void)setCamMode:(DIYCamMode)mode;
+
+#pragma mark - Capture
 - (void)capturePhoto;
 - (void)captureVideoStart;
 - (void)captureVideoStop;

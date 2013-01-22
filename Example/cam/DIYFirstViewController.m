@@ -30,7 +30,7 @@
 	
     // Setup cam
     self.cam.delegate       = self;
-    self.cam.captureMode    = DIYCamModePhoto;
+    [self.cam setCamMode:DIYCamModePhoto];
     
     // Tap to focus indicator
     // -------------------------------------
@@ -41,10 +41,12 @@
     [self.view addSubview:self.focusImageView];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(focusAtTap:)];
+    tap.delegate = self;
+    tap.cancelsTouchesInView = false;
     [self.cam addGestureRecognizer:tap];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [self.view bringSubviewToFront:self.focusImageView];
 }
@@ -65,11 +67,11 @@
 
 - (IBAction)capturePhoto:(id)sender
 {
-    if (self.cam.captureMode == DIYCamModePhoto) {
+    if ([self.cam getCamMode] == DIYCamModePhoto) {
         [self.cam capturePhoto];
     }
     else {
-        if (self.cam.isRecording) {
+        if ([self.cam getRecordingStatus]) {
             [self.cam captureVideoStop];
         }
         else {
@@ -82,10 +84,10 @@
 {
     switch (self.selector.selectedSegmentIndex) {
         case 0:
-            self.cam.captureMode = DIYCamModePhoto;
+            [self.cam setCamMode:DIYCamModePhoto];
             break;
         case 1:
-            self.cam.captureMode = DIYCamModeVideo;
+            [self.cam setCamMode:DIYCamModeVideo];
             break;
         default:
             [NSException raise:@"SelectorOutOfBounds" format:@"Selector changed to %d, which is out of bounds", self.selector.selectedSegmentIndex];
@@ -201,6 +203,17 @@
         }
             break;
     }
+}
+
+#pragma mark - UIGestureRecognizer Delegate
+
+// We're running two UIGestureRecognizers attached to cam at once. One has this
+// ViewController as its target to handle the UI display side. The other is internal
+// to cam and actually adjusts the focus. Implementing this delegate method allows
+// both gesture regonizers to fire with the same tap.
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return true;
 }
 
 #pragma mark - Dealloc
