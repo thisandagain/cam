@@ -31,13 +31,28 @@
     // Setup cam
     self.cam.delegate       = self;
     self.cam.captureMode    = DIYCamModePhoto;
+    
+    // Tap to focus indicator
+    // -------------------------------------
+    UIImage *defaultImage   = [UIImage imageNamed:@"focus_indicator@2x.png"];
+    _focusImageView         = [[UIImageView alloc] initWithImage:defaultImage];
+    self.focusImageView.frame   = CGRectMake(0, 0, defaultImage.size.width, defaultImage.size.height);
+    self.focusImageView.hidden = YES;
+    [self.view addSubview:self.focusImageView];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(focusAtTap:)];
+    [self.cam addGestureRecognizer:tap];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.view bringSubviewToFront:self.focusImageView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     
-    [self releaseObjects];
     self.view = nil;
 }
 
@@ -120,24 +135,81 @@
     NSLog(@"Capture complete. Asset: %@", asset);
 }
 
-#pragma mark - Dealloc
+#pragma mark - UIGesture
 
-- (void)releaseObjects
-{    
-    _cam = nil;
-    _selector = nil;
-    _capture = nil;
-}
-
-- (void)viewDidUnload
+- (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer
 {
-    [super viewDidUnload];
-    [self releaseObjects];
+    self.focusImageView.center = [gestureRecognizer locationInView:self.cam];
+    [self animateFocusImage:0];
 }
+
+#pragma mark - Focus reticle
+
+- (void)animateFocusImage:(int)stage
+{
+    switch (stage) {
+        case 0: {
+            self.focusImageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+            self.focusImageView.alpha = 0.0;
+            self.focusImageView.hidden = NO;
+            [self animateFocusImage:1];
+        }
+            break;
+            
+        case 1: {
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.focusImageView.transform = CGAffineTransformIdentity;
+                                 self.focusImageView.alpha = 1.0;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:2];
+                             }];
+        }
+            break;
+            
+        case 2: {
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.focusImageView.alpha = 0.5;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:3];
+                             }];
+        }
+            break;
+            
+        case 3: {
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.focusImageView.alpha = 1.0;
+                             }
+                             completion:^(BOOL finished){
+                                 [self animateFocusImage:4];
+                             }];
+        }
+            break;
+            
+        case 4: {
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.focusImageView.alpha = 0.0;
+                             }
+                             completion:^(BOOL finished){
+                                 self.focusImageView.hidden = YES;
+                             }];
+        }
+            break;
+    }
+}
+
+#pragma mark - Dealloc
 
 - (void)dealloc
 {
-    [self releaseObjects];
+    _cam = nil;
+    _selector = nil;
+    _capture = nil;
 }
 
 @end
