@@ -1,7 +1,5 @@
 ## Cam
-#### A "keep it simple, stupid" approach to working with AVFoundation
-
-DIYCam is a high-level layer built on top of AVFoundation that enables simple setup and implementation of photo and video capture within iOS.
+#### A drop-in module to get you working with DIYAV in a jiffy
 
 ## Getting Started
 The easiest way to get going with DIYCam is to take a look at the included example application. The XCode project file can be found at `Example > cam.xcodeproj`.
@@ -40,6 +38,12 @@ Default configuration settings can be modified within DIYCamDefaults.h where opt
 - (void)capturePhoto;
 - (void)captureVideoStart;
 - (void)captureVideoStop;
+
+- (BOOL)getRecordingStatus;
+- (void)stopSession;
+- (void)startSession;
+- (DIYCamMode)getCamMode;
+- (void)setCamMode:(DIYCamMode)mode;
 ```
 
 ## Delegate Methods
@@ -59,9 +63,6 @@ Default configuration settings can be modified within DIYCamDefaults.h where opt
 ## Properties
 ```objective-c
 @property (nonatomic, assign) id<DIYCamDelegate> delegate;
-@property (nonatomic, assign) DIYCamMode captureMode;
-@property (nonatomic, retain) AVCaptureSession *session;
-@property (nonatomic, assign, readonly) BOOL isRecording;
 ```
 
 ---
