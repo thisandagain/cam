@@ -30,7 +30,7 @@
 	
     // Setup cam
     self.cam.delegate       = self;
-    [self.cam setCamMode:DIYCamModePhoto];
+    [self.cam setCamMode:DIYAVModePhoto];
     
     // Tap to focus indicator
     // -------------------------------------
@@ -67,7 +67,7 @@
 
 - (IBAction)capturePhoto:(id)sender
 {
-    if ([self.cam getCamMode] == DIYCamModePhoto) {
+    if ([self.cam getCamMode] == DIYAVModePhoto) {
         [self.cam capturePhoto];
     }
     else {
@@ -84,10 +84,10 @@
 {
     switch (self.selector.selectedSegmentIndex) {
         case 0:
-            [self.cam setCamMode:DIYCamModePhoto];
+            [self.cam setCamMode:DIYAVModePhoto];
             break;
         case 1:
-            [self.cam setCamMode:DIYCamModeVideo];
+            [self.cam setCamMode:DIYAVModeVideo];
             break;
         default:
             [NSException raise:@"SelectorOutOfBounds" format:@"Selector changed to %d, which is out of bounds", self.selector.selectedSegmentIndex];
@@ -107,12 +107,12 @@
     NSLog(@"Fail");
 }
 
-- (void)camModeWillChange:(DIYCam *)cam mode:(DIYCamMode)mode
+- (void)camModeWillChange:(DIYCam *)cam mode:(DIYAVMode)mode
 {
     NSLog(@"Mode will change");
 }
 
-- (void)camModeDidChange:(DIYCam *)cam mode:(DIYCamMode)mode
+- (void)camModeDidChange:(DIYCam *)cam mode:(DIYAVMode)mode
 {
     NSLog(@"Mode did change");
 }

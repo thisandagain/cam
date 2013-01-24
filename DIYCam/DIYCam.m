@@ -13,7 +13,6 @@
 //
 
 @interface DIYCam ()
-@property (assign, readwrite) BOOL isRecording;
 @property NSOperationQueue *queue;
 @property DIYAV *diyAV;
 @end
@@ -28,6 +27,10 @@
 {
     // Defaults
     self.backgroundColor    = [UIColor blackColor];
+    
+    //DIYAV
+    _diyAV                  = [[DIYAV alloc] init];
+    self.diyAV.delegate     = self;
 
     // Queue
     _queue                  = [[NSOperationQueue alloc] init];
@@ -60,7 +63,7 @@
 
 - (BOOL)getRecordingStatus
 {
-    return self.isRecording;
+    return self.diyAV.isRecording;
 }
 
 - (void)startSession
@@ -73,12 +76,12 @@
     [self.diyAV stopSession];
 }
 
-- (DIYCamMode)getCamMode
+- (DIYAVMode)getCamMode
 {
-    return self.captureMode;
+    return self.diyAV.captureMode;
 }
 
-- (void)setCamMode:(DIYCamMode)mode
+- (void)setCamMode:(DIYAVMode)mode
 {
     self.captureMode = mode;
 }
@@ -99,6 +102,47 @@
 }
 
 #pragma mark - DIYAVdelegate
+
+- (void)AVReady:(DIYAV *)av
+{
+    [self.delegate camReady:self];
+}
+
+- (void)AVDidFail:(DIYAV *)av withError:(NSError *)error
+{
+    [self.delegate camDidFail:self withError:error];
+}
+
+- (void)AVModeWillChange:(DIYAV *)av mode:(DIYAVMode)mode
+{
+    [self.delegate camModeWillChange:self mode:mode];
+}
+
+- (void)AVModeDidChange:(DIYAV *)av mode:(DIYAVMode)mode
+{
+    [self.delegate camModeDidChange:self mode:mode];
+}
+
+- (void)AVCaptureStarted:(DIYAV *)av
+{
+    [self.delegate camCaptureStarted:self];
+}
+
+- (void)AVCaptureStopped:(DIYAV *)av
+{
+    [self.delegate camCaptureStopped:self];
+}
+
+- (void)AVCaptureProcessing:(DIYAV *)av
+{
+    [self.delegate camCaptureProcessing:self];
+}
+
+- (void)AVAttachPreviewLayer:(CALayer *)layer
+{
+    layer.frame = self.frame;
+    [self.layer addSublayer:layer];
+}
 
 - (void)AVCaptureOutputStill:(CMSampleBufferRef)imageDataSampleBuffer withError:(NSError *)error
 {
@@ -137,8 +181,7 @@
     }
 }
 
-#pragma mark - AVCaptureFileOutputRecordingDelegate
-- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
+- (void)AVcaptureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
 {
     BOOL recordedSuccessfully = true;
     
@@ -189,7 +232,7 @@
 
 #pragma mark - Override
 
-- (void)setCaptureMode:(DIYCamMode)captureMode
+- (void)setCaptureMode:(DIYAVMode)captureMode
 {
     self.diyAV.captureMode = captureMode;
 }
@@ -207,7 +250,6 @@
 
 - (void)dealloc
 {
-    [self purgeMode];
     self.delegate = nil;
 }
 

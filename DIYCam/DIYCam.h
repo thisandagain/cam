@@ -9,18 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-#import "DIYCamDefaults.h"
+#import "DIYAV.h"
 #import "DIYCamUtilities.h"
 #import "DIYCamFileOperation.h"
 #import "DIYCamLibraryImageOperation.h"
 #import "DIYCamLibraryVideoOperation.h"
 
 //
-
-typedef enum {
-    DIYCamModePhoto,
-    DIYCamModeVideo
-} DIYCamMode;
 
 @class DIYCam;
 
@@ -29,8 +24,8 @@ typedef enum {
 - (void)camReady:(DIYCam *)cam;
 - (void)camDidFail:(DIYCam *)cam withError:(NSError *)error;
 
-- (void)camModeWillChange:(DIYCam *)cam mode:(DIYCamMode)mode;
-- (void)camModeDidChange:(DIYCam *)cam mode:(DIYCamMode)mode;
+- (void)camModeWillChange:(DIYCam *)cam mode:(DIYAVMode)mode;
+- (void)camModeDidChange:(DIYCam *)cam mode:(DIYAVMode)mode;
 
 - (void)camCaptureStarted:(DIYCam *)cam;
 - (void)camCaptureStopped:(DIYCam *)cam;
@@ -40,7 +35,7 @@ typedef enum {
 
 //
 
-@interface DIYCam : UIView <AVCaptureFileOutputRecordingDelegate>
+@interface DIYCam : UIView <DIYAVDelegate>
 
 @property (weak) id<DIYCamDelegate> delegate;
 
@@ -48,8 +43,8 @@ typedef enum {
 - (BOOL)getRecordingStatus;
 - (void)stopSession;
 - (void)startSession;
-- (DIYCamMode)getCamMode;
-- (void)setCamMode:(DIYCamMode)mode;
+- (DIYAVMode)getCamMode;
+- (void)setCamMode:(DIYAVMode)mode;
 
 #pragma mark - Capture
 - (void)capturePhoto;

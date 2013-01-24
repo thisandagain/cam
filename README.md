@@ -13,7 +13,7 @@ In order to use DIYCam, you'll want to add the entirety of the `DIYCam` director
 ```objective-c
 DIYCam *cam         = [[DIYCam alloc] initWithFrame:self.view.frame];
 cam.delegate        = self;
-cam.captureMode     = DIYCamModePhoto;
+cam.captureMode     = DIYAVModePhoto;
 [self.view addSubview:cam];
 ```
 
@@ -42,8 +42,8 @@ Default configuration settings can be modified within DIYCamDefaults.h where opt
 - (BOOL)getRecordingStatus;
 - (void)stopSession;
 - (void)startSession;
-- (DIYCamMode)getCamMode;
-- (void)setCamMode:(DIYCamMode)mode;
+- (DIYAVMode)getCamMode;
+- (void)setCamMode:(DIYAVMode)mode;
 ```
 
 ## Delegate Methods
@@ -51,8 +51,8 @@ Default configuration settings can be modified within DIYCamDefaults.h where opt
 - (void)camReady:(DIYCam *)cam;
 - (void)camDidFail:(DIYCam *)cam withError:(NSError *)error;
 
-- (void)camModeWillChange:(DIYCam *)cam mode:(DIYCamMode)mode;
-- (void)camModeDidChange:(DIYCam *)cam mode:(DIYCamMode)mode;
+- (void)camModeWillChange:(DIYCam *)cam mode:(DIYAVMode)mode;
+- (void)camModeDidChange:(DIYCam *)cam mode:(DIYAVMode)mode;
 
 - (void)camCaptureStarted:(DIYCam *)cam;
 - (void)camCaptureStopped:(DIYCam *)cam;
