@@ -34,6 +34,10 @@
 		C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */; };
 		DE26EABE15B76FAA008AF717 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE26EABD15B76FAA008AF717 /* CoreMedia.framework */; };
 		DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */; };
+		DE3D0AB716B1FA5600EBC528 /* Underscore+Functional.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3D0AAE16B1FA5600EBC528 /* Underscore+Functional.m */; };
+		DE3D0AB816B1FA5600EBC528 /* Underscore.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3D0AB116B1FA5600EBC528 /* Underscore.m */; };
+		DE3D0AB916B1FA5600EBC528 /* USArrayWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3D0AB316B1FA5600EBC528 /* USArrayWrapper.m */; };
+		DE3D0ABA16B1FA5600EBC528 /* USDictionaryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3D0AB616B1FA5600EBC528 /* USDictionaryWrapper.m */; };
 		DEB86A0E160BF5C4001A3C9E /* focus_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */; };
 		DEEE486916B0CA640019F37C /* DIYAV.m in Sources */ = {isa = PBXBuildFile; fileRef = DEEE486316B0CA640019F37C /* DIYAV.m */; };
 		DEEE486A16B0CA640019F37C /* DIYAVPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = DEEE486616B0CA640019F37C /* DIYAVPreview.m */; };
@@ -71,7 +75,6 @@
 		C36CA43715A6505900529935 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		C36CA43815A6505900529935 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C36CA43B15A6506B00529935 /* DIYCam.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DIYCam.podspec; path = ../DIYCam.podspec; sourceTree = "<group>"; };
-		C36CA44315A66C6900529935 /* DIYCamDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamDefaults.h; path = ../DIYCam/DIYCamDefaults.h; sourceTree = "<group>"; };
 		C3A284EB15A7B1A400D0C221 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		C3A284ED15A7B3A800D0C221 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -80,6 +83,16 @@
 		DE26EABD15B76FAA008AF717 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		DE26EABF15B78740008AF717 /* DIYCamLibraryVideoOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamLibraryVideoOperation.h; path = ../DIYCam/DIYCamLibraryVideoOperation.h; sourceTree = "<group>"; };
 		DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamLibraryVideoOperation.m; path = ../DIYCam/DIYCamLibraryVideoOperation.m; sourceTree = "<group>"; };
+		DE3D0AAD16B1FA5600EBC528 /* Underscore+Functional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Underscore+Functional.h"; sourceTree = "<group>"; };
+		DE3D0AAE16B1FA5600EBC528 /* Underscore+Functional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Underscore+Functional.m"; sourceTree = "<group>"; };
+		DE3D0AAF16B1FA5600EBC528 /* Underscore-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Underscore-Prefix.pch"; sourceTree = "<group>"; };
+		DE3D0AB016B1FA5600EBC528 /* Underscore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Underscore.h; sourceTree = "<group>"; };
+		DE3D0AB116B1FA5600EBC528 /* Underscore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Underscore.m; sourceTree = "<group>"; };
+		DE3D0AB216B1FA5600EBC528 /* USArrayWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USArrayWrapper.h; sourceTree = "<group>"; };
+		DE3D0AB316B1FA5600EBC528 /* USArrayWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USArrayWrapper.m; sourceTree = "<group>"; };
+		DE3D0AB416B1FA5600EBC528 /* USConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USConstants.h; sourceTree = "<group>"; };
+		DE3D0AB516B1FA5600EBC528 /* USDictionaryWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDictionaryWrapper.h; sourceTree = "<group>"; };
+		DE3D0AB616B1FA5600EBC528 /* USDictionaryWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USDictionaryWrapper.m; sourceTree = "<group>"; };
 		DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "focus_indicator@2x.png"; path = "../DIYCam/focus_indicator@2x.png"; sourceTree = "<group>"; };
 		DEEE486216B0CA640019F37C /* DIYAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAV.h; sourceTree = "<group>"; };
 		DEEE486316B0CA640019F37C /* DIYAV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIYAV.m; sourceTree = "<group>"; };
@@ -190,7 +203,6 @@
 			children = (
 				C36CA43315A64A8700529935 /* DIYCam.h */,
 				C36CA43415A64A8700529935 /* DIYCam.m */,
-				C36CA44315A66C6900529935 /* DIYCamDefaults.h */,
 				C3DAD29115A92CB600A218DF /* DIYCamUtilities.h */,
 				C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */,
 				C3626FA415A6A38800543864 /* DIYCamFileOperation.h */,
@@ -204,9 +216,35 @@
 			name = DIYCam;
 			sourceTree = "<group>";
 		};
+		DE3D0AAB16B1FA5600EBC528 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				DE3D0AAC16B1FA5600EBC528 /* Underscore */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		DE3D0AAC16B1FA5600EBC528 /* Underscore */ = {
+			isa = PBXGroup;
+			children = (
+				DE3D0AAD16B1FA5600EBC528 /* Underscore+Functional.h */,
+				DE3D0AAE16B1FA5600EBC528 /* Underscore+Functional.m */,
+				DE3D0AAF16B1FA5600EBC528 /* Underscore-Prefix.pch */,
+				DE3D0AB016B1FA5600EBC528 /* Underscore.h */,
+				DE3D0AB116B1FA5600EBC528 /* Underscore.m */,
+				DE3D0AB216B1FA5600EBC528 /* USArrayWrapper.h */,
+				DE3D0AB316B1FA5600EBC528 /* USArrayWrapper.m */,
+				DE3D0AB416B1FA5600EBC528 /* USConstants.h */,
+				DE3D0AB516B1FA5600EBC528 /* USDictionaryWrapper.h */,
+				DE3D0AB616B1FA5600EBC528 /* USDictionaryWrapper.m */,
+			);
+			path = Underscore;
+			sourceTree = "<group>";
+		};
 		DEEE486116B0CA640019F37C /* DIYAV */ = {
 			isa = PBXGroup;
 			children = (
+				DE3D0AAB16B1FA5600EBC528 /* lib */,
 				DEEE486216B0CA640019F37C /* DIYAV.h */,
 				DEEE486316B0CA640019F37C /* DIYAV.m */,
 				DEEE486416B0CA640019F37C /* DIYAVDefaults.h */,
@@ -305,6 +343,10 @@
 				DEEE486916B0CA640019F37C /* DIYAV.m in Sources */,
 				DEEE486A16B0CA640019F37C /* DIYAVPreview.m in Sources */,
 				DEEE486B16B0CA640019F37C /* DIYAVUtilities.m in Sources */,
+				DE3D0AB716B1FA5600EBC528 /* Underscore+Functional.m in Sources */,
+				DE3D0AB816B1FA5600EBC528 /* Underscore.m in Sources */,
+				DE3D0AB916B1FA5600EBC528 /* USArrayWrapper.m in Sources */,
+				DE3D0ABA16B1FA5600EBC528 /* USDictionaryWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

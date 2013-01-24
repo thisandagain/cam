@@ -21,10 +21,10 @@ typedef enum {
     id dataset;
 }
 
-@property BOOL complete;
-@property NSUInteger size;
-@property NSURL *path;
-@property NSError *error;
+@property BOOL          complete;
+@property NSUInteger    size;
+@property NSURL         *path;
+@property NSError       *error;
 
 - (id)initWithData:(id)data forLocation:(DIYCamFileLocation)location;
 + (NSURL *)generatePathForLocation:(DIYCamFileLocation)location;

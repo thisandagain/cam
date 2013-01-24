@@ -13,8 +13,8 @@
 //
 
 @interface DIYCam ()
-@property NSOperationQueue *queue;
-@property DIYAV *diyAV;
+@property NSOperationQueue  *queue;
+@property DIYAV             *diyAV;
 @end
 
 //
@@ -27,10 +27,6 @@
 {
     // Defaults
     self.backgroundColor    = [UIColor blackColor];
-    
-    //DIYAV
-    _diyAV                  = [[DIYAV alloc] init];
-    self.diyAV.delegate     = self;
 
     // Queue
     _queue                  = [[NSOperationQueue alloc] init];
@@ -60,6 +56,13 @@
 }
 
 #pragma mark - Public methods
+
+- (void)setupWithOptions:(NSDictionary *)options
+{
+    //DIYAV
+    _diyAV                  = [[DIYAV alloc] initWithOptions:options];
+    self.diyAV.delegate     = self;
+}
 
 - (BOOL)getRecordingStatus
 {

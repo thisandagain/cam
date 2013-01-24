@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 DIY, Co. All rights reserved.
 //
 
-#import "DIYCamDefaults.h"
 #import "DIYCamUtilities.h"
 
 @implementation DIYCamUtilities
