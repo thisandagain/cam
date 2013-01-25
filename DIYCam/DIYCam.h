@@ -41,10 +41,11 @@
 
 #pragma mark - Status
 - (BOOL)getRecordingStatus;
-- (void)stopSession;
-- (void)startSession;
 - (DIYAVMode)getCamMode;
 - (void)setCamMode:(DIYAVMode)mode;
+
+- (void)stopSession;
+- (void)startSession;
 
 #pragma mark - Capture
 - (void)capturePhoto;

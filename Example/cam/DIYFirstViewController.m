@@ -216,13 +216,4 @@
     return true;
 }
 
-#pragma mark - Dealloc
-
-- (void)dealloc
-{
-    _cam = nil;
-    _selector = nil;
-    _capture = nil;
-}
-
 @end
