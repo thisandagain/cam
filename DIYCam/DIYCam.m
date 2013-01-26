@@ -37,6 +37,15 @@
     [self addGestureRecognizer:tap];
 }
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self _init];
+    }
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -59,7 +68,9 @@
 
 - (void)setupWithOptions:(NSDictionary *)options
 {
-    //DIYAV
+    if (!options) {
+        options = @{};
+    }
     _diyAV                  = [[DIYAV alloc] initWithOptions:options];
     self.diyAV.delegate     = self;
 }
@@ -106,10 +117,12 @@
 
 #pragma mark - DIYAVdelegate
 
-- (void)AVReady:(DIYAV *)av
+- (void)AVAttachPreviewLayer:(CALayer *)layer
 {
-    [self.delegate camReady:self];
+    layer.frame = self.frame;
+    [self.layer addSublayer:layer];
 }
+
 
 - (void)AVDidFail:(DIYAV *)av withError:(NSError *)error
 {
@@ -136,18 +149,7 @@
     [self.delegate camCaptureStopped:self];
 }
 
-- (void)AVCaptureProcessing:(DIYAV *)av
-{
-    [self.delegate camCaptureProcessing:self];
-}
-
-- (void)AVAttachPreviewLayer:(CALayer *)layer
-{
-    layer.frame = self.frame;
-    [self.layer addSublayer:layer];
-}
-
-- (void)AVCaptureOutputStill:(CMSampleBufferRef)imageDataSampleBuffer withError:(NSError *)error
+- (void)AVCaptureOutputStill:(CMSampleBufferRef)imageDataSampleBuffer shouldSaveToLibrary:(BOOL)shouldSaveToLibrary withError:(NSError *)error
 {
     [self.delegate camCaptureProcessing:self];
     
@@ -157,7 +159,7 @@
         NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
         
         // Save to asset library
-        if (SAVE_ASSET_LIBRARY) {
+        if (shouldSaveToLibrary) {
             DIYCamLibraryImageOperation *lop = [[DIYCamLibraryImageOperation alloc] initWithData:imageData];
             [self.queue addOperation:lop];
         }
@@ -184,7 +186,7 @@
     }
 }
 
-- (void)AVcaptureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
+- (void)AVcaptureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL shouldSaveToLibrary:(BOOL)shouldSaveToLibrary fromConnections:(NSArray *)connections error:(NSError *)error
 {
     BOOL recordedSuccessfully = true;
     
@@ -200,7 +202,7 @@
         [self.delegate camCaptureProcessing:self];
         
         // Asset library
-        if (SAVE_ASSET_LIBRARY) {  
+        if (shouldSaveToLibrary) {
             DIYCamLibraryVideoOperation *lOp = [[DIYCamLibraryVideoOperation alloc] initWithURL:outputFileURL];
             [self.queue addOperation:lOp];
         }

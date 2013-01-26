@@ -21,7 +21,6 @@
 
 @protocol DIYCamDelegate <NSObject>
 @required
-- (void)camReady:(DIYCam *)cam;
 - (void)camDidFail:(DIYCam *)cam withError:(NSError *)error;
 
 - (void)camModeWillChange:(DIYCam *)cam mode:(DIYAVMode)mode;
@@ -44,10 +43,10 @@
 - (DIYAVMode)getCamMode;
 - (void)setCamMode:(DIYAVMode)mode;
 
+#pragma mark - Capture
 - (void)stopSession;
 - (void)startSession;
 
-#pragma mark - Capture
 - (void)capturePhoto;
 - (void)captureVideoStart;
 - (void)captureVideoStop;
