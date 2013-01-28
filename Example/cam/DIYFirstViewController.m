@@ -30,6 +30,7 @@
 	
     // Setup cam
     self.cam.delegate       = self;
+    [self.cam setupWithOptions:nil];
     [self.cam setCamMode:DIYAVModePhoto];
     
     // Tap to focus indicator

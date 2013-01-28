@@ -38,6 +38,8 @@
 
 @property (weak) id<DIYCamDelegate> delegate;
 
+- (void)setupWithOptions:(NSDictionary *)options;
+
 #pragma mark - Status
 - (BOOL)getRecordingStatus;
 - (DIYAVMode)getCamMode;
