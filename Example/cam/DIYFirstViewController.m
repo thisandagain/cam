@@ -143,67 +143,25 @@
 - (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer
 {
     self.focusImageView.center = [gestureRecognizer locationInView:self.cam];
-    [self animateFocusImage:0];
+    [self animateFocusImage];
 }
 
 #pragma mark - Focus reticle
 
-- (void)animateFocusImage:(int)stage
+- (void)animateFocusImage
 {
-    switch (stage) {
-        case 0: {
-            self.focusImageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+    self.focusImageView.alpha = 0.0;
+    self.focusImageView.hidden = false;
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.focusImageView.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2 animations:^{
             self.focusImageView.alpha = 0.0;
-            self.focusImageView.hidden = NO;
-            [self animateFocusImage:1];
-        }
-            break;
-            
-        case 1: {
-            [UIView animateWithDuration:0.2
-                             animations:^{
-                                 self.focusImageView.transform = CGAffineTransformIdentity;
-                                 self.focusImageView.alpha = 1.0;
-                             }
-                             completion:^(BOOL finished){
-                                 [self animateFocusImage:2];
-                             }];
-        }
-            break;
-            
-        case 2: {
-            [UIView animateWithDuration:0.2
-                             animations:^{
-                                 self.focusImageView.alpha = 0.5;
-                             }
-                             completion:^(BOOL finished){
-                                 [self animateFocusImage:3];
-                             }];
-        }
-            break;
-            
-        case 3: {
-            [UIView animateWithDuration:0.2
-                             animations:^{
-                                 self.focusImageView.alpha = 1.0;
-                             }
-                             completion:^(BOOL finished){
-                                 [self animateFocusImage:4];
-                             }];
-        }
-            break;
-            
-        case 4: {
-            [UIView animateWithDuration:0.2
-                             animations:^{
-                                 self.focusImageView.alpha = 0.0;
-                             }
-                             completion:^(BOOL finished){
-                                 self.focusImageView.hidden = YES;
-                             }];
-        }
-            break;
-    }
+        } completion:^(BOOL finished) {
+            self.focusImageView.hidden = true;
+        }];
+    }];
 }
 
 #pragma mark - UIGestureRecognizer Delegate
