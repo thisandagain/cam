@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C3297D0115A955A80094BE12 /* DIYCamPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = C3297D0015A955A80094BE12 /* DIYCamPreview.m */; };
 		C3626F9C15A69C8300543864 /* CHANGES.md in Resources */ = {isa = PBXBuildFile; fileRef = C3626F9B15A69C8300543864 /* CHANGES.md */; };
 		C3626FA615A6A38800543864 /* DIYCamFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3626FA515A6A38800543864 /* DIYCamFileOperation.m */; };
 		C3626FA915A6A3A300543864 /* DIYCamLibraryImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3626FA815A6A3A300543864 /* DIYCamLibraryImageOperation.m */; };
@@ -35,12 +34,17 @@
 		C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */; };
 		DE26EABE15B76FAA008AF717 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE26EABD15B76FAA008AF717 /* CoreMedia.framework */; };
 		DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */; };
+		DE70BC9C16B71B33008E9170 /* DIYAV.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC8A16B71B33008E9170 /* DIYAV.m */; };
+		DE70BC9D16B71B33008E9170 /* DIYAVPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC8D16B71B33008E9170 /* DIYAVPreview.m */; };
+		DE70BC9E16B71B33008E9170 /* DIYAVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC8F16B71B33008E9170 /* DIYAVUtilities.m */; };
+		DE70BC9F16B71B33008E9170 /* Underscore+Functional.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC9316B71B33008E9170 /* Underscore+Functional.m */; };
+		DE70BCA016B71B33008E9170 /* Underscore.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC9616B71B33008E9170 /* Underscore.m */; };
+		DE70BCA116B71B33008E9170 /* USArrayWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC9816B71B33008E9170 /* USArrayWrapper.m */; };
+		DE70BCA216B71B33008E9170 /* USDictionaryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC9B16B71B33008E9170 /* USDictionaryWrapper.m */; };
 		DEB86A0E160BF5C4001A3C9E /* focus_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C3297CFF15A955A80094BE12 /* DIYCamPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamPreview.h; path = ../DIYCam/DIYCamPreview.h; sourceTree = "<group>"; };
-		C3297D0015A955A80094BE12 /* DIYCamPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamPreview.m; path = ../DIYCam/DIYCamPreview.m; sourceTree = "<group>"; };
 		C3626F9B15A69C8300543864 /* CHANGES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CHANGES.md; path = ../CHANGES.md; sourceTree = "<group>"; };
 		C3626FA415A6A38800543864 /* DIYCamFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamFileOperation.h; path = ../DIYCam/DIYCamFileOperation.h; sourceTree = "<group>"; };
 		C3626FA515A6A38800543864 /* DIYCamFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamFileOperation.m; path = ../DIYCam/DIYCamFileOperation.m; sourceTree = "<group>"; };
@@ -71,7 +75,6 @@
 		C36CA43715A6505900529935 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		C36CA43815A6505900529935 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C36CA43B15A6506B00529935 /* DIYCam.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DIYCam.podspec; path = ../DIYCam.podspec; sourceTree = "<group>"; };
-		C36CA44315A66C6900529935 /* DIYCamDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamDefaults.h; path = ../DIYCam/DIYCamDefaults.h; sourceTree = "<group>"; };
 		C3A284EB15A7B1A400D0C221 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		C3A284ED15A7B3A800D0C221 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C3A284EF15A7BD5E00D0C221 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -80,6 +83,23 @@
 		DE26EABD15B76FAA008AF717 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		DE26EABF15B78740008AF717 /* DIYCamLibraryVideoOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamLibraryVideoOperation.h; path = ../DIYCam/DIYCamLibraryVideoOperation.h; sourceTree = "<group>"; };
 		DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamLibraryVideoOperation.m; path = ../DIYCam/DIYCamLibraryVideoOperation.m; sourceTree = "<group>"; };
+		DE70BC8916B71B33008E9170 /* DIYAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAV.h; sourceTree = "<group>"; };
+		DE70BC8A16B71B33008E9170 /* DIYAV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIYAV.m; sourceTree = "<group>"; };
+		DE70BC8B16B71B33008E9170 /* DIYAVDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAVDefaults.h; sourceTree = "<group>"; };
+		DE70BC8C16B71B33008E9170 /* DIYAVPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAVPreview.h; sourceTree = "<group>"; };
+		DE70BC8D16B71B33008E9170 /* DIYAVPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIYAVPreview.m; sourceTree = "<group>"; };
+		DE70BC8E16B71B33008E9170 /* DIYAVUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAVUtilities.h; sourceTree = "<group>"; };
+		DE70BC8F16B71B33008E9170 /* DIYAVUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIYAVUtilities.m; sourceTree = "<group>"; };
+		DE70BC9216B71B33008E9170 /* Underscore+Functional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Underscore+Functional.h"; sourceTree = "<group>"; };
+		DE70BC9316B71B33008E9170 /* Underscore+Functional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Underscore+Functional.m"; sourceTree = "<group>"; };
+		DE70BC9416B71B33008E9170 /* Underscore-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Underscore-Prefix.pch"; sourceTree = "<group>"; };
+		DE70BC9516B71B33008E9170 /* Underscore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Underscore.h; sourceTree = "<group>"; };
+		DE70BC9616B71B33008E9170 /* Underscore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Underscore.m; sourceTree = "<group>"; };
+		DE70BC9716B71B33008E9170 /* USArrayWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USArrayWrapper.h; sourceTree = "<group>"; };
+		DE70BC9816B71B33008E9170 /* USArrayWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USArrayWrapper.m; sourceTree = "<group>"; };
+		DE70BC9916B71B33008E9170 /* USConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USConstants.h; sourceTree = "<group>"; };
+		DE70BC9A16B71B33008E9170 /* USDictionaryWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDictionaryWrapper.h; sourceTree = "<group>"; };
+		DE70BC9B16B71B33008E9170 /* USDictionaryWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USDictionaryWrapper.m; sourceTree = "<group>"; };
 		DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "focus_indicator@2x.png"; path = "../DIYCam/focus_indicator@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +124,7 @@
 		C36CA3F415A6443400529935 = {
 			isa = PBXGroup;
 			children = (
+				DE70BC8816B71B33008E9170 /* DIYAV */,
 				C3AC9C1815AF2DFA00A23E6F /* DIYCam */,
 				C3626F9B15A69C8300543864 /* CHANGES.md */,
 				C36CA43715A6505900529935 /* LICENSE.md */,
@@ -182,9 +203,6 @@
 			children = (
 				C36CA43315A64A8700529935 /* DIYCam.h */,
 				C36CA43415A64A8700529935 /* DIYCam.m */,
-				C36CA44315A66C6900529935 /* DIYCamDefaults.h */,
-				C3297CFF15A955A80094BE12 /* DIYCamPreview.h */,
-				C3297D0015A955A80094BE12 /* DIYCamPreview.m */,
 				C3DAD29115A92CB600A218DF /* DIYCamUtilities.h */,
 				C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */,
 				C3626FA415A6A38800543864 /* DIYCamFileOperation.h */,
@@ -196,6 +214,47 @@
 				DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */,
 			);
 			name = DIYCam;
+			sourceTree = "<group>";
+		};
+		DE70BC8816B71B33008E9170 /* DIYAV */ = {
+			isa = PBXGroup;
+			children = (
+				DE70BC8916B71B33008E9170 /* DIYAV.h */,
+				DE70BC8A16B71B33008E9170 /* DIYAV.m */,
+				DE70BC8B16B71B33008E9170 /* DIYAVDefaults.h */,
+				DE70BC8C16B71B33008E9170 /* DIYAVPreview.h */,
+				DE70BC8D16B71B33008E9170 /* DIYAVPreview.m */,
+				DE70BC8E16B71B33008E9170 /* DIYAVUtilities.h */,
+				DE70BC8F16B71B33008E9170 /* DIYAVUtilities.m */,
+				DE70BC9016B71B33008E9170 /* lib */,
+			);
+			name = DIYAV;
+			path = ../av/DIYAV;
+			sourceTree = "<group>";
+		};
+		DE70BC9016B71B33008E9170 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				DE70BC9116B71B33008E9170 /* Underscore */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		DE70BC9116B71B33008E9170 /* Underscore */ = {
+			isa = PBXGroup;
+			children = (
+				DE70BC9216B71B33008E9170 /* Underscore+Functional.h */,
+				DE70BC9316B71B33008E9170 /* Underscore+Functional.m */,
+				DE70BC9416B71B33008E9170 /* Underscore-Prefix.pch */,
+				DE70BC9516B71B33008E9170 /* Underscore.h */,
+				DE70BC9616B71B33008E9170 /* Underscore.m */,
+				DE70BC9716B71B33008E9170 /* USArrayWrapper.h */,
+				DE70BC9816B71B33008E9170 /* USArrayWrapper.m */,
+				DE70BC9916B71B33008E9170 /* USConstants.h */,
+				DE70BC9A16B71B33008E9170 /* USDictionaryWrapper.h */,
+				DE70BC9B16B71B33008E9170 /* USDictionaryWrapper.m */,
+			);
+			path = Underscore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,8 +339,14 @@
 				C3626FA615A6A38800543864 /* DIYCamFileOperation.m in Sources */,
 				C3626FA915A6A3A300543864 /* DIYCamLibraryImageOperation.m in Sources */,
 				C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */,
-				C3297D0115A955A80094BE12 /* DIYCamPreview.m in Sources */,
 				DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */,
+				DE70BC9C16B71B33008E9170 /* DIYAV.m in Sources */,
+				DE70BC9D16B71B33008E9170 /* DIYAVPreview.m in Sources */,
+				DE70BC9E16B71B33008E9170 /* DIYAVUtilities.m in Sources */,
+				DE70BC9F16B71B33008E9170 /* Underscore+Functional.m in Sources */,
+				DE70BCA016B71B33008E9170 /* Underscore.m in Sources */,
+				DE70BCA116B71B33008E9170 /* USArrayWrapper.m in Sources */,
+				DE70BCA216B71B33008E9170 /* USDictionaryWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
