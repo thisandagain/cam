@@ -44,7 +44,6 @@
             }
         }
     } @catch (NSException *exception) {
-        [exception raise];
     }
 }
 

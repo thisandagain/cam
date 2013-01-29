@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "DIYCam.h"
 
-@interface DIYFirstViewController : UIViewController <DIYCamDelegate>
+@interface DIYFirstViewController : UIViewController <DIYCamDelegate, UIGestureRecognizerDelegate>
 
-@property (nonatomic, retain) IBOutlet DIYCam *cam;
-@property (nonatomic, retain) IBOutlet UISegmentedControl *selector;
-@property (nonatomic, retain) IBOutlet UIButton *capture;
+@property IBOutlet DIYCam *cam;
+@property IBOutlet UISegmentedControl *selector;
+@property IBOutlet UIButton *capture;
+@property UIImageView *focusImageView;
 
 - (IBAction)capturePhoto:(id)sender;
 

@@ -11,10 +11,10 @@
 
 @interface DIYCamLibraryVideoOperation : NSOperation
 
-@property BOOL complete;
-@property NSURL *path;
-@property NSError *error;
-@property ALAssetsLibrary *library;
+@property BOOL              complete;
+@property NSURL             *path;
+@property NSError           *error;
+@property ALAssetsLibrary   *library;
 
 - (id)initWithURL:(id)videoURL;
 
