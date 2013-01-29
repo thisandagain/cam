@@ -14,10 +14,11 @@
     id dataset;
 }
 
-@property (atomic, assign) BOOL complete;
-@property (atomic, assign) NSUInteger size;
-@property (atomic, retain) NSURL *path;
-@property (atomic, retain) NSError *error;
+@property BOOL              complete;
+@property NSUInteger        size;
+@property NSURL             *path;
+@property NSError           *error;
+@property ALAssetsLibrary   *library;
 
 - (id)initWithData:(id)data;
 

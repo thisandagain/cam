@@ -14,26 +14,16 @@
 
 @implementation DIYAppDelegate
 
-@synthesize window = _window;
-@synthesize tabBarController = _tabBarController;
-
-- (void)dealloc
-{
-    [_window release];
-    [_tabBarController release];
-    [super dealloc];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
-    UIViewController *viewController1 = [[[DIYFirstViewController alloc] initWithNibName:@"DIYFirstViewController" bundle:nil] autorelease];
-    UIViewController *viewController2 = [[[DIYSecondViewController alloc] initWithNibName:@"DIYSecondViewController" bundle:nil] autorelease];
-    self.tabBarController = [[[UITabBarController alloc] init] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIViewController *viewController1 = [[DIYFirstViewController alloc] initWithNibName:@"DIYFirstViewController" bundle:nil];
+    UIViewController *viewController2 = [[DIYSecondViewController alloc] initWithNibName:@"DIYSecondViewController" bundle:nil];
+    self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

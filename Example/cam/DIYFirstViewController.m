@@ -10,10 +10,6 @@
 
 @implementation DIYFirstViewController
 
-@synthesize cam = _cam;
-@synthesize selector = _selector;
-@synthesize capture = _capture;
-
 #pragma mark - View lifecycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,31 +30,49 @@
 	
     // Setup cam
     self.cam.delegate       = self;
-    self.cam.captureMode    = DIYCamModePhoto;
+    [self.cam setupWithOptions:nil];
+    [self.cam setCamMode:DIYAVModePhoto];
+    
+    // Tap to focus indicator
+    // -------------------------------------
+    UIImage *defaultImage   = [UIImage imageNamed:@"focus_indicator@2x.png"];
+    _focusImageView         = [[UIImageView alloc] initWithImage:defaultImage];
+    self.focusImageView.frame   = CGRectMake(0, 0, defaultImage.size.width, defaultImage.size.height);
+    self.focusImageView.hidden = YES;
+    [self.view addSubview:self.focusImageView];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(focusAtTap:)];
+    tap.delegate = self;
+    tap.cancelsTouchesInView = false;
+    [self.cam addGestureRecognizer:tap];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.view bringSubviewToFront:self.focusImageView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     
-    [self releaseObjects];
     self.view = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return true;
 }
 
 #pragma mark - IBActions
 
 - (IBAction)capturePhoto:(id)sender
 {
-    if (self.cam.captureMode == DIYCamModePhoto) {
+    if ([self.cam getCamMode] == DIYAVModePhoto) {
         [self.cam capturePhoto];
     }
     else {
-        if (self.cam.isRecording) {
+        if ([self.cam getRecordingStatus]) {
             [self.cam captureVideoStop];
         }
         else {
@@ -71,10 +85,10 @@
 {
     switch (self.selector.selectedSegmentIndex) {
         case 0:
-            self.cam.captureMode = DIYCamModePhoto;
+            [self.cam setCamMode:DIYAVModePhoto];
             break;
         case 1:
-            self.cam.captureMode = DIYCamModeVideo;
+            [self.cam setCamMode:DIYAVModeVideo];
             break;
         default:
             [NSException raise:@"SelectorOutOfBounds" format:@"Selector changed to %d, which is out of bounds", self.selector.selectedSegmentIndex];
@@ -94,12 +108,12 @@
     NSLog(@"Fail");
 }
 
-- (void)camModeWillChange:(DIYCam *)cam mode:(DIYCamMode)mode
+- (void)camModeWillChange:(DIYCam *)cam mode:(DIYAVMode)mode
 {
     NSLog(@"Mode will change");
 }
 
-- (void)camModeDidChange:(DIYCam *)cam mode:(DIYCamMode)mode
+- (void)camModeDidChange:(DIYCam *)cam mode:(DIYAVMode)mode
 {
     NSLog(@"Mode did change");
 }
@@ -124,25 +138,41 @@
     NSLog(@"Capture complete. Asset: %@", asset);
 }
 
-#pragma mark - Dealloc
+#pragma mark - UIGesture
 
-- (void)releaseObjects
-{    
-    [_cam release]; _cam = nil;
-    [_selector release]; _selector = nil;
-    [_capture release]; _capture = nil;
+- (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer
+{
+    self.focusImageView.center = [gestureRecognizer locationInView:self.cam];
+    [self animateFocusImage];
 }
 
-- (void)viewDidUnload
+#pragma mark - Focus reticle
+
+- (void)animateFocusImage
 {
-    [super viewDidUnload];
-    [self releaseObjects];
+    self.focusImageView.alpha = 0.0;
+    self.focusImageView.hidden = false;
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.focusImageView.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.focusImageView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            self.focusImageView.hidden = true;
+        }];
+    }];
 }
 
-- (void)dealloc
+#pragma mark - UIGestureRecognizer Delegate
+
+// We're running two UIGestureRecognizers attached to cam at once. One has this
+// ViewController as its target to handle the UI display side. The other is internal
+// to cam and actually adjusts the focus. Implementing this delegate method allows
+// both gesture regonizers to fire with the same tap.
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    [self releaseObjects];
-    [super dealloc];
+    return true;
 }
 
 @end
