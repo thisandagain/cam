@@ -1,5 +1,5 @@
 ## Cam
-#### A drop-in module to get you working with DIYAV in a jiffy
+#### A turn-key camera capture solution built on top of DIYAV (on top of AVFoundation), enabling simple setup and implementation of photo and video capture within iOS.
 
 ## Getting Started
 The easiest way to get going with DIYCam is to take a look at the included example application. The XCode project file can be found at `Example > cam.xcodeproj`.
