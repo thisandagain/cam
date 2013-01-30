@@ -1,0 +1,3 @@
+[submodule "av"]
+	path = av
+	url = git://github.com/diy/av.git
