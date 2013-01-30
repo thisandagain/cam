@@ -1,5 +1,13 @@
 # Revision History
 
+## v1.1.0
+- Stripped UI-level stuff out of Cam
+- Cam is now a frontend to DIYAV
+
+## v1.1.0
+- Migrated to ARC
+- Various minor performance and usability improvements
+
 ## v1.0.4
 - Allow for camera position control (front / back)
 - Various static analysis fixes from XCode 4.4.X
