@@ -30,26 +30,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
-#pragma mark - Dealloc
-
-- (void)releaseObjects
-{
-    
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    [self releaseObjects];
-}
-
-- (void)dealloc
-{
-    [self releaseObjects];
-    [super dealloc];
+    return true;
 }
 
 @end
