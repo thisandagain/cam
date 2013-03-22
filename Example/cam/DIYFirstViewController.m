@@ -96,6 +96,16 @@
     }
 }
 
+- (IBAction)toggleFlash:(id)sender
+{
+    //
+}
+
+- (IBAction)flipCamera:(id)sender
+{
+    //
+}
+
 #pragma mark - DIYCamDelegate
 
 - (void)camReady:(DIYCam *)cam
