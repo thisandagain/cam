@@ -98,7 +98,14 @@
 
 - (IBAction)toggleFlash:(id)sender
 {
-    //
+    if ([self.cam getFlash]) {
+        [self.cam setFlash:false];
+        [self.flash setTitle:@"Flash Off" forState:UIControlStateNormal];
+    }
+    else {
+        [self.cam setFlash:true];
+        [self.flash setTitle:@"Flash On" forState:UIControlStateNormal];
+    }
 }
 
 - (IBAction)flipCamera:(id)sender
