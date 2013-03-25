@@ -44,6 +44,8 @@
 - (BOOL)getRecordingStatus;
 - (DIYAVMode)getCamMode;
 - (void)setCamMode:(DIYAVMode)mode;
+- (BOOL)getFlash;
+- (void)setFlash:(BOOL)flash;
 
 #pragma mark - Capture
 - (void)stopSession;

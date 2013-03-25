@@ -100,6 +100,16 @@
     self.captureMode = mode;
 }
 
+- (BOOL)getFlash
+{
+    return self.diyAV.flash;
+}
+
+- (void)setFlash:(BOOL)flash
+{
+    [self.diyAV setFlash:flash];
+}
+
 - (void)capturePhoto
 {
     [self.diyAV capturePhoto];

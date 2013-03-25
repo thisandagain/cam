@@ -14,6 +14,8 @@
 @property IBOutlet DIYCam *cam;
 @property IBOutlet UISegmentedControl *selector;
 @property IBOutlet UIButton *capture;
+@property IBOutlet UIButton *flash;
+@property IBOutlet UIButton *flip;
 @property UIImageView *focusImageView;
 
 - (IBAction)capturePhoto:(id)sender;
