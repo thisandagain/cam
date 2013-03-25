@@ -1,6 +1,10 @@
 # Revision History
 
 ## v1.1.0
+- Stripped UI-level stuff out of Cam
+- Cam is now a frontend to DIYAV
+
+## v1.1.0
 - Migrated to ARC
 - Various minor performance and usability improvements
 
