@@ -46,6 +46,7 @@
 - (void)setCamMode:(DIYAVMode)mode;
 - (BOOL)getFlash;
 - (void)setFlash:(BOOL)flash;
+- (void)flipCamera;
 
 #pragma mark - Capture
 - (void)stopSession;
