@@ -30,7 +30,7 @@
 	
     // Setup cam
     self.cam.delegate       = self;
-    [self.cam setupWithOptions:nil];
+    [self.cam setupWithOptions:@{DIYAVSettingCameraPosition : [NSNumber numberWithInt:AVCaptureDevicePositionFront] }];
     [self.cam setCamMode:DIYAVModePhoto];
     
     // Tap to focus indicator
@@ -110,7 +110,7 @@
 
 - (IBAction)flipCamera:(id)sender
 {
-    //
+    [self.cam flipCamera];
 }
 
 #pragma mark - DIYCamDelegate

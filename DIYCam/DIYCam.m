@@ -110,6 +110,16 @@
     [self.diyAV setFlash:flash];
 }
 
+- (void)flipCamera
+{
+    if (self.diyAV.cameraPosition == AVCaptureDevicePositionFront) {
+        self.diyAV.cameraPosition = AVCaptureDevicePositionBack;
+    }
+    else {
+        self.diyAV.cameraPosition = AVCaptureDevicePositionFront;
+    }
+}
+
 - (void)capturePhoto
 {
     [self.diyAV capturePhoto];
