@@ -178,12 +178,6 @@
         // Convert to jpeg
         NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
         
-        // Save to asset library
-        if (shouldSaveToLibrary) {
-            DIYCamLibraryImageOperation *lop = [[DIYCamLibraryImageOperation alloc] initWithData:imageData];
-            [self.queue addOperation:lop];
-        }
-        
         // Save to application cache
         DIYCamFileOperation *fop = [[DIYCamFileOperation alloc] initWithData:imageData forLocation:DIYCamFileLocationCache];
         
@@ -193,10 +187,21 @@
         [fop setCompletionBlock:^{
             if (fop.complete) {
                 [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:fop.path, @"path", @"image", @"type", nil]];
+                
+                // Save to asset library
+                if (shouldSaveToLibrary) {
+                    DIYCamLibraryImageOperation *lop = [[DIYCamLibraryImageOperation alloc] initWithData:imageData];
+                    [lop setCompletionBlock:^{
+                        if (lop.complete) {
+                            [self.delegate camCaptureLibraryOperationComplete:self];
+                        }
+                    }];
+                    [self.queue addOperation:lop];
+                }
+                
             } else {
                 [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
             }
-            [fop setCompletionBlock:nil];
         }];
 #pragma clang diagnostic pop
         
@@ -221,12 +226,6 @@
 	{
         [self.delegate camCaptureProcessing:self];
         
-        // Asset library
-        if (shouldSaveToLibrary) {
-            DIYCamLibraryVideoOperation *lOp = [[DIYCamLibraryVideoOperation alloc] initWithURL:outputFileURL];
-            [self.queue addOperation:lOp];
-        }
-        
         // Thumbnail
         [DIYCamUtilities generateVideoThumbnail:outputFileURL success:^(UIImage *image, NSData *data) {
             DIYCamFileOperation *fOp = [[DIYCamFileOperation alloc] initWithData:data forLocation:DIYCamFileLocationCache];
@@ -237,10 +236,19 @@
             [fOp setCompletionBlock:^{
                 if (fOp.complete) {
                     [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:outputFileURL, @"path", @"video", @"type", fOp.path, @"thumb", nil]];
+
+                    if (shouldSaveToLibrary) {
+                        DIYCamLibraryVideoOperation *lOp = [[DIYCamLibraryVideoOperation alloc] initWithURL:outputFileURL];
+                        [lOp setCompletionBlock:^{
+                            if (lOp.complete) {
+                                [self.delegate camCaptureLibraryOperationComplete:self];
+                            }
+                        }];
+                        [self.queue addOperation:lOp];
+                    }
                 } else {
                     [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
                 }
-                [fOp setCompletionBlock:nil];
             }];
             #pragma clang diagnostic pop
             
