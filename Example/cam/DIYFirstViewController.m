@@ -155,6 +155,11 @@
     NSLog(@"Capture complete. Asset: %@", asset);
 }
 
+- (void)camCaptureLibraryOperationComplete:(DIYCam *)cam
+{
+    NSLog(@"Library save complete");
+}
+
 #pragma mark - UIGesture
 
 - (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer

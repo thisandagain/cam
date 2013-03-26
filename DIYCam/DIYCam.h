@@ -30,6 +30,8 @@
 - (void)camCaptureStopped:(DIYCam *)cam;
 - (void)camCaptureProcessing:(DIYCam *)cam;
 - (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset;
+- (void)camCaptureLibraryOperationComplete:(DIYCam *)cam;
+
 @end
 
 //
