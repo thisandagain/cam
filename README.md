@@ -11,7 +11,7 @@ In order to use DIYCam, you'll want to add the entirety of the `DIYCam` director
 ```
 
 ```objective-c
-DIYCam *cam         = [[DIYCam alloc] initWithFrame:self.view.frame];
+DIYCam *cam         = [[DIYCam alloc] initWithFrame:self.view.bounds];
 cam.delegate        = self;
 [cam setupWithOptions:nil]; // Check DIYAV.h for options
 [cam setCamMode:DIYAVModePhoto];
