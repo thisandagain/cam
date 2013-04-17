@@ -39,7 +39,7 @@
             failure([NSException exceptionWithName:@"" reason:@"Could not generate video thumbnail" userInfo:nil]);
         } else {
             UIImage *sim = [UIImage imageWithCGImage:im];
-            NSData *data = UIImageJPEGRepresentation(sim, 0.7);
+            NSData *data = UIImageJPEGRepresentation(sim, 0.7f);
             success(sim, data);
         }
     }];

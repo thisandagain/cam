@@ -15,30 +15,10 @@
 #import "DIYCamLibraryImageOperation.h"
 #import "DIYCamLibraryVideoOperation.h"
 
-//
-
-@class DIYCam;
-
-@protocol DIYCamDelegate <NSObject>
-@required
-- (void)camDidFail:(DIYCam *)cam withError:(NSError *)error;
-
-- (void)camModeWillChange:(DIYCam *)cam mode:(DIYAVMode)mode;
-- (void)camModeDidChange:(DIYCam *)cam mode:(DIYAVMode)mode;
-
-- (void)camCaptureStarted:(DIYCam *)cam;
-- (void)camCaptureStopped:(DIYCam *)cam;
-- (void)camCaptureProcessing:(DIYCam *)cam;
-- (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset;
-- (void)camCaptureLibraryOperationComplete:(DIYCam *)cam;
-
-@end
-
-//
-
+@protocol DIYCamDelegate;
 @interface DIYCam : UIView <DIYAVDelegate>
 
-@property (weak) id<DIYCamDelegate> delegate;
+@property (nonatomic, weak) id<DIYCamDelegate> delegate;
 
 - (void)setupWithOptions:(NSDictionary *)options;
 
@@ -59,3 +39,22 @@
 - (void)captureVideoStop;
 
 @end
+
+//
+
+@protocol DIYCamDelegate <NSObject>
+@required
+- (void)camDidFail:(DIYCam *)cam withError:(NSError *)error;
+
+- (void)camModeWillChange:(DIYCam *)cam mode:(DIYAVMode)mode;
+- (void)camModeDidChange:(DIYCam *)cam mode:(DIYAVMode)mode;
+
+- (void)camCaptureStarted:(DIYCam *)cam;
+- (void)camCaptureStopped:(DIYCam *)cam;
+- (void)camCaptureProcessing:(DIYCam *)cam;
+- (void)camCaptureComplete:(DIYCam *)cam withAsset:(NSDictionary *)asset;
+- (void)camCaptureLibraryOperationComplete:(DIYCam *)cam;
+
+@end
+
+//

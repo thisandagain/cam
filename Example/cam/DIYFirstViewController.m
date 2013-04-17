@@ -10,6 +10,13 @@
 
 @implementation DIYFirstViewController
 
+@synthesize cam             = _cam;
+@synthesize selector        = _selector;
+@synthesize capture         = _capture;
+@synthesize flash           = _flash;
+@synthesize flip            = _flip;
+@synthesize focusImageView  = _focusImageView;
+
 #pragma mark - View lifecycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -180,7 +187,7 @@
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.2 animations:^{
             self.focusImageView.alpha = 0.0;
-        } completion:^(BOOL finished) {
+        } completion:^(BOOL secondFinished) {
             self.focusImageView.hidden = true;
         }];
     }];

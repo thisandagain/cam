@@ -10,6 +10,11 @@
 
 @implementation DIYCamFileOperation
 
+@synthesize complete    = _complete;
+@synthesize size        = _size;
+@synthesize path        = _path;
+@synthesize error       = _error;
+
 #pragma mark - Init
 
 - (id)initWithData:(id)data forLocation:(DIYCamFileLocation)location
@@ -34,16 +39,12 @@
 
 - (void)main
 {
-    @try 
-    {
-        @autoreleasepool {
-            NSError *error;
-            self.complete = [dataset writeToURL:self.path options:NSDataWritingAtomic error:&error];
-            if (error) {
-                self.error = error;
-            }
+    @autoreleasepool {
+        NSError *error;
+        self.complete = [dataset writeToURL:self.path options:NSDataWritingAtomic error:&error];
+        if (error) {
+            self.error = error;
         }
-    } @catch (NSException *exception) {
     }
 }
 

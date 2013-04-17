@@ -34,12 +34,11 @@
 		C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DAD29215A92CB600A218DF /* DIYCamUtilities.m */; };
 		DE26EABE15B76FAA008AF717 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE26EABD15B76FAA008AF717 /* CoreMedia.framework */; };
 		DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */; };
+		DE506796171E4B0200EAE122 /* USArrayWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DE506795171E4B0200EAE122 /* USArrayWrapper.m */; };
 		DE70BC9C16B71B33008E9170 /* DIYAV.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC8A16B71B33008E9170 /* DIYAV.m */; };
-		DE70BC9D16B71B33008E9170 /* DIYAVPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC8D16B71B33008E9170 /* DIYAVPreview.m */; };
 		DE70BC9E16B71B33008E9170 /* DIYAVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC8F16B71B33008E9170 /* DIYAVUtilities.m */; };
 		DE70BC9F16B71B33008E9170 /* Underscore+Functional.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC9316B71B33008E9170 /* Underscore+Functional.m */; };
 		DE70BCA016B71B33008E9170 /* Underscore.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC9616B71B33008E9170 /* Underscore.m */; };
-		DE70BCA116B71B33008E9170 /* USArrayWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC9816B71B33008E9170 /* USArrayWrapper.m */; };
 		DE70BCA216B71B33008E9170 /* USDictionaryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70BC9B16B71B33008E9170 /* USDictionaryWrapper.m */; };
 		DEB86A0E160BF5C4001A3C9E /* focus_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DEB86A0D160BF5C4001A3C9E /* focus_indicator@2x.png */; };
 /* End PBXBuildFile section */
@@ -83,11 +82,14 @@
 		DE26EABD15B76FAA008AF717 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		DE26EABF15B78740008AF717 /* DIYCamLibraryVideoOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DIYCamLibraryVideoOperation.h; path = ../DIYCam/DIYCamLibraryVideoOperation.h; sourceTree = "<group>"; };
 		DE26EAC015B78741008AF717 /* DIYCamLibraryVideoOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DIYCamLibraryVideoOperation.m; path = ../DIYCam/DIYCamLibraryVideoOperation.m; sourceTree = "<group>"; };
+		DE506791171E412600EAE122 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		DE506792171E412600EAE122 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		DE506793171E412600EAE122 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		DE506794171E4B0200EAE122 /* USArrayWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USArrayWrapper.h; sourceTree = "<group>"; };
+		DE506795171E4B0200EAE122 /* USArrayWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USArrayWrapper.m; sourceTree = "<group>"; };
 		DE70BC8916B71B33008E9170 /* DIYAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAV.h; sourceTree = "<group>"; };
 		DE70BC8A16B71B33008E9170 /* DIYAV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIYAV.m; sourceTree = "<group>"; };
 		DE70BC8B16B71B33008E9170 /* DIYAVDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAVDefaults.h; sourceTree = "<group>"; };
-		DE70BC8C16B71B33008E9170 /* DIYAVPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAVPreview.h; sourceTree = "<group>"; };
-		DE70BC8D16B71B33008E9170 /* DIYAVPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIYAVPreview.m; sourceTree = "<group>"; };
 		DE70BC8E16B71B33008E9170 /* DIYAVUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIYAVUtilities.h; sourceTree = "<group>"; };
 		DE70BC8F16B71B33008E9170 /* DIYAVUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIYAVUtilities.m; sourceTree = "<group>"; };
 		DE70BC9216B71B33008E9170 /* Underscore+Functional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Underscore+Functional.h"; sourceTree = "<group>"; };
@@ -95,8 +97,6 @@
 		DE70BC9416B71B33008E9170 /* Underscore-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Underscore-Prefix.pch"; sourceTree = "<group>"; };
 		DE70BC9516B71B33008E9170 /* Underscore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Underscore.h; sourceTree = "<group>"; };
 		DE70BC9616B71B33008E9170 /* Underscore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Underscore.m; sourceTree = "<group>"; };
-		DE70BC9716B71B33008E9170 /* USArrayWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USArrayWrapper.h; sourceTree = "<group>"; };
-		DE70BC9816B71B33008E9170 /* USArrayWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USArrayWrapper.m; sourceTree = "<group>"; };
 		DE70BC9916B71B33008E9170 /* USConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USConstants.h; sourceTree = "<group>"; };
 		DE70BC9A16B71B33008E9170 /* USDictionaryWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDictionaryWrapper.h; sourceTree = "<group>"; };
 		DE70BC9B16B71B33008E9170 /* USDictionaryWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USDictionaryWrapper.m; sourceTree = "<group>"; };
@@ -179,6 +179,9 @@
 		C36CA40A15A6443400529935 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DE506791171E412600EAE122 /* Base.xcconfig */,
+				DE506792171E412600EAE122 /* Debug.xcconfig */,
+				DE506793171E412600EAE122 /* Release.xcconfig */,
 				C36CA40B15A6443400529935 /* cam-Info.plist */,
 				C36CA40C15A6443400529935 /* InfoPlist.strings */,
 				C36CA40F15A6443400529935 /* main.m */,
@@ -222,8 +225,6 @@
 				DE70BC8916B71B33008E9170 /* DIYAV.h */,
 				DE70BC8A16B71B33008E9170 /* DIYAV.m */,
 				DE70BC8B16B71B33008E9170 /* DIYAVDefaults.h */,
-				DE70BC8C16B71B33008E9170 /* DIYAVPreview.h */,
-				DE70BC8D16B71B33008E9170 /* DIYAVPreview.m */,
 				DE70BC8E16B71B33008E9170 /* DIYAVUtilities.h */,
 				DE70BC8F16B71B33008E9170 /* DIYAVUtilities.m */,
 				DE70BC9016B71B33008E9170 /* lib */,
@@ -248,8 +249,8 @@
 				DE70BC9416B71B33008E9170 /* Underscore-Prefix.pch */,
 				DE70BC9516B71B33008E9170 /* Underscore.h */,
 				DE70BC9616B71B33008E9170 /* Underscore.m */,
-				DE70BC9716B71B33008E9170 /* USArrayWrapper.h */,
-				DE70BC9816B71B33008E9170 /* USArrayWrapper.m */,
+				DE506794171E4B0200EAE122 /* USArrayWrapper.h */,
+				DE506795171E4B0200EAE122 /* USArrayWrapper.m */,
 				DE70BC9916B71B33008E9170 /* USConstants.h */,
 				DE70BC9A16B71B33008E9170 /* USDictionaryWrapper.h */,
 				DE70BC9B16B71B33008E9170 /* USDictionaryWrapper.m */,
@@ -341,12 +342,11 @@
 				C3DAD29315A92CB600A218DF /* DIYCamUtilities.m in Sources */,
 				DE26EAC115B78741008AF717 /* DIYCamLibraryVideoOperation.m in Sources */,
 				DE70BC9C16B71B33008E9170 /* DIYAV.m in Sources */,
-				DE70BC9D16B71B33008E9170 /* DIYAVPreview.m in Sources */,
 				DE70BC9E16B71B33008E9170 /* DIYAVUtilities.m in Sources */,
 				DE70BC9F16B71B33008E9170 /* Underscore+Functional.m in Sources */,
 				DE70BCA016B71B33008E9170 /* Underscore.m in Sources */,
-				DE70BCA116B71B33008E9170 /* USArrayWrapper.m in Sources */,
 				DE70BCA216B71B33008E9170 /* USDictionaryWrapper.m in Sources */,
+				DE506796171E4B0200EAE122 /* USArrayWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +382,7 @@
 /* Begin XCBuildConfiguration section */
 		C36CA42915A6443400529935 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE506792171E412600EAE122 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -410,6 +411,7 @@
 		};
 		C36CA42A15A6443400529935 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE506793171E412600EAE122 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";

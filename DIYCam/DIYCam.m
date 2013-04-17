@@ -13,13 +13,17 @@
 //
 
 @interface DIYCam ()
-@property NSOperationQueue  *queue;
-@property DIYAV             *diyAV;
+{
+    NSOperationQueue  *_queue;
+    DIYAV             *_diyAV;
+}
 @end
 
 //
 
 @implementation DIYCam
+
+@synthesize delegate = _delegate;
 
 #pragma mark - Init
 
@@ -30,7 +34,7 @@
 
     // Queue
     _queue                  = [[NSOperationQueue alloc] init];
-    self.queue.maxConcurrentOperationCount = 4;
+    _queue.maxConcurrentOperationCount = 4;
     
     // Gesture Recognizer for taps for focus
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(focusAtTap:)];
@@ -72,67 +76,67 @@
         options = @{};
     }
     _diyAV                  = [[DIYAV alloc] initWithOptions:options];
-    self.diyAV.delegate     = self;
+    _diyAV.delegate     = self;
 }
 
 - (BOOL)getRecordingStatus
 {
-    return self.diyAV.isRecording;
+    return _diyAV.isRecording;
 }
 
 - (void)startSession
 {
-    [self.diyAV startSession];
+    [_diyAV startSession];
 }
 
 - (void)stopSession
 {
-    [self.diyAV stopSession];
+    [_diyAV stopSession];
 }
 
 - (DIYAVMode)getCamMode
 {
-    return self.diyAV.captureMode;
+    return _diyAV.captureMode;
 }
 
 - (void)setCamMode:(DIYAVMode)mode
 {
-    self.captureMode = mode;
+    _diyAV.captureMode = mode;
 }
 
 - (BOOL)getFlash
 {
-    return self.diyAV.flash;
+    return _diyAV.flash;
 }
 
 - (void)setFlash:(BOOL)flash
 {
-    [self.diyAV setFlash:flash];
+    [_diyAV setFlash:flash];
 }
 
 - (void)flipCamera
 {
-    if (self.diyAV.cameraPosition == AVCaptureDevicePositionFront) {
-        self.diyAV.cameraPosition = AVCaptureDevicePositionBack;
+    if (_diyAV.cameraPosition == AVCaptureDevicePositionFront) {
+        _diyAV.cameraPosition = AVCaptureDevicePositionBack;
     }
     else {
-        self.diyAV.cameraPosition = AVCaptureDevicePositionFront;
+        _diyAV.cameraPosition = AVCaptureDevicePositionFront;
     }
 }
 
 - (void)capturePhoto
 {
-    [self.diyAV capturePhoto];
+    [_diyAV capturePhoto];
 }
 
 - (void)captureVideoStart
 {
-    [self.diyAV captureVideoStart];
+    [_diyAV captureVideoStart];
 }
 
 - (void)captureVideoStop
 {
-    [self.diyAV captureVideoStop];
+    [_diyAV captureVideoStop];
 }
 
 #pragma mark - DIYAVdelegate
@@ -146,32 +150,32 @@
 
 - (void)AVDidFail:(DIYAV *)av withError:(NSError *)error
 {
-    [self.delegate camDidFail:self withError:error];
+    [_delegate camDidFail:self withError:error];
 }
 
 - (void)AVModeWillChange:(DIYAV *)av mode:(DIYAVMode)mode
 {
-    [self.delegate camModeWillChange:self mode:mode];
+    [_delegate camModeWillChange:self mode:mode];
 }
 
 - (void)AVModeDidChange:(DIYAV *)av mode:(DIYAVMode)mode
 {
-    [self.delegate camModeDidChange:self mode:mode];
+    [_delegate camModeDidChange:self mode:mode];
 }
 
 - (void)AVCaptureStarted:(DIYAV *)av
 {
-    [self.delegate camCaptureStarted:self];
+    [_delegate camCaptureStarted:self];
 }
 
 - (void)AVCaptureStopped:(DIYAV *)av
 {
-    [self.delegate camCaptureStopped:self];
+    [_delegate camCaptureStopped:self];
 }
 
 - (void)AVCaptureOutputStill:(CMSampleBufferRef)imageDataSampleBuffer shouldSaveToLibrary:(BOOL)shouldSaveToLibrary withError:(NSError *)error
 {
-    [self.delegate camCaptureProcessing:self];
+    [_delegate camCaptureProcessing:self];
     
     // Check sample buffer
     if (imageDataSampleBuffer != NULL && error == nil) {
@@ -186,28 +190,28 @@
 #pragma clang diagnostic ignored "-Warc-retain-cycles"
         [fop setCompletionBlock:^{
             if (fop.complete) {
-                [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:fop.path, @"path", @"image", @"type", nil]];
+                [_delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:fop.path, @"path", @"image", @"type", nil]];
                 
                 // Save to asset library
                 if (shouldSaveToLibrary) {
                     DIYCamLibraryImageOperation *lop = [[DIYCamLibraryImageOperation alloc] initWithData:imageData];
                     [lop setCompletionBlock:^{
                         if (lop.complete) {
-                            [self.delegate camCaptureLibraryOperationComplete:self];
+                            [_delegate camCaptureLibraryOperationComplete:self];
                         }
                     }];
-                    [self.queue addOperation:lop];
+                    [_queue addOperation:lop];
                 }
                 
             } else {
-                [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
+                [_delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
             }
         }];
 #pragma clang diagnostic pop
         
-        [self.queue addOperation:fop];
+        [_queue addOperation:fop];
     } else {
-        [self.delegate camDidFail:self withError:error];
+        [_delegate camDidFail:self withError:error];
     }
 }
 
@@ -224,7 +228,7 @@
     
 	if (recordedSuccessfully)
 	{
-        [self.delegate camCaptureProcessing:self];
+        [_delegate camCaptureProcessing:self];
         
         // Thumbnail
         [DIYCamUtilities generateVideoThumbnail:outputFileURL success:^(UIImage *image, NSData *data) {
@@ -235,26 +239,26 @@
             #pragma clang diagnostic ignored "-Warc-retain-cycles"
             [fOp setCompletionBlock:^{
                 if (fOp.complete) {
-                    [self.delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:outputFileURL, @"path", @"video", @"type", fOp.path, @"thumb", nil]];
+                    [_delegate camCaptureComplete:self withAsset:[NSDictionary dictionaryWithObjectsAndKeys:outputFileURL, @"path", @"video", @"type", fOp.path, @"thumb", nil]];
 
                     if (shouldSaveToLibrary) {
                         DIYCamLibraryVideoOperation *lOp = [[DIYCamLibraryVideoOperation alloc] initWithURL:outputFileURL];
                         [lOp setCompletionBlock:^{
                             if (lOp.complete) {
-                                [self.delegate camCaptureLibraryOperationComplete:self];
+                                [_delegate camCaptureLibraryOperationComplete:self];
                             }
                         }];
-                        [self.queue addOperation:lOp];
+                        [_queue addOperation:lOp];
                     }
                 } else {
-                    [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
+                    [_delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
                 }
             }];
             #pragma clang diagnostic pop
             
-            [self.queue addOperation:fOp];
+            [_queue addOperation:fOp];
         } failure:^(NSException *exception) {
-            [self.delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
+            [_delegate camDidFail:self withError:[NSError errorWithDomain:@"com.diy.cam" code:500 userInfo:nil]];
         }];
         
 	} else {
@@ -262,21 +266,12 @@
     }
 }
 
-
-#pragma mark - Override
-
-- (void)setCaptureMode:(DIYAVMode)captureMode
-{
-    self.diyAV.captureMode = captureMode;
-}
-
-
 #pragma mark - Focusing
 
 - (void)focusAtTap:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint tapPoint = [gestureRecognizer locationInView:self];
-    [self.diyAV focusAtPoint:tapPoint inFrame:self.frame];
+    [_diyAV focusAtPoint:tapPoint inFrame:self.frame];
 }
 
 #pragma mark - Dealloc
