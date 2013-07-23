@@ -10,12 +10,6 @@
 
 @implementation DIYCamLibraryImageOperation
 
-@synthesize complete    = _complete;
-@synthesize size        = _size;
-@synthesize path        = _path;
-@synthesize error       = _error;
-@synthesize library     = _library;
-
 #pragma mark - Init
 
 - (id)initWithData:(id)data
@@ -38,12 +32,16 @@
 
 - (void)main
 {
-    @autoreleasepool {
-        [self.library writeImageDataToSavedPhotosAlbum:dataset metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-            self.path = assetURL;
-            self.error = error;
-            self.complete = true;
-        }];
+    @try 
+    {
+        @autoreleasepool {
+            [self.library writeImageDataToSavedPhotosAlbum:dataset metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+                self.path = assetURL;
+                self.error = error;
+                self.complete = true;
+            }];
+        }
+    } @catch (NSException *exception) {
     }
 }
 

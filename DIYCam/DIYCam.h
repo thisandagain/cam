@@ -10,37 +10,15 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "DIYAV.h"
+#import "DIYAVUtilities.h"
 #import "DIYCamUtilities.h"
 #import "DIYCamFileOperation.h"
 #import "DIYCamLibraryImageOperation.h"
 #import "DIYCamLibraryVideoOperation.h"
 
-@protocol DIYCamDelegate;
-@interface DIYCam : UIView <DIYAVDelegate>
-
-@property (nonatomic, weak) id<DIYCamDelegate> delegate;
-
-- (void)setupWithOptions:(NSDictionary *)options;
-
-#pragma mark - Status
-- (BOOL)getRecordingStatus;
-- (DIYAVMode)getCamMode;
-- (void)setCamMode:(DIYAVMode)mode;
-- (BOOL)getFlash;
-- (void)setFlash:(BOOL)flash;
-- (void)flipCamera;
-
-#pragma mark - Capture
-- (void)stopSession;
-- (void)startSession;
-
-- (void)capturePhoto;
-- (void)captureVideoStart;
-- (void)captureVideoStop;
-
-@end
-
 //
+
+@class DIYCam;
 
 @protocol DIYCamDelegate <NSObject>
 @required
@@ -58,3 +36,29 @@
 @end
 
 //
+
+@interface DIYCam : UIView <DIYAVDelegate>
+
+@property (weak) id<DIYCamDelegate> delegate;
+
+- (void)setupWithOptions:(NSDictionary *)options;
+
+#pragma mark - Status
+- (BOOL)getRecordingStatus;
+- (DIYAVMode)getCamMode;
+- (void)setCamMode:(DIYAVMode)mode;
+- (BOOL)getFlash;
+- (void)setFlash:(BOOL)flash;
+- (void)setFlashMode:(DIYAVFlashMode)mode;
+-(AVCaptureDevicePosition)getCameraPosition;
+- (void)flipCamera;
+
+#pragma mark - Capture
+- (void)stopSession;
+- (void)startSession;
+
+- (void)capturePhoto;
+- (void)captureVideoStart;
+- (void)captureVideoStop;
+
+@end
