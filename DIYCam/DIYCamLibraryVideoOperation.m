@@ -10,11 +10,6 @@
 
 @implementation DIYCamLibraryVideoOperation
 
-@synthesize complete    = _complete;
-@synthesize path        = _path;
-@synthesize error       = _error;
-@synthesize library     = _library;
-
 #pragma mark - Init
 
 - (id)initWithURL:(id)videoURL
@@ -35,11 +30,15 @@
 
 - (void)main
 {
-    @autoreleasepool {            
-        [self.library writeVideoAtPathToSavedPhotosAlbum:self.path completionBlock:^(NSURL *assetURL, NSError *error) {
-            self.error = error;
-            self.complete = true;
-        }];
+    @try {
+        @autoreleasepool {            
+            [self.library writeVideoAtPathToSavedPhotosAlbum:self.path completionBlock:^(NSURL *assetURL, NSError *error) {
+                self.error = error;
+                self.complete = true;
+            }];
+        }
+    }
+    @catch (NSException *exception) {
     }
 }
 
