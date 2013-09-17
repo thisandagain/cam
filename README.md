@@ -1,4 +1,5 @@
 ## Cam
+#### Deprecated. See [PBJVision](https://github.com/piemonte/PBJVision).
 #### A turn-key camera capture solution built on top of DIYAV (on top of AVFoundation), enabling simple setup and implementation of photo and video capture within iOS.
 
 ## Getting Started
