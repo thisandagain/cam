@@ -3,7 +3,7 @@
 #### A turn-key camera capture solution built on top of DIYAV (on top of AVFoundation), enabling simple setup and implementation of photo and video capture within iOS.
 
 ## Getting Started
-The easiest way to get going with DIYCam is to take a look at the included example application. The XCode project file can be found at `Example > cam.xcodeproj`.
+The easiest way to get going with DIYCam is to take a look at the included example application. The Xcode project file can be found at `Example > cam.xcodeproj`.
 
 In order to use DIYCam, you'll want to add the entirety of the `DIYCam` directory to your project. To get started, simply:
 
